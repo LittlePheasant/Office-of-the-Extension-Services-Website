@@ -1,0 +1,67 @@
+
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+
+        <img src="assets/images/extension_logo.png" alt="EVSU Logo" style="display: flex; justify-content: center; border-radius: 50%; width: 10rem;">
+      <!-- <p>Auto-resizing sidenav</p>
+      <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p> -->
+      <!-- <button (click)="showFiller = !showFiller" mat-raised-button>
+        Toggle extra text
+      </button> -->
+
+
+      <mat-list>
+        <mat-list-item>
+            <a routerLink="home" routerLinkActive="active" class="sidenav_anchor">Home</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a routerLink="dashboard" routerLinkActive="active" class="sidenav_anchor">Dashboard</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a class="sidenav_anchor">Journals</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a class="sidenav_anchor">About Us</a>
+        </mat-list-item>
+      </mat-list>
+    </mat-drawer>
+  
+    <div class="example-sidenav-content">
+
+      <mat-toolbar style="background-color: #900303 !important;">
+        <div class="col-sm-6 col-md-6 col-lg-3">
+          <button type="button" mat-button (click)="drawer.toggle()" class="example-icon">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span class="title">Office of the Extension Services</span>
+        </div>
+        
+        <span class="example-spacer"></span>
+        <!-- <button mat-icon-button class="example-icon">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-icon-button class="example-icon">
+          <mat-icon>share</mat-icon>
+        </button> -->
+
+        <div class="profile-card" style="display: inline-flex; align-items: center;">
+          <img src=".\assets\images\extension_logo.png" alt="Extension Logo"
+               style="border-radius: 50%; vertical-align: middle; height: 50px; padding-right: 5px;">
+          <!-- <div class="header" style="display: inline;">
+            <h5 style="color: #fff;">User Name</h5>
+          </div> -->
+          
+        </div>
+
+      </mat-toolbar>
+
+    </div>
+<mat-drawer-container class="drawer_content">
+  <div class="row">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>
+
+  
+</mat-drawer-container>
+

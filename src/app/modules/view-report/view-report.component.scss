@@ -1,0 +1,124 @@
+.card {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    justify-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-x: auto;
+}
+
+.tablecontainer {
+    text-align:center; 
+    width: 100%;
+    border-collapse: collapse;
+
+    color: black;
+    padding: 4px;
+
+}
+
+.tablecontainer td, .tablecontainer th, .requestcontainer td, .requestcontainer th {
+    border: 1px solid #ffffff;
+    padding: 6px;
+    text-align: center;
+}
+
+.tablecontainer tr:nth-child(even), .requestcontainer tr:nth-child(even) {
+    background-color: #dddddd60;
+}
+
+.tablecontainer tr:hover, .requestcontainer tr:hover {
+    background-color: #dddddd93;
+}
+
+.tablecontainer th, .requestcontainer th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: #0c801f;
+
+    color: white;
+}
+
+.title {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14pt;
+}
+
+.left {
+    float: left;
+}
+
+.text {
+    margin-top: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.right {
+    p{
+        float: right;
+    }
+    
+}
+
+// tr {
+    
+// }
+
+// th{
+//     width: 100%;
+//     padding-top: 17px;
+//     color: #ffff;
+
+// }
+
+.searchbar {
+    font-size: large;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.align-right{
+    padding-bottom: 20px;
+    padding-left: 20px;
+    float: right;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    //position: absolute;
+}
+
+ .print-btn, .add-btn{
+    float: right;
+    padding-left: 5px;
+    padding-bottom: 20px;
+    //position: fixed;
+}
+
+.material-symbols-rounded {
+    font-size: 30px;
+    position: fixed;
+
+}
+
+.bar{
+    position: fixed;
+}
+
+.card {
+    margin-bottom: 20px;
+    //top: 176px;
+    margin-left: 10px;
+    justify-items: center;
+    padding-left: 11px;
+    padding-right: 10px;
+    overflow-x: auto;
+}
+
+.cardcontainer {
+    position: relative;
+    top: 0;
+}
