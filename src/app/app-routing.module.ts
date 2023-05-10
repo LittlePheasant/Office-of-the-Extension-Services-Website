@@ -7,8 +7,10 @@ import { ViewReportComponent } from './modules/view-report/view-report.component
 import { ViewActualReportComponent } from './modules/view-actual-report/view-actual-report.component';
 import { ViewUserlistComponent } from './modules/view-userlist/view-userlist.component';
 import { ViewProfileComponent } from './modules/view-profile/view-profile.component';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
+  {path:'login', component:LoginComponent},
   {path:'main', component:DefaultComponent,
    children:[
     {path:'dashboard', component:DashboardComponent},

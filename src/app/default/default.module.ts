@@ -27,6 +27,7 @@ import { ViewReportComponent } from '../modules/view-report/view-report.componen
 import { ViewActualReportComponent } from '../modules/view-actual-report/view-actual-report.component';
 import { ViewProfileComponent } from '../modules/view-profile/view-profile.component';
 import { ViewUserlistComponent } from '../modules/view-userlist/view-userlist.component';
+import { LoginComponent } from '../auth/login/login.component';
 
 
 
@@ -39,6 +40,7 @@ import { ViewUserlistComponent } from '../modules/view-userlist/view-userlist.co
     ViewActualReportComponent,
     ViewProfileComponent,
     ViewUserlistComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,

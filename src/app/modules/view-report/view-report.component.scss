@@ -17,6 +17,12 @@
 
 }
 
+.paginator {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: 5px;
+}
+
 .tablecontainer td, .tablecontainer th, .requestcontainer td, .requestcontainer th {
     border: 1px solid #ffffff;
     padding: 6px;
@@ -82,13 +88,10 @@
 }
 
 .align-right{
-    padding-bottom: 20px;
-    padding-left: 20px;
     float: right;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    //position: absolute;
 }
 
  .print-btn, .add-btn{
