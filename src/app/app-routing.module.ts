@@ -14,7 +14,7 @@ const routes: Routes = [
     {path:'view-report', component:ViewReportComponent},
     {path:'view-actual-report', component:ViewActualReportComponent}
    ]},
-   {path:'', redirectTo:'/main', pathMatch:'full'}
+   {path:'', redirectTo:'/main/dashboard', pathMatch:'full'}
 ];
 
 @NgModule({
