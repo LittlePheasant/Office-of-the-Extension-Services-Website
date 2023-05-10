@@ -25,6 +25,8 @@ import { DashboardComponent } from '../modules/dashboard/dashboard.component';
 import { AddReportComponent } from '../modules/add-report/add-report.component';
 import { ViewReportComponent } from '../modules/view-report/view-report.component';
 import { ViewActualReportComponent } from '../modules/view-actual-report/view-actual-report.component';
+import { ViewProfileComponent } from '../modules/view-profile/view-profile.component';
+import { ViewUserlistComponent } from '../modules/view-userlist/view-userlist.component';
 
 
 
@@ -35,6 +37,8 @@ import { ViewActualReportComponent } from '../modules/view-actual-report/view-ac
     AddReportComponent,
     ViewReportComponent,
     ViewActualReportComponent,
+    ViewProfileComponent,
+    ViewUserlistComponent,
   ],
   imports: [
     CommonModule,

@@ -5,6 +5,8 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { AddReportComponent } from './modules/add-report/add-report.component';
 import { ViewReportComponent } from './modules/view-report/view-report.component';
 import { ViewActualReportComponent } from './modules/view-actual-report/view-actual-report.component';
+import { ViewUserlistComponent } from './modules/view-userlist/view-userlist.component';
+import { ViewProfileComponent } from './modules/view-profile/view-profile.component';
 
 const routes: Routes = [
   {path:'main', component:DefaultComponent,
@@ -12,7 +14,9 @@ const routes: Routes = [
     {path:'dashboard', component:DashboardComponent},
     {path:'add-report', component:AddReportComponent},
     {path:'view-report', component:ViewReportComponent},
-    {path:'view-actual-report', component:ViewActualReportComponent}
+    {path:'view-actual-report', component:ViewActualReportComponent},
+    {path:'view-profile', component:ViewProfileComponent},
+    {path:'view-userlist', component:ViewUserlistComponent}
    ]},
    {path:'', redirectTo:'/main/dashboard', pathMatch:'full'}
 ];

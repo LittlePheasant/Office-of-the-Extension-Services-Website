@@ -1,0 +1,103 @@
+.card {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    justify-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-x: auto;
+}
+
+.tablecontainer {
+    text-align:center; 
+    width: 100%;
+    border-collapse: collapse;
+    display: table;
+
+    color: black;
+    padding: 4px;
+
+}
+
+.tablecontainer td, .tablecontainer th, .requestcontainer td, .requestcontainer th {
+    border: 1px solid #ffffff;
+    padding: 6px;
+    text-align: center;
+}
+
+.tablecontainer tr:nth-child(even), .requestcontainer tr:nth-child(even) {
+    background-color: #dddddd60;
+}
+
+.tablecontainer tr:hover, .requestcontainer tr:hover {
+    background-color: #dddddd93;
+}
+
+.tablecontainer th, .requestcontainer th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: #a74639;
+
+    color: white;
+}
+
+
+.title {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14pt;
+}
+
+.left {
+    float: left;
+}
+
+.text {
+    margin-top: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.right {
+    p{
+        float: right;
+    }
+    
+}
+
+
+th{
+
+    padding-top: 17px;
+}
+
+.searchbar {
+    font-size: large;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    float: left;
+}
+
+.align-right{
+    // padding-bottom: 20px;
+    padding-left: 20px;
+    float: right;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.add-btn{
+    float: right;
+    padding-left: 5px;
+    padding-bottom: 20px;
+}
+
+.material-symbols-rounded {
+    font-size: 30px;
+}
+
+.bar, .material-symbols-rounded{
+    position: fixed;
+}
