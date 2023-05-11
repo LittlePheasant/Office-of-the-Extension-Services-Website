@@ -8,7 +8,7 @@ import { ReportData, UsersList } from '../models/models';
 })
 export class ApiService {
 
-  baseUrl: string = "http://localhost/apiConnection";
+  baseUrl: string = "https://office-of-the-extension-services.000webhostapp.com/apiConnection";
   reportData!: ReportData[];
   userData!: UsersList[];
 
