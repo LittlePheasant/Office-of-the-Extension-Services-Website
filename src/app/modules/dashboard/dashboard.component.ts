@@ -38,98 +38,13 @@ export class DashboardComponent implements OnInit {
     this._api.viewUsersList()
     .subscribe(
       (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.totalUsers = response.length;
       }
     );
 
     this.loadChart();
 
-      // this._api.getParticularLength().subscribe((response:any) => {
-      //   if(response || response.data){
-      //     const reports = response.data;
-      //     for (let i = 0; i < reports.length; i++) {
-      //       const report = reports[i];
-      //       const particular_id = report.particular_id;
-      //       this._api.getDataByParticularId(particular_id).subscribe((response: any) => {
-
-      //         if (response || response.data) {
-      //     const data = response;
-      //     const chartData = [];
-      
-      //     for (let i = 0; i < data.length; i++) {
-      //       chartData.push({
-      //         name: data[i].name, // Replace 'name' with the name property in your API response
-      //         x: i,
-      //         y: parseInt(data[i].count), // Replace 'value' with the y property in your API response
-      //       });
-      //     }
-
-      //     // Define options for chart 1
-      //     const options1: Highcharts.Options = { 
-      //       chart: { type: 'column' },
-      //       title: { text: 'Output Indicator 1' },
-      //       xAxis: { type: 'category' },
-      //       yAxis: { title: {
-      //         text: 'Total by Campus/Colleges'
-      //         }
-      //       },
-      //       plotOptions: {
-      //         series: {
-      //             borderWidth: 0,
-      //             dataLabels: {
-      //                 enabled: true,
-      //                 //format: '{point.y:.1f}%'
-      //             }
-      //         }
-      //       },
-      //       series: [
-      //         {
-      //           type: 'column',
-      //           name: 'Number of Active Partnerships with LGUs, industries, NGOs, NGAs, SMEs, and other stakeholders as a result of extension services',
-      //           data: chartData // Pass chartData as an array without brackets
-      //         },
-      //       ],
-      //     };
-      //     console.log(chartData);
-      //     const container1 = this.elementRef.nativeElement.querySelector('#chart1');
-      //     Highcharts.chart(container1, options1);
-      //   }
-
-      //       })
-      //     }
-      // }});
-    // this._api.getParticularLength().subscribe((response:any) => {
-    //   const total_count = parseInt(response);
-    //   const count = total_count;
-    //   const total_ChartData = [];
-
-    //   for (let j = 1; j <= count; j++) {
-    //     const length = j;
-    //     const particular_id = length;
-        
-    //     this._api.getDataByParticularId(particular_id).subscribe((response:any) => {
-        
-    //       if (response || response.data) {
-    //         const data = response;
-    //         const chartData = [];
-    //         console.log(data);        
-    //             for (let i = 0; i < data.length; i++) {
-    //               chartData.push({
-    //                 name: data[i].name, // Replace 'name' with the name property in your API response
-    //                 x: i,
-    //                 y: parseInt(data[i].count), // Replace 'value' with the y property in your API response
-    //               });
-    //                 total_ChartData.push(chartData);
-    //             }
-    //             //console.log(chartData); 
-    //           }
-              
-    //         }
-    //       )
-    //     }
-    //   }
-    // );
 
   };
 
@@ -138,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
     this._api.getDataByParticularId(particular_id).subscribe((response: any) => {
 
-      if (response || response.data) {
+      if (response) {
         const data = response;
         const chartData = [];
     
