@@ -8,6 +8,7 @@ import { ViewActualReportComponent } from './modules/view-actual-report/view-act
 import { ViewUserlistComponent } from './modules/view-userlist/view-userlist.component';
 import { ViewProfileComponent } from './modules/view-profile/view-profile.component';
 import { LoginComponent } from './auth/login/login.component';
+import { DownloadsComponent } from './modules/downloads/downloads.component';
 
 const routes: Routes = [
   {path:'login', component:LoginComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
     {path:'view-report', component:ViewReportComponent},
     {path:'view-actual-report', component:ViewActualReportComponent},
     {path:'view-profile', component:ViewProfileComponent},
-    {path:'view-userlist', component:ViewUserlistComponent}
+    {path:'view-userlist', component:ViewUserlistComponent},
+    {path:'downloads', component:DownloadsComponent}
    ]},
    {path:'', redirectTo:'/main/dashboard', pathMatch:'full'}
 ];
