@@ -120,7 +120,9 @@
     justify-items: center;
     padding-left: 11px;
     padding-right: 10px;
-    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .cardcontainer {
