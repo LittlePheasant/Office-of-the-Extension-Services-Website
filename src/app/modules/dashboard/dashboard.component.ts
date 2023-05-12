@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
     this._api.viewUsersList()
     .subscribe(
       (response: any) => {
-        //console.log(response);
+        console.log(response);
         this.totalUsers = response.length;
       }
     );
