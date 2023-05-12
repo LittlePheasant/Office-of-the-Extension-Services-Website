@@ -12,16 +12,28 @@
 
       <mat-list>
         <mat-list-item>
-            <a routerLink="home" routerLinkActive="active" class="sidenav_anchor">Home</a>
+            <a routerLink="home" routerLinkActive="active" class="sidenav_anchor">
+              <i class="material-icons">home</i>
+              Home
+            </a>
         </mat-list-item>
         <mat-list-item>
-            <a routerLink="dashboard" routerLinkActive="active" class="sidenav_anchor">Dashboard</a>
+            <a routerLink="dashboard" routerLinkActive="active" class="sidenav_anchor">
+              <i class="material-icons">dashboard</i>
+              Dashboard
+            </a>
         </mat-list-item>
         <mat-list-item>
-            <a class="sidenav_anchor">Journals</a>
+            <a class="sidenav_anchor">
+              <i class="material-icons">article</i>
+              Journals
+            </a>
         </mat-list-item>
         <mat-list-item>
-            <a class="sidenav_anchor">About Us</a>
+            <a class="sidenav_anchor">
+              <i class="material-icons">info</i>
+              About Us
+            </a>
         </mat-list-item>
       </mat-list>
     </mat-drawer>
@@ -56,11 +68,11 @@
       </mat-toolbar>
 
     </div>
-<mat-drawer-container class="drawer_content">
-  <div class="row">
-    <router-outlet></router-outlet>
-  </div>
-</mat-drawer-container>
+  <mat-drawer-container class="drawer_content">
+    <div class="row">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
 
   
 </mat-drawer-container>

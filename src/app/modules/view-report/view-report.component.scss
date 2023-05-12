@@ -14,6 +14,8 @@
 
     color: black;
     padding: 4px;
+    overflow-y: auto;
+    height: 100%;
 
 }
 
@@ -124,4 +126,5 @@
 .cardcontainer {
     position: relative;
     top: 0;
+    height: 506px;
 }

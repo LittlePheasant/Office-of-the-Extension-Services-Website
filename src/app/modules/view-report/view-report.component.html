@@ -39,8 +39,8 @@
         <mat-card class="cardcontainer" style="margin-top: 1px;">
             
             
-            <mat-card>
-                <mat-table matSort [dataSource]="data" class="tablecontainer">
+            <mat-card class="tablecontainer">
+                <mat-table matSort [dataSource]="data" >
 
                     <ng-container matColumnDef="index">
                         <th mat-header-cell mat-sort-header *matHeaderCellDef> No. </th>
