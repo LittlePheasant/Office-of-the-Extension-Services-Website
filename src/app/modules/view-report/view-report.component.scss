@@ -1,6 +1,7 @@
 .card {
     margin-bottom: 20px;
     margin-top: 10px;
+    margin-right: 10px;
     justify-items: center;
     padding-left: 10px;
     padding-right: 10px;
@@ -49,9 +50,20 @@
 }
 
 .title {
-    text-align: center;
+    height: 40px;
+    margin-top: 10px;
+    background-color: #900303;
+    margin-left: -11px; 
+    width: 92.7rem;
+}
+
+.title-banner {
+    text-align: left;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 14pt;
+    font-size: 18pt;
+    color: #ffff;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 .left {
@@ -71,16 +83,15 @@
     
 }
 
-// tr {
-    
-// }
-
-// th{
-//     width: 100%;
-//     padding-top: 17px;
-//     color: #ffff;
-
-// }
+.title-card {
+    margin-top: 12px;
+    height: 45px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-shadow: 0px 4px 1px -1px rgba(0, 0, 0, 0.7), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
 
 .searchbar {
     font-size: large;
@@ -94,6 +105,7 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+    margin-right: 18px;
 }
 
  .print-btn, .add-btn{
@@ -128,5 +140,5 @@
 .cardcontainer {
     position: relative;
     top: 0;
-    height: 506px;
+    height: 561px;
 }
