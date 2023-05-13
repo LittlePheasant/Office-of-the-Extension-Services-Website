@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Data } from '@angular/router';
 import { IndicatorsList } from 'src/app/models/models';
@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './view-actual-report.component.html',
   styleUrls: ['./view-actual-report.component.scss']
 })
-export class ViewActualReportComponent {
+export class ViewActualReportComponent implements OnInit {
 
   searchText:any;
   indicators!:IndicatorsList[];
@@ -22,6 +22,11 @@ export class ViewActualReportComponent {
   data = new MatTableDataSource<Data>();
 
   constructor(private _api:ApiService){}
+
+
+  ngOnInit(): void {
+    this.viewActualReport();
+  }
 
 
 
