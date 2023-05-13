@@ -55,10 +55,10 @@ export class AddReportComponent implements OnInit{
 
   postdata(form: FormGroup) {
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    const data = form.value;;
-    formData.append('data', data);
+    // const data = form.value;;
+    // formData.append('data', data);
 
     // if (form && form.valid) { // add null check for form
 
@@ -193,7 +193,8 @@ export class AddReportComponent implements OnInit{
     );
 
     // reset form
-    form.reset();
+    //form.reset();
+    this.dialogClose();
   };
 
   dialogClose(){

@@ -20,7 +20,13 @@ export class ApiService {
     return this.httpClient.get(this.baseUrl + '/checkCredentials.php?info='+ credentials);
   }
   toLogin(credentials:any){
-    return this.httpClient.post(this.baseUrl + '/login.php', credentials);
+    return this.httpClient.post(this.baseUrl + '/login.php',{params: credentials});
+      // .subscribe((response:any) => {
+      //   console.log(response);
+      // },
+      // (err:any) => {
+      //   console.log(err);
+      // })
   }
   viewUsersList(){
     return this.httpClient.get<UsersList[]>(this.baseUrl + '/getUsers.php');

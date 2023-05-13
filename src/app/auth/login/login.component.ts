@@ -25,28 +25,36 @@ export class LoginComponent {
     });
   }
 
-  onLogin(form: FormGroup) {
-
-    const formData = new FormData();
-
-    const credentials = form.value;;
-    formData.append('data', credentials);
-
-    console.log(formData);
-
-    // this._api.validateCredentials(credentials)
-    //   .subscribe((response:any) => {
-    //     console.log(response);
-    //   })
-
-    this._api.toLogin(credentials)
-      .subscribe((response: any) => {
+  onLogin(form: any):void {
+    const email = form.controls['email'].value;
+    const password = form.controls['password'].value;
+  
+    const credentials = {
+      email: email,
+      password: password
+    };
+  
+    this._api.toLogin(credentials).subscribe(
+      (response: any) => {
         console.log(response);
-        this._api.userData= response.user_role;
-        const user_role = this._api.userData;
-        console.log(user_role);
-      });
-  }
+        // Handle successful login
+        if (response.status === 'success') {
+          console.log('Login successful');
+          console.log('User ID:', response.user_id);
+          console.log('User Role:', response.role);
+          // Redirect or perform any other actions
+        } else {
+          console.log('Login failed:', response.message);
+          // Display error message to the user
+        }
+      },
+      (err: any) => {
+        console.log(err);
+        // Handle HTTP error
+      }
+    );
+  };
+  
 
 
 }
