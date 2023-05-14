@@ -47,8 +47,16 @@ export class ApiService {
     // });
   }
 
-  addReport(data:any): Observable <ReportData[]>{
-    return this.httpClient.post<ReportData[]>(this.baseUrl + '/insertReport.php', data);
+  addReport(data:any){
+    return this.httpClient.post(this.baseUrl + '/insertReport.php', data);
+  }
+
+  fetchReportDetailsById(reportId:number){
+    return this.httpClient.get(this.baseUrl + '/viewReport.php?id=' + reportId);
+  }
+
+  updateReport(reportId:number, data:any){
+    return this.httpClient.put(this.baseUrl + '/updateReport.php?id=' + reportId, data);
   }
 
   deleteReport(id:any) {

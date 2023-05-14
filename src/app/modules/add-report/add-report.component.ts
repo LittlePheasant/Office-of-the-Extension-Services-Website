@@ -13,38 +13,65 @@ export class AddReportComponent implements OnInit{
 
   addReportForm!: FormGroup;
   reportData!: ReportData[];
-
+  reportId: number; // Variable to store the report ID
+  reportDetails: any; // Variable to store the report details
 
   constructor (private _fb: FormBuilder,
                private _api: ApiService,
                private _dialogRef: MatDialogRef<AddReportComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any){}
+              @Inject(MAT_DIALOG_DATA) public data: any){
+                this.reportId = data.reportId; // Assign the report ID from the dialog data
+                this.reportDetails = data.reportDetails; // Assign the report details from the dialog data
+              }
   
   
   
   ngOnInit(): void {
-    this.addReportForm = this._fb.group ({
-
-      date_entry: ['', [Validators.required]],
-      facilitator: ['', [Validators.required]],
-      title: ['', [Validators.required]],
-      type_beneficiary: ['', [Validators.required]],
-      count_male: [0, [Validators.required]],
-      count_female: [0, [Validators.required]],
-      poor_rate: [0, [Validators.required]],
-      fair_rate: [0, [Validators.required]],
-      satisfactory_rate: [0, [Validators.required]],
-      verysatisfactory_rate: [0, [Validators.required]],
-      excellent_rate: [0, [Validators.required]],
-      duration: [0, [Validators.required]],
-      unitOpt: ['', [Validators.required]],
-      serviceOpt: ['', [Validators.required]],
-      partners: ['', [Validators.required]],
-      fac_staff: ['', [Validators.required]],
-      role: ['', [Validators.required]],
-      cost_fund: [0.00, [Validators.required]],
-      file: ['']
-    });
+    if (this.data) {
+      this.addReportForm.patchValue({
+        date_entry: this.data.date_entry,
+        facilitator: this.data.facilitator,
+        title: this.data.title,
+        type_beneficiary: this.data.type_beneficiary,
+        count_male: this.data.count_male,
+        count_female: this.data.count_female,
+        poor_rate: this.data.poor_rate,
+        fair_rate: this.data.fair_rate,
+        satisfactory_rate: this.data.satisfactory_rate,
+        verysatisfactory_rate: this.data.verysatisfactory_rate,
+        excellent_rate: this.data.excellent_rate,
+        duration: this.data.duration,
+        unitOpt: this.data.unitOpt,
+        serviceOpt: this.data.serviceOpt,
+        partners: this.data.partners,
+        fac_staff: this.data.fac_staff,
+        role: this.data.role,
+        cost_fund: this.data.cost_fund,
+        _file: this.data._file
+      })
+    } else {
+      this.addReportForm = this._fb.group({
+        date_entry: ['', [Validators.required]],
+        facilitator: ['', [Validators.required]],
+        title: ['', [Validators.required]],
+        type_beneficiary: ['', [Validators.required]],
+        count_male: [0, [Validators.required]],
+        count_female: [0, [Validators.required]],
+        poor_rate: [0, [Validators.required]],
+        fair_rate: [0, [Validators.required]],
+        satisfactory_rate: [0, [Validators.required]],
+        verysatisfactory_rate: [0, [Validators.required]],
+        excellent_rate: [0, [Validators.required]],
+        duration: [0, [Validators.required]],
+        unitOpt: ['', [Validators.required]],
+        serviceOpt: ['', [Validators.required]],
+        partners: ['', [Validators.required]],
+        fac_staff: ['', [Validators.required]],
+        role: ['', [Validators.required]],
+        cost_fund: [0.00, [Validators.required]],
+        _file: ['']
+      });
+    }
   }
 
   onFileSelected(event: any) {
@@ -55,142 +82,23 @@ export class AddReportComponent implements OnInit{
 
   postdata(form: FormGroup) {
 
-    // const formData = new FormData();
-
-    // const data = form.value;;
-    // formData.append('data', data);
-
-    // if (form && form.valid) { // add null check for form
-
-    //   /// append file to form data
-    //   const fileControl = form.get('file');
-    //   if (fileControl) {
-    //     const file = fileControl.value;
-    //     formData.append('file', file);
-    //   }
-    
-    //     // append other form data to form data
-    //   const date_entryControl = form.get('date_entry');
-    //   if (date_entryControl) {
-    //     const date_entry = date_entryControl.value;
-    //     formData.append('date_entry', date_entry);
-    //   }
-
-    //   const facilitatorControl = form.get('facilitator');
-    //   if (facilitatorControl) {
-    //     const facilitator = facilitatorControl.value;
-    //     formData.append('facilitator', facilitator);
-    //   }
-
-    //   const titleControl = form.get('title');
-    //   if (titleControl) {
-    //     const title = titleControl.value;
-    //     formData.append('title', title);
-    //   }
-
-    //   const type_beneficiaryControl = form.get('type_beneficiary');
-    //   if (type_beneficiaryControl) {
-    //     const type_beneficiary = type_beneficiaryControl.value;
-    //     formData.append('type_beneficiary', type_beneficiary);
-    //   }
-
-    //   const count_maleControl = form.get('count_male');
-    //   if (count_maleControl) {
-    //     const count_male = count_maleControl.value;
-    //     formData.append('count_male', count_male);
-    //   }
-
-    //   const count_femaleControl = form.get('count_female');
-    //   if (count_femaleControl) {
-    //     const count_female = count_femaleControl.value;
-    //     formData.append('count_female', count_female);
-    //   }
-
-    //   const poor_rateControl = form.get('poor_rate');
-    //   if (poor_rateControl) {
-    //     const poor_rate = poor_rateControl.value;
-    //     formData.append('poor_rate', poor_rate);
-    //   }
-
-    //   const fair_rateControl = form.get('fair_rate');
-    //   if (fair_rateControl) {
-    //     const fair_rate = fair_rateControl.value;
-    //     formData.append('fair_rate', fair_rate);
-    //   }
-
-    //   const satisfactory_rateControl = form.get('satisfactory_rate');
-    //   if (satisfactory_rateControl) {
-    //     const satisfactory_rate = satisfactory_rateControl.value;
-    //     formData.append('satisfactory_rate', satisfactory_rate);
-    //   }
-
-    //   const verysatisfactory_rateControl = form.get('verysatisfactory_rate');
-    //   if (verysatisfactory_rateControl) {
-    //     const verysatisfactory_rate = verysatisfactory_rateControl.value;
-    //     formData.append('verysatisfactory_rate', verysatisfactory_rate);
-    //   }
-
-    //   const excellent_rateControl = form.get('excellent_rate');
-    //   if (excellent_rateControl) {
-    //     const excellent_rate = excellent_rateControl.value;
-    //     formData.append('excellent_rate', excellent_rate);
-    //   }
-
-    //   const durationControl = form.get('duration');
-    //   if (durationControl) {
-    //     const duration = durationControl.value;
-    //     formData.append('duration', duration);
-    //   }
-
-    //   const serviceOptControl = form.get('serviceOpt');
-    //   if (serviceOptControl) {
-    //     const serviceOpt = serviceOptControl.value;
-    //     formData.append('serviceOpt', serviceOpt);
-    //   }
-
-    //   const partnersControl = form.get('partners');
-    //   if (partnersControl) {
-    //     const partners = partnersControl.value;
-    //     formData.append('partners', partners);
-    //   }
-
-    //   const fac_staffControl = form.get('fac_staff');
-    //   if (fac_staffControl) {
-    //     const fac_staff = fac_staffControl.value;
-    //     formData.append('fac_staff', fac_staff);
-    //   }
-
-    //   const roleControl = form.get('role');
-    //   if (roleControl) {
-    //     const role = roleControl.value;
-    //     formData.append('role', role);
-    //   }
-  
-    //   // send HTTP request to server
-    //   this._api.addReport(formData).subscribe(
-    //     (response: any[]) => {
-    //       //his.reportData = response;
-    //       console.log(response);
-    //       alert("Added Successfully!");
-    //     },
-    //     (error: any) => {
-    //       console.log(error);
-    //       alert("Failed to add entry.");
-    //     }
-    //   );
-  
-    //   // reset form
-    //   form.reset();
-    // }
-
-
-    this._api.addReport(this.addReportForm.value).subscribe(
-      (response: any[]) => {
-        this.reportData = response;
-        console.log(response);
-        alert("Added Successfully!");
-      },
-    );
+    if (this.reportId) {
+      // Perform PUT request
+      this._api.updateReport(this.reportId, this.addReportForm.value).subscribe(
+        (response: any) => {
+          console.log(response);
+          alert("Updated Successfully!");
+        },
+      );
+    } else {
+      // Perform POST request
+      this._api.addReport(this.addReportForm.value).subscribe(
+        (response: any) => {
+          console.log(response);
+          alert("Added Successfully!");
+        },
+      );
+    }
 
     // reset form
     //form.reset();
@@ -272,8 +180,8 @@ export class AddReportComponent implements OnInit{
     return this.addReportForm.get('cost_fund');
   }
 
-  get file() { 
-    return this.addReportForm.get('file');
+  get _file() { 
+    return this.addReportForm.get('_file');
   }
 
 }

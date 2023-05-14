@@ -18,6 +18,7 @@ export class ViewReportComponent {
 
   searchText:any;
   filePath!: string;
+  reportId!:number;
 
   // data: any[];
   columns = ['index','date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
@@ -85,6 +86,24 @@ export class ViewReportComponent {
 
     console.log(_dialogRef);
     
+  }
+
+  editOpenDialog(reportId: number) {
+    this.reportId = this.router.snapshot.params['entry_id'];
+    console.log(this.reportId);
+  
+    // Fetch the report details by ID using an API call or any other method
+    // Assuming you have a method to fetch report details, replace 'fetchReportDetailsById' with the appropriate method
+    this._api.fetchReportDetailsById(reportId).subscribe((reportDetails: any) => {
+      const _dialogRef = this._dialog.open(AddReportComponent, {
+        data: {
+          reportId: reportId,
+          reportDetails: reportDetails
+        }
+      });
+  
+      console.log(_dialogRef);
+    });
   }
 
   
