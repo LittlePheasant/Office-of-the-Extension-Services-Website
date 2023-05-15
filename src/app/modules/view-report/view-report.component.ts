@@ -8,6 +8,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { ReportData } from 'src/app/models/models';
 import { AddReportComponent } from '../add-report/add-report.component';
+import { EditReportComponent } from '../edit-report/edit-report.component';
 
 @Component({
   selector: 'app-view-report',
@@ -18,8 +19,6 @@ export class ViewReportComponent {
 
   searchText:any;
   filePath!: string;
-  reportId!:number;
-
   // data: any[];
   columns = ['index','date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
              'poor_rate', 'fair_rate', 'satisfactory_rate', 'verysatisfactory_rate', 'excellent_rate',
@@ -34,10 +33,10 @@ export class ViewReportComponent {
    @ViewChild(MatSort) sort!: MatSort;
    //directives!: [NgxPrintDirective]
 
-  constructor( public _api: ApiService,
-              public router: ActivatedRoute,
-              public _fb: FormBuilder,
-              public _dialog: MatDialog){
+  constructor( private _api: ApiService,
+               private activateRoute: ActivatedRoute,
+               private _fb: FormBuilder,
+               private _dialog: MatDialog){
     
   }
   ngAfterViewInit(): void {
@@ -89,16 +88,14 @@ export class ViewReportComponent {
   }
 
   editOpenDialog(reportId: number) {
-    this.reportId = this.router.snapshot.params['entry_id'];
-    console.log(this.reportId);
+    console.log(reportId);
   
     // Fetch the report details by ID using an API call or any other method
     // Assuming you have a method to fetch report details, replace 'fetchReportDetailsById' with the appropriate method
-    this._api.fetchReportDetailsById(reportId).subscribe((reportDetails: any) => {
-      const _dialogRef = this._dialog.open(AddReportComponent, {
+    this._api.fetchReportDetailsById(reportId).subscribe((response: any) => {
+      const _dialogRef = this._dialog.open(EditReportComponent, {
         data: {
-          reportId: reportId,
-          reportDetails: reportDetails
+          reportDetails: response
         }
       });
   

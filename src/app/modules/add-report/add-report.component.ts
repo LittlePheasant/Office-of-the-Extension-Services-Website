@@ -13,65 +13,37 @@ export class AddReportComponent implements OnInit{
 
   addReportForm!: FormGroup;
   reportData!: ReportData[];
-  reportId: number; // Variable to store the report ID
-  reportDetails: any; // Variable to store the report details
 
   constructor (private _fb: FormBuilder,
                private _api: ApiService,
                private _dialogRef: MatDialogRef<AddReportComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any){
-                this.reportId = data.reportId; // Assign the report ID from the dialog data
-                this.reportDetails = data.reportDetails; // Assign the report details from the dialog data
               }
   
   
   
   ngOnInit(): void {
-    if (this.data) {
-      this.addReportForm.patchValue({
-        date_entry: this.data.date_entry,
-        facilitator: this.data.facilitator,
-        title: this.data.title,
-        type_beneficiary: this.data.type_beneficiary,
-        count_male: this.data.count_male,
-        count_female: this.data.count_female,
-        poor_rate: this.data.poor_rate,
-        fair_rate: this.data.fair_rate,
-        satisfactory_rate: this.data.satisfactory_rate,
-        verysatisfactory_rate: this.data.verysatisfactory_rate,
-        excellent_rate: this.data.excellent_rate,
-        duration: this.data.duration,
-        unitOpt: this.data.unitOpt,
-        serviceOpt: this.data.serviceOpt,
-        partners: this.data.partners,
-        fac_staff: this.data.fac_staff,
-        role: this.data.role,
-        cost_fund: this.data.cost_fund,
-        _file: this.data._file
-      })
-    } else {
-      this.addReportForm = this._fb.group({
-        date_entry: ['', [Validators.required]],
-        facilitator: ['', [Validators.required]],
-        title: ['', [Validators.required]],
-        type_beneficiary: ['', [Validators.required]],
-        count_male: [0, [Validators.required]],
-        count_female: [0, [Validators.required]],
-        poor_rate: [0, [Validators.required]],
-        fair_rate: [0, [Validators.required]],
-        satisfactory_rate: [0, [Validators.required]],
-        verysatisfactory_rate: [0, [Validators.required]],
-        excellent_rate: [0, [Validators.required]],
-        duration: [0, [Validators.required]],
-        unitOpt: ['', [Validators.required]],
-        serviceOpt: ['', [Validators.required]],
-        partners: ['', [Validators.required]],
-        fac_staff: ['', [Validators.required]],
-        role: ['', [Validators.required]],
-        cost_fund: [0.00, [Validators.required]],
-        _file: ['']
-      });
-    }
+    this.addReportForm = this._fb.group({
+      date_entry: ['', [Validators.required]],
+      facilitator: ['', [Validators.required]],
+      title: ['', [Validators.required]],
+      type_beneficiary: ['', [Validators.required]],
+      count_male: [0, [Validators.required]],
+      count_female: [0, [Validators.required]],
+      poor_rate: [0, [Validators.required]],
+      fair_rate: [0, [Validators.required]],
+      satisfactory_rate: [0, [Validators.required]],
+      verysatisfactory_rate: [0, [Validators.required]],
+      excellent_rate: [0, [Validators.required]],
+      duration: [0, [Validators.required]],
+      unitOpt: ['', [Validators.required]],
+      serviceOpt: ['', [Validators.required]],
+      partners: ['', [Validators.required]],
+      fac_staff: ['', [Validators.required]],
+      role: ['', [Validators.required]],
+      cost_fund: [0.00, [Validators.required]],
+      _file: ['']
+    });
   }
 
   onFileSelected(event: any) {
@@ -82,23 +54,13 @@ export class AddReportComponent implements OnInit{
 
   postdata(form: FormGroup) {
 
-    if (this.reportId) {
-      // Perform PUT request
-      this._api.updateReport(this.reportId, this.addReportForm.value).subscribe(
-        (response: any) => {
-          console.log(response);
-          alert("Updated Successfully!");
-        },
-      );
-    } else {
-      // Perform POST request
-      this._api.addReport(this.addReportForm.value).subscribe(
-        (response: any) => {
-          console.log(response);
-          alert("Added Successfully!");
-        },
-      );
-    }
+    // Perform POST request
+    this._api.addReport(this.addReportForm.value).subscribe(
+      (response: any) => {
+        console.log(response);
+        alert("Added Successfully!");
+      },
+    );
 
     // reset form
     //form.reset();

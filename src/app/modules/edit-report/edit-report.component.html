@@ -1,0 +1,159 @@
+
+<div mat-dialog-title class="title">
+    <h1><b>MONTHLY ACCOMPLISHMENT REPORT FORM</b></h1>
+</div>
+
+<div mat-dialog-content class="content">
+    <form [formGroup]="editReportForm" (ngSubmit)="postdata(editReportForm)">
+        <div class="row">
+            <mat-label ><b>Date</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" [matDatepicker]="picker"   name="date_entry" formControlName="date_entry" placeholder="Enter a date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker" class="dateIcon"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <!-- <script>
+                    $('#picker').picker({format: 'yyyy-MM-dd'});
+                </script> -->
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Facilitators</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" placeholder="Write in full"
+                name="facilitator" formControlName="facilitator">
+            </mat-form-field>
+        </div>
+        
+        <div class="row">
+            <mat-label><b>Title</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" placeholder="Write in full"
+                name="title" formControlName="title">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Type of Beneficiary</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" placeholder="Sector/Clientele"
+                name="type_beneficiary" formControlName="type_beneficiary">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>No. of Beneficiary</b></mat-label>
+            <div class="gender_label_count">
+                <mat-form-field appearance="outline">
+                    <mat-label><b>Male</b></mat-label>
+                    <input matInput type="number"  name="count_male" formControlName="count_male">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label><b>Female</b></mat-label>
+                    <input matInput type="number" name="count_female" formControlName="count_female">
+                </mat-form-field>
+            </div> 
+        </div>
+
+        <div class="row">
+            <mat-label><b>Quality and Relevance Rating <i>(Mean)</i></b></mat-label>
+            <div class="mean_rate">
+                <div class="rate_group">
+                    <mat-form-field appearance="outline">
+                        <mat-label><b>1 <i>Poor</i></b></mat-label>
+                        <input matInput type="number" name="poor_rate" formControlName="poor_rate">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label><b>2 <i>Fair</i></b></mat-label>
+                        <input matInput type="number" name="fair_rate" formControlName="fair_rate">
+                    </mat-form-field>
+                </div>
+                <div class="rate_group">
+                    <mat-form-field appearance="outline">
+                        <mat-label><b>3 <i>Satisfactory</i></b></mat-label>
+                        <input matInput type="number" name="satisfactory_rate" formControlName="satisfactory_rate">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label><b>4 <i>Very Satisfactory</i></b></mat-label>
+                        <input matInput type="number" name="verysatisfactory_rate" formControlName="verysatisfactory_rate">
+                    </mat-form-field>
+                </div>
+                <div class="rate_group">
+                    <mat-form-field appearance="outline">
+                        <mat-label><b>5 <i>Excellent</i></b></mat-label>
+                        <input matInput type="number" name="excellent_rate" formControlName="excellent_rate">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Duration and Unit of Measure</b></mat-label>
+            <div class="duration">
+            <mat-form-field appearance="outline">
+                <input matInput type="number" name="duration" formControlName="duration" placeholder="No. of Hrs./Days">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-select name="unitOpt" formControlName="unitOpt" placeholder="Unit">
+                    <mat-option value="Hours">Hours</mat-option>
+                    <mat-option value="Days">Days</mat-option>
+                </mat-select>
+            </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Type of Extension Services Rendered</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Training, Outreach, Consultancy, GAD, etc." name="serviceOpt" formControlName="serviceOpt">
+                <!-- <mat-select multiple="true" name="serviceOpt" formControlName="serviceOpt">
+                    <mat-option value="training">Training</mat-option>
+                    <mat-option value="outreach">Outreach</mat-option>
+                    <mat-option value="consultancy">Consultancy</mat-option>
+                    <mat-option value="gad">GAD</mat-option>
+                </mat-select> -->
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Partner Agency/Industry/Community</b></mat-label>
+            <mat-form-field appearance="outline" style="display: block;">
+                <input matInput type="text" placeholder="Write in full" name="partners" formControlName="partners">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Faculty/Staff Involved</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" placeholder="Write in full" name="fac_staff" formControlName="fac_staff">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Nature of Participation</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input type="text" matInput placeholder="Role" name="role" formControlName="role">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Cost and Funding Source</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="number" placeholder="Php 0.00" name="cost_fund" formControlName="cost_fund">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Attachment</b></mat-label>
+            <input type="file" name="_file" formControlName="_file" accept="application/pdf" (change)="onFileSelected($event)" style="margin-bottom: 20px;">
+        </div>
+
+
+    
+        <div mat-dialog-actions class="dialogbtn">
+            <button mat-raised-button type="button" (click)="dialogClose()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">Save</button>
+        </div>
+    </form>
+</div>

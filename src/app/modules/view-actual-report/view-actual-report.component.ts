@@ -13,10 +13,13 @@ export class ViewActualReportComponent implements OnInit {
 
   searchText:any;
   indicators!:IndicatorsList[];
+  selectedOpt!:string;
 
   defaultValues: string[] =[];
   columns = ['particulars', 'CAAD', 'CAS', 'COBE', 'COE', 'COED', 'COT', 'GS',
              'BURAUEN', 'CARIGARA', 'DULAG', 'ORMOC', 'TANAUAN'];
+
+  options = ['1', '2', '3', '4'];
 
   // Declare the data source
   data = new MatTableDataSource<Data>();
@@ -25,19 +28,21 @@ export class ViewActualReportComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.viewActualReport();
   }
 
 
 
-  viewActualReport(){
-    this._api.getIndicators().subscribe(
-    (response: any) => {
-      this.indicators = response;
-      console.log(this.indicators)
-      this.data.data = response;
-      // console.log(response);
-    })
+
+
+  search(){
+    console.log(this.selectedOpt);
+    this._api.getDataByParticularId(this.selectedOpt).subscribe(
+      (response: any) => {
+        this.indicators = response;
+        console.log(this.indicators)
+        this.data.data = response;
+        // console.log(response);
+      })
   }
 
 
