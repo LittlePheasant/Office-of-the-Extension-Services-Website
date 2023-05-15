@@ -62,8 +62,4 @@ export class ApiService {
   deleteReport(id:any) {
     return this.httpClient.delete(this.baseUrl + '/delete.php?id='+ id);  
   }
-
-  getIndicators(id:any){
-    return this.httpClient.get(this.baseUrl + '/getIndicators.php', id);
-  }
 }
