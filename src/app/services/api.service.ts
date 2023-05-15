@@ -20,7 +20,7 @@ export class ApiService {
     return this.httpClient.get(this.baseUrl + '/checkCredentials.php?info='+ credentials);
   }
   toLogin(credentials:any){
-    return this.httpClient.post(this.baseUrl + '/login.php',{params: credentials});
+    return this.httpClient.post(this.baseUrl + '/login.php',credentials);
       // .subscribe((response:any) => {
       //   console.log(response);
       // },
