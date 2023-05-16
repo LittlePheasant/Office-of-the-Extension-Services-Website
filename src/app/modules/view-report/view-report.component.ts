@@ -52,8 +52,8 @@ export class ViewReportComponent {
   }
 
   adminview(){
-    this.userid = this._api.userID;
-    this._api.viewReport(this._api.userID)
+    const userid = localStorage.getItem('userid');
+    this._api.viewReport(userid)
     .subscribe(
       (response: any) => {
         this._api.reportData = response;
