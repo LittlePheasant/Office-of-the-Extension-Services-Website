@@ -30,20 +30,28 @@ export class ViewActualReportComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-
-
-
-  search(){
-    console.log(this.selectedOpt);
-    this._api.getDataByParticularId(this.selectedOpt).subscribe(
-      (response: any) => {
-        this.indicators = response;
-        console.log(this.indicators)
-        this.data.data = response;
-        // console.log(response);
-      })
+  viewActualReport(){
+    // this._api.getIndicators().subscribe(
+    // (response: any) => {
+    //   this.indicators = response;
+    //   console.log(this.indicators)
+    //   this.data.data = response;
+    //   // console.log(response);
+    // })
   }
+
+
+
+  // search(){
+  //   console.log(this.selectedOpt);
+  //   this._api.getDataByParticularId(this.selectedOpt).subscribe(
+  //     (response: any) => {
+  //       this.indicators = response;
+  //       console.log(this.indicators)
+  //       this.data.data = response;
+  //       // console.log(response);
+  //     })
+  //}
 
 
 }

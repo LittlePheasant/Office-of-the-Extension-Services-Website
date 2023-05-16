@@ -35,8 +35,6 @@ export class LoginComponent {
       password: form.controls['password'].value
     }
 
-    //console.log(credentials);
-
       this._api.toLogin(credentials)
     .subscribe((response: any) => {
       console.log(response);
@@ -49,28 +47,16 @@ export class LoginComponent {
         const role = data.user_role;
         localStorage.setItem('userid', userId); // Replace '123' with the actual value of the userid obtained from your API
         this._api.userROLE = role;//new
-        // console.log('User ID:', data.user_id);
-        // console.log('User Role:', data.user_role);
+
         // Redirect or perform any other actions
 
         this.router.navigate(['/default/dashboard']);//new
-
-        // if (role === 'Admin') {
-        //   //this.router.navigate(['/admin-dashboard', userId]);
-        //   this.router.navigate(['/main/dashboard']);
-        // } else {
-        //   //this.router.navigate(['/user-dashboard', userId]);
-        //   console.log('user');
-        // }
 
 
       } else {
         console.log('Login failed:', response.message);
         // Handle login error, such as displaying an error message to the user
       }
-    }, (error: any) => {
-      console.log(error);
-      // Handle login error, such as displaying an error message to the user
     });
   };
   

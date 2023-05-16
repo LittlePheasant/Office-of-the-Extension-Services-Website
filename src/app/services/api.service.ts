@@ -22,13 +22,7 @@ export class ApiService {
     return this.httpClient.get(this.baseUrl + '/checkCredentials.php?info='+ credentials);
   }
   toLogin(credentials:any){
-    return this.httpClient.post(this.baseUrl + '/login.php',credentials);
-      // .subscribe((response:any) => {
-      //   console.log(response);
-      // },
-      // (err:any) => {
-      //   console.log(err);
-      // })
+    return this.httpClient.post(this.baseUrl + '/login.php', credentials);
   }
   viewUsersList(){
     return this.httpClient.get<UsersList[]>(this.baseUrl + '/getUsers.php');

@@ -19,7 +19,8 @@ export class ViewReportComponent {
 
   searchText:any;
   filePath!: string;
-  // data: any[];
+  userid!: string;
+  
   columns = ['index','date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
              'poor_rate', 'fair_rate', 'satisfactory_rate', 'verysatisfactory_rate', 'excellent_rate',
              'duration', 'serviceOpt', 'partners', 'fac_staff', 'role', 'cost_fund', '_file', 'actions'];
@@ -51,7 +52,8 @@ export class ViewReportComponent {
   }
 
   adminview(){
-    this._api.viewReport()
+    this.userid = this._api.userID;
+    this._api.viewReport(this._api.userID)
     .subscribe(
       (response: any) => {
         this._api.reportData = response;
