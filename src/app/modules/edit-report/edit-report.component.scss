@@ -1,0 +1,9 @@
+.title {
+    text-align: center;
+}
+
+.gender_label_count, .rate_group, .duration {
+    mat-form-field {
+        margin-right: 11px;
+    }
+}

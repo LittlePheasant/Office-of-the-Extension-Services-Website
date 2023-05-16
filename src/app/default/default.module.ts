@@ -29,6 +29,7 @@ import { ViewProfileComponent } from '../modules/view-profile/view-profile.compo
 import { ViewUserlistComponent } from '../modules/view-userlist/view-userlist.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { DownloadsComponent } from '../modules/downloads/downloads.component';
+import { EditReportComponent } from '../modules/edit-report/edit-report.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { DownloadsComponent } from '../modules/downloads/downloads.component';
     ViewUserlistComponent,
     LoginComponent,
     DownloadsComponent,
+    EditReportComponent,
   ],
   imports: [
     CommonModule,

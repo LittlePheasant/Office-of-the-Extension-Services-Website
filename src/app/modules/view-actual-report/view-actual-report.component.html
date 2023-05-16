@@ -9,9 +9,16 @@
         </div>
         
         <mat-card class="card">
-            <!-- <div class="bar">
-                <input class="searchbar" type="text" name="search" [(ngModel)]="searchText" placeholder="Search ...">
-            </div> -->
+            <div class="bar">
+                <mat-form-field appearance="outline">
+                    <mat-select [(ngModel)]="selectedOpt">
+                        <mat-option *ngFor="let opt of options" [value]="opt">{{opt}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button (click)="search()">
+                    <i class="material-icons">search</i>
+                </button>
+            </div>
             
             <mat-table [dataSource]="data" class="tablecontainer">
         

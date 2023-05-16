@@ -42,7 +42,7 @@ export class ApiService {
     return this.httpClient.get(this.baseUrl + '/viewActualReport.php');
   }
 
-  getDataByParticularId(particular_id:number){
+  getDataByParticularId(particular_id:any){
     return this.httpClient.get(this.baseUrl + '/viewActualReport.php?id=' + particular_id);
     // .subscribe((response:any) => {
     //   console.log(response);
@@ -63,9 +63,5 @@ export class ApiService {
 
   deleteReport(id:any) {
     return this.httpClient.delete(this.baseUrl + '/delete.php?id='+ id);  
-  }
-
-  getIndicators(){
-    return this.httpClient.get(this.baseUrl + '/getIndicators.php');
   }
 }
