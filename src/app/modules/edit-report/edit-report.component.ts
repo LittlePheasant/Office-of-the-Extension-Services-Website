@@ -23,26 +23,29 @@ export class EditReportComponent implements OnInit {
    @Inject(MAT_DIALOG_DATA) public data: any){
 
     this.editReportForm = this._fb.group({
-      date_entry: [data.reportDetails.date_entry],
-      facilitator: [data.reportDetails.facilitator],
-      title: [data.reportDetails.title],
-      type_beneficiary: [data.reportDetails.type_beneficiary],
-      count_male: [data.reportDetails.count_male],
-      count_female: [data.reportDetails.count_female],
-      poor_rate: [data.reportDetails.poor_rate],
-      fair_rate: [data.reportDetails.fair_rate],
-      satisfactory_rate: [data.reportDetails.satisfactory_rate],
-      verysatisfactory_rate: [data.reportDetails.verysatisfactory_rate],
-      excellent_rate: [data.reportDetails.excellent_rate],
-      duration: [data.reportDetails.duration],
-      unitOpt: [data.reportDetails.unitOpt],
-      serviceOpt: [data.reportDetails.serviceOpt],
-      partners: [data.reportDetails.partners],
-      fac_staff: [data.reportDetails.fac_staff],
-      role: [data.reportDetails.role],
-      cost_fund: [data.reportDetails.cost_fund],
-      _file: [data.reportDetails._file || null]
+      date_entry: [data.reportDetails[0].date_entry],
+      facilitator: [data.reportDetails[0].facilitator],
+      title: [data.reportDetails[0].title],
+      type_beneficiary: [data.reportDetails[0].type_beneficiary],
+      count_male: [data.reportDetails[0].count_male],
+      count_female: [data.reportDetails[0].count_female],
+      poor_rate: [data.reportDetails[0].poor_rate],
+      fair_rate: [data.reportDetails[0].fair_rate],
+      satisfactory_rate: [data.reportDetails[0].satisfactory_rate],
+      verysatisfactory_rate: [data.reportDetails[0].verysatisfactory_rate],
+      excellent_rate: [data.reportDetails[0].excellent_rate],
+      duration: [data.reportDetails[0].duration],
+      unitOpt: [data.reportDetails[0].unitOpt],
+      serviceOpt: [data.reportDetails[0].serviceOpt],
+      partners: [data.reportDetails[0].partners],
+      fac_staff: [data.reportDetails[0].fac_staff],
+      role: [data.reportDetails[0].role],
+      cost_fund: [data.reportDetails[0].cost_fund],
+      _file: [data.reportDetails[0]._file || null]
     });
+
+    // Set the dataLoaded flag to true
+    this.dataLoaded = true;
      
    }
   
@@ -59,7 +62,7 @@ export class EditReportComponent implements OnInit {
 
   postdata(form:any) {
 
-    const id = this.data.reportId
+    const id = this.data.reportDetails[0].entry_id;
     const data = this.editReportForm.value;
     // Perform PUT request
     this._api.updateReport(id, data).subscribe(

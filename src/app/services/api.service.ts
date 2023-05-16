@@ -45,7 +45,7 @@ export class ApiService {
   }
 
   fetchReportDetailsById(reportId:number){
-    return this.httpClient.get(this.baseUrl + '/viewReport.php?id=' + reportId);
+    return this.httpClient.get(this.baseUrl + '/viewReport.php?entry_id=' + reportId);
   }
 
   updateReport(reportId:number, data:any){

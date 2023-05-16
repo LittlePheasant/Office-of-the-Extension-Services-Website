@@ -89,12 +89,11 @@ export class ViewReportComponent {
     
   }
 
-  editOpenDialog(reportId: number) {
-    console.log(reportId);
+  editOpenDialog(entry_id: any) {
   
     // Fetch the report details by ID using an API call or any other method
     // Assuming you have a method to fetch report details, replace 'fetchReportDetailsById' with the appropriate method
-    this._api.fetchReportDetailsById(reportId).subscribe((response: any) => {
+    this._api.fetchReportDetailsById(entry_id).subscribe((response: any) => {
       const _dialogRef = this._dialog.open(EditReportComponent, {
         data: {
           reportDetails: response
