@@ -11,6 +11,8 @@ export class ApiService {
   baseUrl: string = "https://office-of-the-extension-services.000webhostapp.com/apiConnection";
   reportData!: ReportData[];
   userData!: UsersList[];
+  userID!:string;//new
+  userROLE!:string;//new
 
   constructor(
     private httpClient:HttpClient

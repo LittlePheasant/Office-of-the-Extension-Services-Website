@@ -47,17 +47,21 @@ export class LoginComponent {
 
         const userId = data.user_id;
         const role = data.user_role;
+        this._api.userID = userId;//new
+        this._api.userROLE = role;//new
         // console.log('User ID:', data.user_id);
         // console.log('User Role:', data.user_role);
         // Redirect or perform any other actions
 
-        if (role === 'Admin') {
-          //this.router.navigate(['/admin-dashboard', userId]);
-          this.router.navigate(['/main/dashboard']);
-        } else {
-          //this.router.navigate(['/user-dashboard', userId]);
-          console.log('user');
-        }
+        this.router.navigate(['/default/dashboard']);//new
+
+        // if (role === 'Admin') {
+        //   //this.router.navigate(['/admin-dashboard', userId]);
+        //   this.router.navigate(['/main/dashboard']);
+        // } else {
+        //   //this.router.navigate(['/user-dashboard', userId]);
+        //   console.log('user');
+        // }
 
 
       } else {

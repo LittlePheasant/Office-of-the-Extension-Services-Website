@@ -18,12 +18,14 @@ export class DashboardComponent implements OnInit {
   totalUsers!: number;
   //data=[];
   isDisabled: boolean;
+  userid!: string; //new
 
   constructor(
     private _api:ApiService,
     private elementRef: ElementRef
   ) { 
     this.isDisabled = false;
+    this.userid = this._api.userID;
   }
 
   ngOnInit(): void {

@@ -1,5 +1,6 @@
 export interface ReportData {
     entry_id:number,
+    user_id:number,
     date_entry:string,
     facilitator:string, 
     title:string, 
@@ -12,12 +13,13 @@ export interface ReportData {
     verysatisfactory_rate:number, 
     excellent_rate:number, 
     duration:number,
+    unitOpt:string,
     serviceOpt:string[], 
     partners:string, 
     fac_staff:string,
     role:string, 
     cost_fund:number,
-    file:File
+    _file:File
 }
 
 
