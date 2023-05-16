@@ -47,7 +47,7 @@ export class LoginComponent {
 
         const userId = data.user_id;
         const role = data.user_role;
-        this._api.userID = userId;//new
+        localStorage.setItem('userid', userId); // Replace '123' with the actual value of the userid obtained from your API
         this._api.userROLE = role;//new
         // console.log('User ID:', data.user_id);
         // console.log('User Role:', data.user_role);

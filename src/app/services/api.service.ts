@@ -34,19 +34,16 @@ export class ApiService {
     return this.httpClient.get<UsersList[]>(this.baseUrl + '/getUsers.php');
   }
   
-  viewReport() {
-    return this.httpClient.get<ReportData[]>(this.baseUrl + '/viewReport.php');
+  viewReport(userID:any) {
+    return this.httpClient.get<ReportData[]>(this.baseUrl + '/viewReport.php?id=' + userID);
   }
 
   getParticularLength(){
     return this.httpClient.get(this.baseUrl + '/viewActualReport.php');
   }
 
-  getDataByParticularId(particular_id:any){
-    return this.httpClient.get(this.baseUrl + '/viewActualReport.php?id=' + particular_id);
-    // .subscribe((response:any) => {
-    //   console.log(response);
-    // });
+  getDataByParticularId(userid: any, particular_id: any) {
+    return this.httpClient.get(`${this.baseUrl}/viewActualReport.php?id=${userid}&particular_id=${particular_id}`);
   }
 
   addReport(data:any){

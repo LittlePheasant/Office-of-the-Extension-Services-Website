@@ -29,8 +29,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    const userid = localStorage.getItem('userid');
 
-    this._api.viewReport()
+    this._api.viewReport(userid)
     .subscribe(
       (response: any) => {
         this.totalAccomplishments = response.length;
@@ -52,21 +54,20 @@ export class DashboardComponent implements OnInit {
 
   loadChart(){
     const particular_id = 1;
+    const userid = localStorage.getItem('userid');
 
-    this._api.getDataByParticularId(particular_id).subscribe((response: any) => {
-
-      if (response) {
-        const data = response;
+    this._api.getDataByParticularId(userid, particular_id).subscribe((response: any) => {
+      if (response && response.length > 0) {
         const chartData = [];
-    
-        for (let i = 0; i < data.length; i++) {
+  
+        for (let i = 0; i < response.length; i++) {
           chartData.push({
-            name: data[i].name, // Replace 'name' with the name property in your API response
+            name: response[i].name,
             x: i,
-            y: parseInt(data[i].count), // Replace 'value' with the y property in your API response
+            y: parseInt(response[i].count),
           });
         }
-
+  
         // Define options for chart 1
         const options1: Highcharts.Options = { 
           chart: { type: 'column' },
@@ -101,22 +102,22 @@ export class DashboardComponent implements OnInit {
             },
           ],
         };
+  
         const container1 = this.elementRef.nativeElement.querySelector('#chart1');
         Highcharts.chart(container1, options1);
       }
     });
 
-    this._api.getDataByParticularId(particular_id + 1).subscribe((response: any) => {
+    this._api.getDataByParticularId(userid, particular_id + 1).subscribe((response: any) => {
 
-      if (response || response.data) {
-        const data = response;
+      if (response && response.length > 0) {
         const chartData = [];
     
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < response.length; i++) {
           chartData.push({
-            name: data[i].name, // Replace 'name' with the name property in your API response
+            name: response[i].name,
             x: i,
-            y: parseInt(data[i].count), // Replace 'value' with the y property in your API response
+            y: parseInt(response[i].count),
           });
         }
 
@@ -156,17 +157,16 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this._api.getDataByParticularId(particular_id + 2).subscribe((response: any) => {
+    this._api.getDataByParticularId(userid, particular_id + 2).subscribe((response: any) => {
 
-      if (response || response.data) {
-        const data = response;
+      if (response && response.length > 0) {
         const chartData = [];
     
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < response.length; i++) {
           chartData.push({
-            name: data[i].name, // Replace 'name' with the name property in your API response
+            name: response[i].name,
             x: i,
-            y: parseInt(data[i].count), // Replace 'value' with the y property in your API response
+            y: parseInt(response[i].count),
           });
         }
 
@@ -206,17 +206,17 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this._api.getDataByParticularId(particular_id + 3).subscribe((response: any) => {
+    this._api.getDataByParticularId(userid, particular_id + 3).subscribe((response: any) => {
 
-      if (response || response.data) {
+      if (response && response.length > 0) {
         const data = response;
         const chartData = [];
     
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < response.length; i++) {
           chartData.push({
-            name: data[i].name, // Replace 'name' with the name property in your API response
+            name: response[i].name,
             x: i,
-            y: parseInt(data[i].count), // Replace 'value' with the y property in your API response
+            y: parseInt(response[i].count),
           });
         }
 
