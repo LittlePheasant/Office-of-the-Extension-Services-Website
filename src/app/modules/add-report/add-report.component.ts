@@ -23,7 +23,11 @@ export class AddReportComponent implements OnInit{
   
   
   ngOnInit(): void {
+
+    const userid = localStorage.getItem('userid');
+
     this.addReportForm = this._fb.group({
+      user_id: [userid],
       date_entry: ['', [Validators.required]],
       facilitator: ['', [Validators.required]],
       title: ['', [Validators.required]],

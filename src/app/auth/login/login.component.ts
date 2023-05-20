@@ -50,7 +50,7 @@ export class LoginComponent {
 
         // Redirect or perform any other actions
 
-        this.router.navigate(['/default/dashboard']);//new
+        this.router.navigate(['/main/dashboard']);//new
 
 
       } else {
@@ -58,7 +58,9 @@ export class LoginComponent {
         // Handle login error, such as displaying an error message to the user
       }
     });
-  };
+
+    console.log(credentials);
+  }
   
 
 
