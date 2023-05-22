@@ -1,0 +1,7 @@
+{
+    "/api/*" : {
+        "target": "https://api-nine-lac.vercel.app/api",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}
