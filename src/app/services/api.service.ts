@@ -30,7 +30,7 @@ export class ApiService {
   }
   
   viewReport(userID:any) {
-    return this.httpClient.get<ReportData[]>(this.baseUrl + '/viewReport.php?id=' + userID);
+    return this.httpClient.get<ReportData[]>(this.baseUrl + '/viewReport.php?userid=' + userID);
   }
 
   getParticularLength(){
@@ -45,12 +45,12 @@ export class ApiService {
     return this.httpClient.post(this.baseUrl + '/insertReport.php', data);
   }
 
-  fetchReportDetailsById(reportId:number){
-    return this.httpClient.get(this.baseUrl + '/viewReport.php?entry_id=' + reportId);
+  fetchReportDetailsById(userid:any, entry_id:any){
+    return this.httpClient.get(`${this.baseUrl}/viewReport.php?userid=${userid}&entry_id=${entry_id}`);
   }
 
-  updateReport(reportId:number, data:any){
-    return this.httpClient.put(this.baseUrl + '/updateReport.php?id=' + reportId, data);
+  updateReport(user_id:any, data:any){
+    return this.httpClient.put(this.baseUrl + '/updateReport.php?id=' + user_id, data);
   }
 
   deleteReport(id:any) {

@@ -23,6 +23,7 @@ export class EditReportComponent implements OnInit {
    @Inject(MAT_DIALOG_DATA) public data: any){
 
     this.editReportForm = this._fb.group({
+      userid: [data.reportDetails[0].userid],
       date_entry: [data.reportDetails[0].date_entry],
       facilitator: [data.reportDetails[0].facilitator],
       title: [data.reportDetails[0].title],
@@ -62,7 +63,7 @@ export class EditReportComponent implements OnInit {
 
   postdata(form:any) {
 
-    const id = this.data.reportDetails[0].entry_id;
+    const id = this.data.reportDetails[0].userid;
     const data = this.editReportForm.value;
     // Perform PUT request
     this._api.updateReport(id, data).subscribe(

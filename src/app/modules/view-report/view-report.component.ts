@@ -90,10 +90,11 @@ export class ViewReportComponent {
   }
 
   editOpenDialog(entry_id: any) {
+    const userid = localStorage.getItem('userid');
   
     // Fetch the report details by ID using an API call or any other method
     // Assuming you have a method to fetch report details, replace 'fetchReportDetailsById' with the appropriate method
-    this._api.fetchReportDetailsById(entry_id).subscribe((response: any) => {
+    this._api.fetchReportDetailsById(userid, entry_id).subscribe((response: any) => {
       const _dialogRef = this._dialog.open(EditReportComponent, {
         data: {
           reportDetails: response
