@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReportData, UsersList } from '../models/models';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  baseUrl: string = "https://api-nine-lac.vercel.app/api";
+  private baseUrl: string = environment.apiUrl;
   reportData!: ReportData[];
   userData!: UsersList[];
   userID!:string;//new
