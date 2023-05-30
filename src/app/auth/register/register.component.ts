@@ -32,19 +32,11 @@ export class RegisterComponent {
   }
 
   onRegister(form: any){
+      this.email = form.controls['email'].value,
+      this.password = form.controls['password'].value,
+      this.cpassword = form.controls['cpassword'].value
 
-    const credentials = {
-      email: form.controls['email'].value,
-      password: form.controls['password'].value,
-      cpassword: form.controls['cpassword'].value
-    }
-
-    this._api.toRegister(credentials).subscribe((response: any) => {
-      console.log(response);
     
-    
-    })
-
 
   }
 

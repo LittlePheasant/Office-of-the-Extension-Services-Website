@@ -23,8 +23,8 @@ export class ApiService {
     return this.httpClient.get(this.baseUrl + '/checkCredentials.php?info='+ credentials);
   }
 
-  toRegister(credentials:any):Observable<any>{
-    return this.httpClient.post(this.baseUrl + '/register', credentials);
+  toRegister(email:any, password:any, cpassword:any):Observable<any>{
+    return this.httpClient.post(this.baseUrl + '/register', {email, password, cpassword});
   }
 
   toLogin(credentials:any):Observable<any>{

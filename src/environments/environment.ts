@@ -5,5 +5,5 @@ export const environment = {
     // dbUser: 'id20554492_root',
     // dbPassword: '000WEBhost@keanna'
     //apiUrl: 'https://office-of-the-extension-services.000webhostapp.com/apiConnection'  //proxy url in development
-    apiUrl: 'http://localhost:8080/apiConnection'
+    //apiUrl: 'http://localhost:8080/apiConnection'
 };

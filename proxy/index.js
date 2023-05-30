@@ -9,7 +9,30 @@ const uri = 'mongodb+srv://palencia.kenneth69@gmail.com:000MONGO_dbVercel@keanna
 
 app.use(express.json());
 
-app.post('/login', async (req, res) => {
+app.post('api/register', async (req, res) => {
+    const { username, password, cpassword } = req.body;
+
+        const client = new MongoClient(uri);
+        try {
+            await client.connect();
+            const db = client.db('database-name');
+            const collection = db.collection('users');
+
+
+
+            res.status(200).json({ message: 'Successfully Regitsered' });
+
+        } catch(error) {
+            console.error('Error:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+
+        } finally {
+            await client.close();
+        }
+    }
+);
+
+app.post('api/login', async (req, res) => {
     const { username, password } = req.body;
 
         const client = new MongoClient(uri);
@@ -30,7 +53,7 @@ app.post('/login', async (req, res) => {
             await client.close();
         }
     }
-    );
+);
 
 
 // app.put("/", 
