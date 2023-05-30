@@ -72,8 +72,6 @@ import { firebaseConfig } from 'firebase.config';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    AngularFireDatabaseModule.initializeApp(firebaseConfig),
-    AngularFireModule
   ]
 })
 export class DefaultModule { }
