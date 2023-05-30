@@ -9,8 +9,10 @@ import { ViewUserlistComponent } from './modules/view-userlist/view-userlist.com
 import { ViewProfileComponent } from './modules/view-profile/view-profile.component';
 import { LoginComponent } from './auth/login/login.component';
 import { DownloadsComponent } from './modules/downloads/downloads.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 const routes: Routes = [
+  {path:'register', component:RegisterComponent},
   {path:'login', component:LoginComponent},
   {path:'main', component:DefaultComponent,
    children:[

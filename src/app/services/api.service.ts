@@ -22,6 +22,11 @@ export class ApiService {
   validateCredentials(credentials:any){
     return this.httpClient.get(this.baseUrl + '/checkCredentials.php?info='+ credentials);
   }
+
+  toRegister(credentials:any):Observable<any>{
+    return this.httpClient.post(this.baseUrl + '/register', credentials);
+  }
+
   toLogin(credentials:any):Observable<any>{
     return this.httpClient.post(this.baseUrl + '/login', credentials);
   }

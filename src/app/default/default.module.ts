@@ -30,9 +30,7 @@ import { ViewUserlistComponent } from '../modules/view-userlist/view-userlist.co
 import { LoginComponent } from '../auth/login/login.component';
 import { DownloadsComponent } from '../modules/downloads/downloads.component';
 import { EditReportComponent } from '../modules/edit-report/edit-report.component';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { firebaseConfig } from 'firebase.config';
+import { RegisterComponent } from '../auth/register/register.component';
 
 
 @NgModule({
@@ -47,6 +45,7 @@ import { firebaseConfig } from 'firebase.config';
     LoginComponent,
     DownloadsComponent,
     EditReportComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
