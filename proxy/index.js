@@ -1,20 +1,20 @@
 const express = require("express");
+const MongoClient = require('mongodb').MongoClient;
 const app = express();
-//const cors = require("cors");
-const {createProxyMiddleware} = require("http-proxy-middleware");
+const port = process.env.PORT || 4200;
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
-app.get("/", 
-        createProxyMiddleware({target: 'https://office-of-the-extension-services.000webhostapp.com/apiConnection', 
-        changeOrigin:true}),
-        (req, res) => {
-            console.log(res);
-        }
+const uri = 'mongodb+srv://palencia.kenneth69@gmail.com:000MONGO_dbVercel@keanna@cluster0.xpjxeel.mongodb.net/?retryWrites=true&w=majority';
+//const cors = require("cors");
+//const {createProxyMiddleware} = require("http-proxy-middleware");
+
+app.use(express.json());
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    const client = new MongoClient(uri);
+    //try // continue
+}
     );
 
 app.post("/", 
