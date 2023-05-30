@@ -38,25 +38,25 @@ export class LoginComponent {
       this._api.toLogin(credentials)
     .subscribe((response: any) => {
       console.log(response);
-      const data = response.data; // Assuming user_id and user_role are within a data object
+      // const data = response.data; // Assuming user_id and user_role are within a data object
 
-      if (response.success === 1) {
-        alert('Login successful');
+      // if (response.success === 1) {
+      //   alert('Login successful');
 
-        const userId = data.user_id;
-        const role = data.user_role;
-        localStorage.setItem('userid', userId); // Replace '123' with the actual value of the userid obtained from your API
-        this._api.userROLE = role;//new
+      //   const userId = data.user_id;
+      //   const role = data.user_role;
+      //   localStorage.setItem('userid', userId); // Replace '123' with the actual value of the userid obtained from your API
+      //   this._api.userROLE = role;//new
 
-        // Redirect or perform any other actions
+      //   // Redirect or perform any other actions
 
-        this.router.navigate(['/main/dashboard']);//new
+      //   this.router.navigate(['/main/dashboard']);//new
 
 
-      } else {
-        console.log('Login failed:', response.message);
-        // Handle login error, such as displaying an error message to the user
-      }
+      // } else {
+      //   console.log('Login failed:', response.message);
+      //   // Handle login error, such as displaying an error message to the user
+      // }
     });
 
     console.log(credentials);

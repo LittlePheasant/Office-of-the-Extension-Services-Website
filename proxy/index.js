@@ -12,35 +12,43 @@ app.use(express.json());
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    const client = new MongoClient(uri);
-    //try // continue
-}
-    );
+        const client = new MongoClient(uri);
+        try {
+            await client.connect();
+            const db = client.db('database-name');
+            const collection = db.collection('users');
 
-app.post("/", 
-    createProxyMiddleware({target: 'https://office-of-the-extension-services.000webhostapp.com/apiConnection', 
-    changeOrigin:true}),
-    (req, res) => {
-        console.log(res);
-    }
-);
 
-app.put("/", 
-        createProxyMiddleware({target: 'https://office-of-the-extension-services.000webhostapp.com/apiConnection', 
-        changeOrigin:true}),
-        (req, res) => {
-            console.log(res);
+
+            res.status(200).json({ message: 'Login successful' });
+
+        } catch(error) {
+            console.error('Error:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+
+        } finally {
+            await client.close();
         }
+    }
     );
 
-app.delete("/", 
-    createProxyMiddleware({target: 'https://office-of-the-extension-services.000webhostapp.com/apiConnection', 
-    changeOrigin:true}),
-    (req, res) => {
-        console.log(res);
-    }
-);
 
-app.listen(4200,()=>{
-    console.log("proxy started");
+// app.put("/", 
+//         createProxyMiddleware({target: 'https://office-of-the-extension-services.000webhostapp.com/apiConnection', 
+//         changeOrigin:true}),
+//         (req, res) => {
+//             console.log(res);
+//         }
+//     );
+
+// app.delete("/", 
+//     createProxyMiddleware({target: 'https://office-of-the-extension-services.000webhostapp.com/apiConnection', 
+//     changeOrigin:true}),
+//     (req, res) => {
+//         console.log(res);
+//     }
+// );
+
+app.listen(port, () => {
+    console.log('Server running on port ${port}');
 })

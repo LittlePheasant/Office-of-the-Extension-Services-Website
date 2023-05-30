@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ApiService {
 
-  private baseUrl: string = environment.apiUrl;
+  private baseUrl = '/api';
   reportData!: ReportData[];
   userData!: UsersList[];
   userID!:string;//new
@@ -23,7 +23,7 @@ export class ApiService {
     return this.httpClient.get(this.baseUrl + '/checkCredentials.php?info='+ credentials);
   }
   toLogin(credentials:any):Observable<any>{
-    return this.httpClient.post(this.baseUrl + '/login.php', credentials);
+    return this.httpClient.post(this.baseUrl + '/login', credentials);
   }
   viewUsersList(){
     return this.httpClient.get<UsersList[]>(this.baseUrl + '/getUsers.php');
