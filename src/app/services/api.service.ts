@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ApiService {
 
-  private baseUrl = '/api';
+  private baseUrl = 'http://localhost:8080/apiConnection';
   reportData!: ReportData[];
   userData!: UsersList[];
   userID!:string;//new

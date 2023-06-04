@@ -68,7 +68,7 @@ export class AddReportComponent implements OnInit{
 
     // reset form
     //form.reset();
-    this.dialogClose();
+    //this.dialogClose();
   };
 
   dialogClose(){

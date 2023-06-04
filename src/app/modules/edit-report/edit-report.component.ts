@@ -63,7 +63,7 @@ export class EditReportComponent implements OnInit {
 
   postdata(form:any) {
 
-    const id = this.data.reportDetails[0].userid;
+    const id = this.data.reportDetails[0].entry_id;
     const data = this.editReportForm.value;
     // Perform PUT request
     this._api.updateReport(id, data).subscribe(
