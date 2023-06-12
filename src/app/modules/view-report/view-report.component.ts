@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ReportData } from 'src/app/models/models';
 import { AddReportComponent } from '../add-report/add-report.component';
 import { EditReportComponent } from '../edit-report/edit-report.component';
+//import { NgxPrintService } from 'ngx-print';
 
 @Component({
   selector: 'app-view-report',
@@ -20,6 +21,7 @@ export class ViewReportComponent {
   searchText:any;
   filePath!: string;
   userid!: string;
+  id:any;
   
   columns = ['index','date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
              'poor_rate', 'fair_rate', 'satisfactory_rate', 'verysatisfactory_rate', 'excellent_rate',
@@ -37,7 +39,7 @@ export class ViewReportComponent {
   constructor( private _api: ApiService,
                private activateRoute: ActivatedRoute,
                private _fb: FormBuilder,
-               private _dialog: MatDialog){
+               private _dialog: MatDialog,){
     
   }
   ngAfterViewInit(): void {
@@ -75,9 +77,11 @@ export class ViewReportComponent {
      window.location.reload();
   }
 
-  print() {
+  print(id:any) {
     // Call the print method
-    window.print();
+    //this.printService.print();
+    const printSectionId = id;
+    this.print(printSectionId);
   }
 
   addReportDialog(){

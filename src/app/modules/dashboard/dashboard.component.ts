@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import * as HighchartsExporting from 'highcharts/modules/exporting';
 import xrange from 'highcharts/modules/xrange';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import { ApiService } from 'src/app/services/api.service';
+import { NavigationSkipped } from '@angular/router';
 HighchartsAccessibility(Highcharts);
 
 
@@ -74,7 +76,7 @@ export class DashboardComponent implements OnInit {
           title: { text: 'Output Indicator 1' },
           xAxis: { type: 'category' },
           yAxis: { title: {
-            text: 'Total by Campus/Colleges'
+            text: ''
             }
           },
           //colors: ['#FF0000', '#00FF00', '#0000FF', '#FF00FF', '#00FFFF', '#FFFF00', '#C0C0C0'],
@@ -90,6 +92,7 @@ export class DashboardComponent implements OnInit {
             //   colorByPoint: true
             // }
           },
+          
           accessibility: {
             enabled: true,
           },
@@ -127,7 +130,7 @@ export class DashboardComponent implements OnInit {
       title: { text: 'Output Indicator 2' },
       xAxis: { type: 'category' },
       yAxis: { title: {
-        text: 'Total in percent(%) by Campus/Colleges'
+        text: ''
         }
       },
       plotOptions: {
@@ -176,7 +179,7 @@ export class DashboardComponent implements OnInit {
       title: { text: 'Output Indicator 3' },
       xAxis: { type: 'category' },
       yAxis: { title: {
-        text: 'Total in percent(%) by Campus/Colleges'
+        text: ''
         }
       },
       plotOptions: {
@@ -226,7 +229,7 @@ export class DashboardComponent implements OnInit {
       title: { text: 'Output Indicator 4' },
       xAxis: { type: 'category' },
       yAxis: { title: {
-        text: 'Total in percent(%) by Campus/Colleges'
+        text: ''
         }
       },
       plotOptions: {

@@ -31,7 +31,7 @@ import { LoginComponent } from '../auth/login/login.component';
 import { DownloadsComponent } from '../modules/downloads/downloads.component';
 import { EditReportComponent } from '../modules/edit-report/edit-report.component';
 import { RegisterComponent } from '../auth/register/register.component';
-
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -66,7 +66,7 @@ import { RegisterComponent } from '../auth/register/register.component';
     MatPaginatorModule,
     MatSortModule,
     MatMenuModule,
-    //NgxPrinterModule,
+    NgxPrintModule,
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,

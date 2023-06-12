@@ -24,11 +24,11 @@ export class ApiService {
   }
 
   toRegister(email:any, password:any, cpassword:any):Observable<any>{
-    return this.httpClient.post(this.baseUrl + '/register', {email, password, cpassword});
+    return this.httpClient.post(this.baseUrl + '/register.php', {email, password, cpassword});
   }
 
-  toLogin(credentials:any):Observable<any>{
-    return this.httpClient.post(this.baseUrl + '/login', credentials);
+  toLogin(credentials:any){
+    return this.httpClient.post(this.baseUrl + '/login.php', credentials);
   }
   viewUsersList(){
     return this.httpClient.get<UsersList[]>(this.baseUrl + '/getUsers.php');

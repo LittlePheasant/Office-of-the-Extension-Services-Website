@@ -32,9 +32,9 @@
                 </div>
     
                 <div class="print-btn">
-                    <span class="material-symbols-rounded" style="color: black;" (click)="print()">
+                    <!-- <span class="material-symbols-rounded" style="color: black;" (click)="print()">
                         print
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </div>
@@ -42,7 +42,10 @@
             
             
             <mat-card class="tablecontainer">
-                <mat-table matSort [dataSource]="data" >
+                <button mat-raised-button color="primary" (click)="print(id)" styleSheetFile="/view-report.component.scss"
+                printSectionId="print-section"
+                ngxPrint>Print</button>
+                <mat-table matSort [dataSource]="data" id="print-section">
 
                     <ng-container matColumnDef="index">
                         <th mat-header-cell mat-sort-header *matHeaderCellDef> No. </th>
