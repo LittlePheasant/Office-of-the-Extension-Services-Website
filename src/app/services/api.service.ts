@@ -38,8 +38,12 @@ export class ApiService {
     return this.httpClient.get<ReportData[]>(this.baseUrl + '/viewReport.php?userid=' + userID);
   }
 
-  getParticularLength(){
-    return this.httpClient.get(this.baseUrl + '/viewActualReport.php');
+  getParticularsLength(){
+    return this.httpClient.get(`${this.baseUrl}/viewActualReport.php`);
+  }
+
+  getParticulars(userid:any){
+    return this.httpClient.get(`${this.baseUrl}/viewActualReport.php?id=${userid}`);
   }
 
   getDataByParticularId(userid: any, particular_id: any) {

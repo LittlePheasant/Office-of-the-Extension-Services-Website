@@ -18,6 +18,7 @@ xrange(Highcharts);
 export class DashboardComponent implements OnInit {
   totalAccomplishments!: number;
   totalUsers!: number;
+  totalActualReports!:number;
   //data=[];
   isDisabled: boolean;
   userid!: string; //new
@@ -48,6 +49,14 @@ export class DashboardComponent implements OnInit {
         this.totalUsers = response.length;
       }
     );
+
+    this._api.getParticularsLength()
+    .subscribe(
+      (response: any) => {
+        console.log(response);
+        this.totalActualReports = response.length;
+      }
+    )
 
     this.loadChart();
 

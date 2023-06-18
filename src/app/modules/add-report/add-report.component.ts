@@ -28,8 +28,8 @@ export class AddReportComponent implements OnInit{
 
     this.addReportForm = this._fb.group({
       user_id: [userid],
+      program_id: ['', [Validators.required]],
       date_entry: ['', [Validators.required]],
-      facilitator: ['', [Validators.required]],
       title: ['', [Validators.required]],
       type_beneficiary: ['', [Validators.required]],
       count_male: [0, [Validators.required]],
@@ -62,13 +62,16 @@ export class AddReportComponent implements OnInit{
     this._api.addReport(this.addReportForm.value).subscribe(
       (response: any) => {
         console.log(response);
-        alert("Added Successfully!");
+        if(this.addReportForm.valid && response.status.OK){
+          alert("Added Successfully!");
+          this.dialogClose();
+        }
       },
     );
 
     // reset form
     //form.reset();
-    //this.dialogClose();
+    
   };
 
   dialogClose(){
@@ -76,14 +79,12 @@ export class AddReportComponent implements OnInit{
   };
   
   
-  
+  get program_id() { 
+    return this.addReportForm.get('program_id');
+  }
 
   get date_entry() { 
     return this.addReportForm.get('date_entry');
-  }
-
-  get facilitator() { 
-    return this.addReportForm.get('facilitator');
   }
 
   get title() { 

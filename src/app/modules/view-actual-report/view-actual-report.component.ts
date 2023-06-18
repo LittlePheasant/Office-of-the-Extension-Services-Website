@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Data } from '@angular/router';
-import { IndicatorsList } from 'src/app/models/models';
+import { Data, ReportCount } from 'src/app/models/models';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -12,11 +11,11 @@ import { ApiService } from 'src/app/services/api.service';
 export class ViewActualReportComponent implements OnInit {
 
   searchText:any;
-  indicators!:IndicatorsList[];
+  count!:ReportCount[];
   selectedOpt!:string;
 
   defaultValues: string[] =[];
-  columns = ['particulars', 'CAAD', 'CAS', 'COBE', 'COE', 'COED', 'COT', 'GS',
+  columns = ['Particulars', 'CAAD', 'CAS', 'COBE', 'COE', 'COED', 'COT', 'GS',
              'BURAUEN', 'CARIGARA', 'DULAG', 'ORMOC', 'TANAUAN'];
 
   options = ['1', '2', '3', '4'];
@@ -28,17 +27,35 @@ export class ViewActualReportComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.viewActualReport();
   }
 
   viewActualReport(){
-    // this._api.getIndicators().subscribe(
-    // (response: any) => {
-    //   this.indicators = response;
-    //   console.log(this.indicators)
-    //   this.data.data = response;
-    //   // console.log(response);
-    // })
+    const userid = localStorage.getItem('userid');
+    this._api.getParticulars(userid).subscribe(
+    (response: any) => {
+      this.count = response;
+      console.log(this.count);
+      // Map or transform the fetched data to match the Data structure
+      const rows = this.count;
+
+      // Convert the associative array to a flat array
+      const flattenedRows = Object.values(rows);
+
+      console.log(flattenedRows);
+    })
   }
+
+  getElementCount(element: any, column: string): string {
+    const matchingData = element[column] as { name: string, count: string }[];
+    if (Array.isArray(matchingData)) {
+      const matchingEntry = matchingData.find(entry => entry.name === column);
+      return matchingEntry ? matchingEntry.count : '';
+    }
+    return '';
+  }
+  
+  
 
 
 

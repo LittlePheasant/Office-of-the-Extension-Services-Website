@@ -30,8 +30,31 @@ export interface UsersList {
     user_role:string
 }
 
-export interface IndicatorsList {
-    particulars_id:number,
+export interface Particulars {
+    particular_id:number,
     particulars:string
+}
+
+export interface ReportCount {
+    particulars_id:Particulars['particular_id'],
+    user_id:UsersList['user_id'],
+    count:number
 
 }
+
+export interface Data {
+    Particulars: string;
+    CAAD: string;
+    CAS: string;
+    COBE: string;
+    COE: string;
+    COED: string;
+    COT: string;
+    GS: string;
+    BURAUEN: string;
+    CARIGARA: string;
+    DULAG: string;
+    ORMOC: string;
+    TANAUAN: string;
+  }
+  

@@ -21,106 +21,23 @@
             </div>
             
             <mat-table [dataSource]="data" class="tablecontainer">
-        
-                <ng-container matColumnDef="particulars">
-                    <th mat-header-cell *matHeaderCellDef>Particulars
-                      <ng-container *ngIf="defaultValues.length > 0;">
-                        {{ defaultValues[1] }}
-                      </ng-container>
-                      <!-- <ng-template #loading>Loading...</ng-template> -->
-                    </th>
-                    <td mat-cell *matCellDef="let element" style="width: 200px;">{{ element.particulars }}</td>
-                </ng-container>
-                    <!-- <th mat-header-cell *matHeaderCellDef>Id</th>
-                    <td mat-cell *matCellDef="let element" ngIf="false">{{element.user_id}}</td> -->
-    
-               <ng-container matColumnDef="CAS">
-                    <th mat-header-cell *matHeaderCellDef> CAS </th>
-                    <td mat-cell *matCellDef="let element"> {{element.CAS}} </td>
-                </ng-container>
-            
-                <ng-container matColumnDef="CAAD">
-                    <th mat-header-cell *matHeaderCellDef> CAAD </th>
-                    <td mat-cell *matCellDef="let element"> {{element.CAAD}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="COBE">
-                    <th mat-header-cell *matHeaderCellDef> COBE </th>
-                    <td mat-cell *matCellDef="let element"> {{element.COBE}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="COE">
-                    <th mat-header-cell *matHeaderCellDef> COE </th>
-                    <td mat-cell *matCellDef="let element"> {{element.COE}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="COED">
-                    <th mat-header-cell *matHeaderCellDef> COED </th>
-                    <td mat-cell *matCellDef="let element"> {{element.COED}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="COT">
-                    <th mat-header-cell *matHeaderCellDef> COT </th>
-                    <td mat-cell *matCellDef="let element"> {{element.COT}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="GS">
-                    <th mat-header-cell *matHeaderCellDef> GS </th>
-                    <td mat-cell *matCellDef="let element"> {{element.GS}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="BURAUEN">
-                    <th mat-header-cell *matHeaderCellDef> BURAUEN </th>
-                    <td mat-cell *matCellDef="let element"> {{element.BURAUEN}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="CARIGARA">
-                    <th mat-header-cell *matHeaderCellDef> CARIGARA </th>
-                    <td mat-cell *matCellDef="let element"> {{element.CARIGARA}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="DULAG">
-                    <th mat-header-cell *matHeaderCellDef> DULAG </th>
-                    <td mat-cell *matCellDef="let element"> {{element.DULAG}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="ORMOC">
-                    <th mat-header-cell *matHeaderCellDef> ORMOC </th>
-                    <td mat-cell *matCellDef="let element"> {{element.ORMOC}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="TANAUAN">
-                    <th mat-header-cell *matHeaderCellDef> TANAUAN </th>
-                    <td mat-cell *matCellDef="let element"> {{element.TANAUAN}} </td>
-                </ng-container>
-            
-                <!-- <ng-container matColumnDef="role">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Role </th>
-                    <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Actions</th>
-                    <td mat-cell *matCellDef="let element">
-                        <a routerLink="../edit/user-details/{{element.user_id}}" routerLinkActive="active" style="text-decoration: none; color: #fff; display: inline-flex;
-                        align-items: center;">
-                            <span class="material-symbols-outlined" style="color: rgb(0, 81, 255);">
-                                edit_square
-                            </span>
-                        </a>
-
-                        <a type="button" (click)="delete(element.user_id)">
-                            <span class="material-symbols-outlined" style="color: rgb(179, 0, 0);">
-                                delete
-                            </span>
-                        </a>
-                    </td>
+                <!-- <ng-container matColumnDef="Particulars">
+                  <th mat-header-cell *matHeaderCellDef>Particulars</th>
+                  <td mat-cell *matCellDef="let element">{{ element.Particulars }}</td>
                 </ng-container> -->
-            
+              
+                <!-- Column Definitions -->
+                <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+                    <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+                    <td mat-cell *matCellDef="let element">
+                    {{ getElementCount(element, column) }}
+                    </td>
+                </ng-container>
+              
                 <tr mat-header-row *matHeaderRowDef="columns"></tr>
                 <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-            
-            </mat-table>
+              </mat-table>
+              
             <!-- <mat-paginator #paginator [pageSizeOptions]="[5, 25, 50]" showFirstLastButtons></mat-paginator> -->
         
         

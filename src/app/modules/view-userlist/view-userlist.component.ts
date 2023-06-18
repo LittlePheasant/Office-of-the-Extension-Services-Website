@@ -16,7 +16,7 @@ export class ViewUserlistComponent {
   userData!:UsersList[];
   searchText: any;
 
-  columns = ['index', 'name', 'username', 'role', 'actions'];
+  columns = ['index', 'name', 'username', 'user_role', 'actions'];
 
   // Declare the data source
   data = new MatTableDataSource<Data>();
