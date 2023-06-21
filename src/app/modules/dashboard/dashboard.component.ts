@@ -1,13 +1,14 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import * as HighchartsExporting from 'highcharts/modules/exporting';
+import HighchartsExporting from 'highcharts/modules/exporting';
 import xrange from 'highcharts/modules/xrange';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationSkipped } from '@angular/router';
+
+
 HighchartsAccessibility(Highcharts);
-
-
+HighchartsExporting(Highcharts);
 xrange(Highcharts);
 
 @Component({
@@ -50,7 +51,7 @@ export class DashboardComponent implements OnInit {
       }
     );
 
-    this._api.getParticularsLength()
+    this._api.getParticulars(userid)
     .subscribe(
       (response: any) => {
         console.log(response);
@@ -105,6 +106,9 @@ export class DashboardComponent implements OnInit {
           accessibility: {
             enabled: true,
           },
+          exporting: {
+            enabled: true
+          },
           series: [
             {
               type: 'column',
@@ -117,6 +121,7 @@ export class DashboardComponent implements OnInit {
   
         const container1 = this.elementRef.nativeElement.querySelector('#chart1');
         Highcharts.chart(container1, options1);
+        //HighchartsExporting
       }
     });
 

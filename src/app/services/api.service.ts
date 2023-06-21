@@ -43,7 +43,7 @@ export class ApiService {
   }
 
   getParticulars(userid:any){
-    return this.httpClient.get(`${this.baseUrl}/viewActualReport.php?id=${userid}`);
+    return this.httpClient.get<ReportData[]>(`${this.baseUrl}/viewActualReport.php?id=${userid}`);
   }
 
   getDataByParticularId(userid: any, particular_id: any) {
