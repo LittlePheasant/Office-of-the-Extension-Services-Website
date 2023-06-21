@@ -14,6 +14,7 @@ export class EditReportComponent implements OnInit {
   
   editReportForm!:FormGroup;
   dataLoaded: boolean=false;
+  programOptions: any[] = [];
 
   constructor (private _fb: FormBuilder,
     private _api: ApiService,
@@ -24,8 +25,9 @@ export class EditReportComponent implements OnInit {
 
     this.editReportForm = this._fb.group({
       userid: [data.reportDetails[0].userid],
+      program_id: [data.reportDetails[0].program_id],
       date_entry: [data.reportDetails[0].date_entry],
-      facilitator: [data.reportDetails[0].facilitator],
+      // facilitator: [data.reportDetails[0].facilitator],
       title: [data.reportDetails[0].title],
       type_beneficiary: [data.reportDetails[0].type_beneficiary],
       count_male: [data.reportDetails[0].count_male],
@@ -47,11 +49,22 @@ export class EditReportComponent implements OnInit {
 
     // Set the dataLoaded flag to true
     this.dataLoaded = true;
-     
    }
   
   
   ngOnInit(): void {
+    const userid = localStorage.getItem('userid');
+
+    this._api.getPrograms(userid)
+      .subscribe(
+        (response: any) => {
+          this.programOptions = response;
+        },
+        error => {
+          console.log('Error retrieving program options.');
+        }
+      );
+     
   }
 
 

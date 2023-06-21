@@ -50,6 +50,10 @@ export class ApiService {
     return this.httpClient.get(`${this.baseUrl}/viewActualReport.php?id=${userid}&particular_id=${particular_id}`);
   }
 
+  getPrograms(userid:any){
+    return this.httpClient.get(`${this.baseUrl}/getPrograms.php?id=${userid}`);
+  }
+
   addReport(data:any){
     return this.httpClient.post(this.baseUrl + '/insertReport.php', data);
   }
@@ -58,8 +62,12 @@ export class ApiService {
     return this.httpClient.get(`${this.baseUrl}/viewReport.php?userid=${userid}&entry_id=${entry_id}`);
   }
 
-  updateReport(user_id:any, data:any){
-    return this.httpClient.put(this.baseUrl + '/updateReport.php?id=' + user_id, data);
+  updateReport(userid:any, data:any){
+    return this.httpClient.put(`${this.baseUrl}/updateReport.php?id=${userid}`, `${data}`);
+  }
+
+  updateStatus(userid:any, data:any){
+    return this.httpClient.put(`${this.baseUrl}/updateReport.php?id=${userid}`, `${data}`);
   }
 
   deleteReport(id:any) {

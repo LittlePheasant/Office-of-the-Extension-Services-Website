@@ -21,14 +21,13 @@ export class DashboardComponent implements OnInit {
   totalUsers!: number;
   totalActualReports!:number;
   //data=[];
-  isDisabled: boolean;
   userid!: string; //new
+  userrole!:string;
 
   constructor(
     private _api:ApiService,
     private elementRef: ElementRef
   ) { 
-    this.isDisabled = false;
     this.userid = this._api.userID;
   }
 
@@ -39,7 +38,12 @@ export class DashboardComponent implements OnInit {
     this._api.viewReport(userid)
     .subscribe(
       (response: any) => {
-        this.totalAccomplishments = response.length;
+        this.totalAccomplishments = response.data.length;
+
+        this.userrole = response.userRole;
+
+        console.log(this.userrole)
+        
       }
     )
 
@@ -51,13 +55,15 @@ export class DashboardComponent implements OnInit {
       }
     );
 
-    this._api.getParticulars(userid)
+    this._api.getParticularsLength()
     .subscribe(
       (response: any) => {
         console.log(response);
         this.totalActualReports = response.length;
       }
     )
+
+    this.isAdmin();
 
     this.loadChart();
 
@@ -274,7 +280,8 @@ export class DashboardComponent implements OnInit {
 
   };
 
-  disableChart(){
-    this.isDisabled=true;
+  isAdmin(){
+    return this.userrole === 'Admin';
+    
   }
 }

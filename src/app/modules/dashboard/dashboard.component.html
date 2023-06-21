@@ -2,7 +2,7 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isAdmin()">
                 <div class="card card-stats">
                     <div class="card-header card-header-warning card-header-icon">
                       <div class="card-icon">
@@ -37,7 +37,7 @@
                       <h3 class="card-title">
                         <b>{{totalAccomplishments}}</b>
                       </h3>
-                      <p class="card-category">Quartely Accomplishment</p>
+                      <p class="card-category">Accomplishment</p>
                       
                     </div>
                     <div class="card-footer">
@@ -45,7 +45,7 @@
                             <i class="material-icons">
                                 visibility
                             </i>
-                            <a routerLink="../view-report" routerLinkActive="active" (click)="disableChart()">
+                            <a routerLink="../view-report" routerLinkActive="active">
                                 <div class="button">
                                     View   
                                 </div>
@@ -55,14 +55,14 @@
                 </div>
             </div>
         
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isAdmin()">
                 <div class="card card-stats">
                     <div class="card-header card-header-danger card-header-icon">
                       <div class="card-icon">
                         <i class="material-icons">list_alt</i>
                       </div>
                       <h3 class="card-title">
-                        <b>0</b>
+                        <b>{{totalActualReports}}</b>
                       </h3>
                       <p class="card-category">Actual Accomplishment</p>
                     </div>
@@ -113,7 +113,7 @@
 </div>
 <!-- <div class="spacer"></div> -->
 <div class="row">
-    <div class="chart-container" [ngStyle]="{'display' : isDisabled ? 'none' : 'block'}">
+    <div class="chart-container">
         <div class="row">
             <div class="col">
                 <mat-card class="card-chart">

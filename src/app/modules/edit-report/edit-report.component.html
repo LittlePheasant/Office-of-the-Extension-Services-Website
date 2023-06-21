@@ -6,6 +6,15 @@
 <div mat-dialog-content class="content">
     <form [formGroup]="editReportForm" (ngSubmit)="postdata(editReportForm)">
         <div class="row">
+            <mat-label><b>Program</b></mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select name="program_id" formControlName="program_id" placeholder="Choose program">
+                <mat-option *ngFor="let program of programOptions" [value]="program.program_id">{{ program.program }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+        
+        <div class="row">
             <mat-label ><b>Date</b></mat-label>
             <mat-form-field appearance="outline">
                 <input matInput type="text" [matDatepicker]="picker"   name="date_entry" formControlName="date_entry" placeholder="Enter a date">
@@ -18,13 +27,13 @@
             </mat-form-field>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
             <mat-label><b>Facilitators</b></mat-label>
             <mat-form-field appearance="outline">
                 <input matInput type="text" placeholder="Write in full"
                 name="facilitator" formControlName="facilitator">
             </mat-form-field>
-        </div>
+        </div> -->
         
         <div class="row">
             <mat-label><b>Title</b></mat-label>

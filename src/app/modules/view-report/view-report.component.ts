@@ -22,10 +22,15 @@ export class ViewReportComponent {
   filePath!: string;
   userid!: string;
   id:any;
+  programOptions: any[] = [];
+  selectedProgramId!: string;
+  filteredData: any[] = [];
+  status!:string;
+  userrole!:string;
   
-  columns = ['index','date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
+  columns = ['index', 'date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
              'poor_rate', 'fair_rate', 'satisfactory_rate', 'verysatisfactory_rate', 'excellent_rate',
-             'duration', 'serviceOpt', 'partners', 'fac_staff', 'role', 'cost_fund', '_file', 'actions'];
+             'duration', 'serviceOpt', 'partners', 'fac_staff', 'role', 'cost_fund', 'actions'];
              
 
   // Declare the data source
@@ -48,8 +53,25 @@ export class ViewReportComponent {
     
   }
   ngOnInit(): void {
+
     this.adminview();
 
+    const userid = localStorage.getItem('userid');
+
+    this._api.getPrograms(userid)
+      .subscribe(
+        (response: any) => {
+          this.programOptions = response;
+          console.log(this.programOptions);
+
+        },
+        error => {
+          console.log('Error retrieving program options.');
+        }
+      );
+
+      //this.islocked();
+      this.isAdmin();
 
   }
 
@@ -58,13 +80,32 @@ export class ViewReportComponent {
     this._api.viewReport(userid)
     .subscribe(
       (response: any) => {
-        this._api.reportData = response;
-        console.log(response);
-        this.data.data=response;
-        console.log(this.data);
+        //this._api.reportData = response;
+        //console.log(response.data);
+        this.filteredData=response.data;
+        console.log(this.filteredData);
+
+        this.userrole = response.userRole;
 
       }
     );
+  };
+
+  // islocked(){
+  //   return this.status === 'LOCKED';
+  // }
+
+  applyFilter(): void {
+    if (this.selectedProgramId) {
+      this.filteredData = this.data.data.filter((element: any) => element.program_id === this.selectedProgramId);
+    } else {
+      this.filteredData = this.data.data;
+    }
+  };
+
+  filterData(): void {
+    this.applyFilter();
+    this.paginator.firstPage();
   }
 
   delete(id:number){
@@ -85,7 +126,7 @@ export class ViewReportComponent {
   }
 
   addReportDialog(){
-    const user_id = 1;
+    const userid = localStorage.getItem('userid');
 
     const _dialogRef = this._dialog.open(AddReportComponent);
 
@@ -107,6 +148,20 @@ export class ViewReportComponent {
   
       console.log(_dialogRef);
     });
+  };
+
+  isLocked(entry_id:any){
+    const userid = localStorage.getItem('userid');
+    
+    this._api.updateStatus(userid, entry_id)
+     .subscribe((response: any) => {
+
+    })
+  };
+
+  isAdmin(){
+    return this.userrole === 'Admin';
+    
   }
 
   

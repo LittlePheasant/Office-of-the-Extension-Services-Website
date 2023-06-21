@@ -13,6 +13,7 @@ export class AddReportComponent implements OnInit{
 
   addReportForm!: FormGroup;
   reportData!: ReportData[];
+  programOptions: any[] = [];
 
   constructor (private _fb: FormBuilder,
                private _api: ApiService,
@@ -48,6 +49,16 @@ export class AddReportComponent implements OnInit{
       cost_fund: [0.00, [Validators.required]],
       _file: ['']
     });
+
+    this._api.getPrograms(userid)
+      .subscribe(
+        (response: any) => {
+          this.programOptions = response;
+        },
+        error => {
+          console.log('Error retrieving program options.');
+        }
+      );
   }
 
   onFileSelected(event: any) {
@@ -77,6 +88,7 @@ export class AddReportComponent implements OnInit{
   dialogClose(){
     this._dialogRef.close();
   };
+
   
   
   get program_id() { 

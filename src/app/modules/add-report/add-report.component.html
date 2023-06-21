@@ -8,25 +8,12 @@
         <div class="row">
             <mat-label><b>Program</b></mat-label>
             <mat-form-field appearance="outline">
-                <mat-select name="program_id" formControlName="program_id" placeholder="Choose program">
-                  <mat-option value="1">CAAD-DISENIO</mat-option>
-                  <mat-option value="2">CAS PWEDe</mat-option>
-                  <mat-option value="3">COE EXTENDS</mat-option>
-                  <mat-option value="4">THINK-IT</mat-option>
-                  <mat-option value="5">TINDOG</mat-option>
-                  <mat-option value="6">BASCoG</mat-option>
-                  <mat-option value="7">G.R.A.D.U.A.T.E.</mat-option>
-                  <mat-option value="8">MaESTRAH</mat-option>
-                  <mat-option value="9">CHER UP</mat-option>
-                  <mat-option value="10">E.L.E.V.ate-O.C.</mat-option>
-                  <mat-option value="11">COT INSPIRE</mat-option>
-                  <mat-option value="12">COT HRND-ASPIRE</mat-option>
-                  <mat-option value="13">COT COTC</mat-option>
-                  <mat-option value="14">COBE-C.B.E.G.R.</mat-option>
-                </mat-select>
-              </mat-form-field>              
+              <mat-select name="program_id" formControlName="program_id" placeholder="Choose program">
+                <mat-option *ngFor="let program of programOptions" [value]="program.program_id">{{ program.program }}</mat-option>
+              </mat-select>
+            </mat-form-field>
         </div>
-        
+              
         <div class="row">
             <mat-label ><b>Date</b></mat-label>
             <mat-form-field appearance="outline">
