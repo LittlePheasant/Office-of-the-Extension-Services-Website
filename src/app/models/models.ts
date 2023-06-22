@@ -36,8 +36,8 @@ export interface Particulars {
 }
 
 export interface ReportCount {
-    particulars_id:Particulars['particular_id'],
-    user_id:UsersList['user_id'],
+    particulars:Particulars['particulars'],
+    name:UsersList['name'],
     count:number
 
 }

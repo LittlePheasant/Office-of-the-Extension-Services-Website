@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ReportData, UsersList } from '../models/models';
+import { ReportCount, ReportData, UsersList } from '../models/models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class ApiService {
   }
   
   viewReport(userID:any) {
-    return this.httpClient.get<ReportData[]>(this.baseUrl + '/viewReport.php?userid=' + userID);
+    return this.httpClient.get<ReportData[]>(this.baseUrl + '/viewReport.php?id=' + userID);
   }
 
   getParticularsLength(){
@@ -43,7 +43,7 @@ export class ApiService {
   }
 
   getParticulars(userid:any){
-    return this.httpClient.get<ReportData[]>(`${this.baseUrl}/viewActualReport.php?id=${userid}`);
+    return this.httpClient.get<ReportCount[]>(`${this.baseUrl}/viewActualReport.php?id=${userid}`);
   }
 
   getDataByParticularId(userid: any, particular_id: any) {

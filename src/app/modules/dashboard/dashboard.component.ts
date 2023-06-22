@@ -38,7 +38,10 @@ export class DashboardComponent implements OnInit {
     this._api.viewReport(userid)
     .subscribe(
       (response: any) => {
-        this.totalAccomplishments = response.data.length;
+        const fetchData = response.data; 
+        this.totalAccomplishments = fetchData.length;
+
+        console.log(this.totalAccomplishments)
 
         this.userrole = response.userRole;
 
