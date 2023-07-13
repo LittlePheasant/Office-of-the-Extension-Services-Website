@@ -4,7 +4,7 @@
 </div>
 
 <div mat-dialog-content class="content">
-    <form [formGroup]="editReportForm" (ngSubmit)="postdata(editReportForm)">
+    <form [formGroup]="editReportForm" (ngSubmit)="postdata()" enctype="multipart/form-data">
         <div class="row">
             <mat-label><b>Program</b></mat-label>
             <mat-form-field appearance="outline">
@@ -155,13 +155,17 @@
 
         <div class="row">
             <mat-label><b>Attachment</b></mat-label>
-            <input type="file" name="_file" formControlName="_file" accept="application/pdf" (change)="onFileSelected($event)" style="margin-bottom: 20px;">
+            <div class="file-container" *ngIf="!fileFetched">
+                <input type="file" id="file" class="file" name="file" formControlName="file" accept="application/pdf" (change)="onFileSelected($event)" placeholder="Click space or Drag a File" style="margin-bottom: 20px;">
+            </div>
+            <div *ngIf="fileFetched">
+                <!-- <button (click)="fileFetched = undefined" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">Clear File</button> -->
+                <input type="button" (click)="fileFetched = undefined" value="Clear" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">{{fileFetched.name}}
+            </div>
         </div>
 
-
-    
         <div mat-dialog-actions class="dialogbtn">
-            <button mat-raised-button type="button" (click)="dialogClose()">Cancel</button>
+            <button mat-raised-button type="button" color="warn" (click)="dialogClose()">Cancel</button>
             <button mat-raised-button color="primary" type="submit">Save</button>
         </div>
     </form>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Data, ReportCount } from 'src/app/models/models';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -13,15 +12,17 @@ export class ViewActualReportComponent implements OnInit {
   searchText:any;
   
   selectedOpt!:string;
+  index = 0;
+  transformedData: any[] = [];
 
   defaultValues: string[] =[];
-  columns = ['Particulars', 'CAAD', 'CAS', 'COBE', 'COE', 'COED', 'COT', 'GS',
-             'BURAUEN', 'CARIGARA', 'DULAG', 'ORMOC', 'TANAUAN'];
+  columns = ['particulars', 'quarter', 'CAAD', 'CAS', 'COBE', 'COE', 'COED', 'COT', 'GS' , 'BURAUEN', 'CARIGARA', 'DULAG', 'ORMOC', 'TANAUAN'];
+  
 
   options = ['1', '2', '3', '4'];
 
   // Declare the data source
-  data = new MatTableDataSource<Data>();
+  data = new MatTableDataSource<any>();
 
   constructor(private _api:ApiService){}
 
@@ -35,59 +36,88 @@ export class ViewActualReportComponent implements OnInit {
     this._api.getParticulars(userid).subscribe(
     (response: any) => {
 
-      let count: any[] = [];
-      count = response.fetchdata;
-      console.log(count);
-      // Map or transform the fetched data to match the Data structure
-      const rows: Data[] = this.transformData(count);
+      this.transformData(response);
+      this.data = new MatTableDataSource(this.transformedData);
+      this.data.data = this.transformedData;
+      console.log('responsedata',response);
+      console.log('transformeddata', this.data.data);
 
-    console.log(rows)
-      
-      // Assign the transformed data to the MatTableDataSource
-      this.data.data = rows;
       
     })
   }
 
-  transformData(count: ReportCount[]): Data[] {
-    const rows: Data[] = [];
+  transformData(response: any) {
+    this.transformedData = [];
+  
+    for (const particularsId in response) {
+      if (response.hasOwnProperty(particularsId)) {
+        const group = response[particularsId];
+  
+        let isFirstRow = true; // Flag to track the first row of each particularsId
+  
+        for (const quarter in group) {
+          if (group.hasOwnProperty(quarter)) {
+            const items = group[quarter];
 
-    // Iterate over the count array and transform each entry
-    count.forEach((entry: ReportCount) => {
-      const row: Data = {
-        Particulars: entry.particulars,
-        CAAD: this.getElementCount(entry, 'CAAD'),
-        CAS: this.getElementCount(entry, 'CAS'),
-        COBE: this.getElementCount(entry, 'COBE'),
-        COE: this.getElementCount(entry, 'COE'),
-        COED: this.getElementCount(entry, 'COED'),
-        COT: this.getElementCount(entry, 'COT'),
-        GS: this.getElementCount(entry, 'GS'),
-        BURAUEN: this.getElementCount(entry, 'BURAUEN'),
-        CARIGARA: this.getElementCount(entry, 'CARIGARA'),
-        DULAG: this.getElementCount(entry, 'DULAG'),
-        ORMOC: this.getElementCount(entry, 'ORMOC'),
-        TANAUAN: this.getElementCount(entry, 'TANAUAN')
-      };
-      rows.push(row);
-    });
+            if (items.length > 0) {
+              for (const item of items) {
+                const transformedItem: any = {
+                  particulars: isFirstRow ? item.particulars : '',
+                  quarter: quarter,
+                  CAAD: item.name === 'CAAD' ? item.count : '',
+                  CAS: item.name === 'CAS' ? item.count : '',
+                  COBE: item.name === 'COBE' ? item.count : '',
+                  COE: item.name === 'COE' ? item.count : '',
+                  COED: item.name === 'COED' ? item.count : '',
+                  COT: item.name === 'COT' ? item.count : '',
+                  GS: item.name === 'GS' ? item.count : '',
+                  BURAUEN: item.name === 'BURAUEN' ? item.count : '',
+                  CARIGARA: item.name === 'CARIGARA' ? item.count : '',
+                  DULAG: item.name === 'DULAG' ? item.count : '',
+                  ORMOC: item.name === 'ORMOC' ? item.count : '',
+                  TANAUAN: item.name === 'TANAUAN' ? item.count : ''
+                };
 
-    return rows;
-  }
+                this.transformedData.push(transformedItem);
+                isFirstRow = false;
+              }
 
+            } else {
 
-  getElementCount(entry: any, column: string): string {
-    const matchingData = entry[column] as { name: string, count: string }[];
-    if (Array.isArray(matchingData)) {
-      const matchingEntry = matchingData.find(item => item.name === column);
-      return matchingEntry ? matchingEntry.count : '';
+              const transformedItem: any = {
+                particulars: isFirstRow ? group[Number(quarter) - 1]?.[0]?.particulars : '', // Set the value only for the first row
+                quarter: quarter,
+                CAAD: '',
+                CAS: '',
+                COBE: '',
+                COE: '',
+                COED: '',
+                COT: '',
+                GS: '',
+                BURAUEN: '',
+                CARIGARA: '',
+                DULAG: '',
+                ORMOC: '',
+                TANAUAN: ''
+              };
+
+              this.transformedData.push(transformedItem);
+              isFirstRow = false;
+            }
+            
+          }
+        }
+      }
     }
-    console.log(matchingData)
-    return '';
-
-    
   }
-}
+  
+  
+  
+  }
+  
+
+
+
   
   
 

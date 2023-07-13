@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   totalAccomplishments!: number;
   totalUsers!: number;
   totalActualReports!:number;
+  totalDownloadbles!:number;
   //data=[];
   userid!: string; //new
   userrole!:string;
@@ -38,14 +39,13 @@ export class DashboardComponent implements OnInit {
     this._api.viewReport(userid)
     .subscribe(
       (response: any) => {
-        const fetchData = response.data; 
-        this.totalAccomplishments = fetchData.length;
+        this.totalAccomplishments = response.data.length;
 
-        console.log(this.totalAccomplishments)
+        //console.log(this.totalAccomplishments)
 
         this.userrole = response.userRole;
 
-        console.log(this.userrole)
+        //console.log(this.userrole)
         
       }
     )
@@ -64,7 +64,15 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.totalActualReports = response.length;
       }
-    )
+    );
+
+    this._api.viewUploadedFiles(userid)
+    .subscribe(
+      (response: any) => {
+        this.totalDownloadbles = response.data.length;
+
+      }
+    );
 
     this.isAdmin();
 
@@ -130,7 +138,6 @@ export class DashboardComponent implements OnInit {
   
         const container1 = this.elementRef.nativeElement.querySelector('#chart1');
         Highcharts.chart(container1, options1);
-        //HighchartsExporting
       }
     });
 

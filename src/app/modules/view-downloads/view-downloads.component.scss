@@ -1,0 +1,145 @@
+.card {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    justify-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    box-shadow: 0px 1px 0px -1px rgba(0, 0, 0, 0.2), 
+                0px 0px 1px 0px rgba(0, 0, 0, 0.14), 
+                1px -1px 0px 0px rgba(0, 0, 0, 0.12);
+}
+
+.tablecontainer {
+    text-align:center; 
+    width: 100%;
+    border-collapse: collapse;
+
+    color: black;
+    padding: 4px;
+    overflow-y: auto;
+    height: 100%;
+
+    box-shadow: 0px 0px 1px -1px rgba(0, 0, 0, 0.2), 
+                0px 0px 1px 0px rgba(0, 0, 0, 0.14), 
+                0px 0px 3px 0px rgba(0, 0, 0, 0.12);
+
+}
+
+.tablecontainer td, .tablecontainer th {
+    border: 1px solid #ffffff;
+    padding: 6px;
+    text-align: center;
+    width: 100%;
+}
+
+.tablecontainer tr:nth-child(even) {
+    background-color: #dddddd60;
+}
+
+.tablecontainer tr:hover {
+    background-color: #dddddd93;
+}
+
+.tablecontainer th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: #0c801f;
+
+    color: white;
+}
+
+.title {
+    height: 40px;
+    margin-top: 10px;
+    background-color: #900303;
+    width: auto;
+}
+
+.title-banner {
+    text-align: left;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18pt;
+    color: #ffff;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.left {
+    float: left;
+}
+
+.text {
+    margin-top: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.right {
+    p{
+        float: right;
+    }
+    
+}
+
+.title-card {
+    margin-top: 12px;
+    height: 45px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-shadow: 0px 4px 1px -1px rgba(0, 0, 0, 0.7), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.searchbar {
+    font-size: large;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.align-right{
+    float: right;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-right: 18px;
+}
+
+ .print-btn, .add-btn{
+    float: right;
+    padding-left: 5px;
+    padding-bottom: 20px;
+    //position: fixed;
+}
+
+.material-symbols-rounded {
+    font-size: 30px;
+    position: fixed;
+
+}
+
+.bar{
+    position: fixed;
+}
+
+.card {
+    margin-bottom: 20px;
+    //top: 176px;
+    margin-left: 10px;
+    justify-items: center;
+    padding-left: 11px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.cardcontainer {
+    position: relative;
+    top: 0;
+    height: 561px;
+}

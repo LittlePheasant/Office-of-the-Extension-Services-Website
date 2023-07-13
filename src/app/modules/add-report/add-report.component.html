@@ -4,7 +4,7 @@
 </div>
 
 <div mat-dialog-content class="content">
-    <form [formGroup]="addReportForm" (ngSubmit)="postdata(addReportForm)">
+    <form [formGroup]="addReportForm" (ngSubmit)="postdata()" enctype="multipart/form-data">
         <div class="row">
             <mat-label><b>Program</b></mat-label>
             <mat-form-field appearance="outline">
@@ -21,9 +21,6 @@
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="picker" class="dateIcon"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <!-- <script>
-                    $('#picker').picker({format: 'yyyy-MM-dd'});
-                </script> -->
             </mat-form-field>
         </div>
         
@@ -147,14 +144,14 @@
 
         <div class="row">
             <mat-label><b>Attachment</b></mat-label>
-            <input type="file" name="_file" formControlName="_file" accept="application/pdf" (change)="onFileSelected($event)" style="margin-bottom: 20px;">
+            <input type="file" id="file" name="file" formControlName="file" accept="application/pdf" (change)="onFileSelected($event)" style="margin-bottom: 20px;">
         </div>
 
 
     
         <div mat-dialog-actions class="dialogbtn">
             <button mat-raised-button type="button" (click)="dialogClose()">Cancel</button>
-            <button mat-raised-button color="primary" type="submit">Save</button>
+            <button mat-raised-button color="primary" type="submit" name="upload">Save</button>
         </div>
     </form>
 </div>

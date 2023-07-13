@@ -1,7 +1,8 @@
+import { Binary } from "@angular/compiler";
+
 export interface ReportData {
     user_id:UsersList,
     date_entry:string,
-    facilitator:string, 
     title:string, 
     type_beneficiary:string, 
     count_male:number, 
@@ -18,7 +19,7 @@ export interface ReportData {
     fac_staff:string,
     role:string, 
     cost_fund:number,
-    _file:File
+    file:File
 }
 
 
@@ -31,30 +32,28 @@ export interface UsersList {
 }
 
 export interface Particulars {
-    particular_id:number,
+    particulars_id:number,
     particulars:string
 }
 
 export interface ReportCount {
+    user_id: string;
+    particular_id:string,
     particulars:Particulars['particulars'],
-    name:UsersList['name'],
-    count:number
+    // name:UsersList['name'],
+    count:string
 
 }
 
 export interface Data {
+    ParticularsId: string;
     Particulars: string;
-    CAAD: string;
-    CAS: string;
-    COBE: string;
-    COE: string;
-    COED: string;
-    COT: string;
-    GS: string;
-    BURAUEN: string;
-    CARIGARA: string;
-    DULAG: string;
-    ORMOC: string;
-    TANAUAN: string;
-  }
+    [key: string]: string | number 
+}
+
+export interface Downloadables {
+    df_id:number,
+    _filename:string,
+    uploaded_at:string
+}
   

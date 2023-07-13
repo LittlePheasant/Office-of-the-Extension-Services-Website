@@ -32,6 +32,7 @@ import { DownloadsComponent } from '../modules/downloads/downloads.component';
 import { EditReportComponent } from '../modules/edit-report/edit-report.component';
 import { RegisterComponent } from '../auth/register/register.component';
 import { NgxPrintModule } from 'ngx-print';
+import { ViewDownloadsComponent } from '../modules/view-downloads/view-downloads.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { NgxPrintModule } from 'ngx-print';
     LoginComponent,
     DownloadsComponent,
     EditReportComponent,
-    RegisterComponent
+    RegisterComponent,
+    ViewDownloadsComponent,
   ],
   imports: [
     CommonModule,

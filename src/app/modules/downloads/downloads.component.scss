@@ -1,0 +1,21 @@
+.title {
+    text-align: center;
+}
+
+.file-container {
+    width: 600px;
+    height: 233px;
+    border: 4px dotted black;
+
+    .file {
+        opacity: 0;
+        padding: 5rem;
+        width: auto;
+        height: 5rem;
+        margin-bottom: 10px;
+    }
+}
+
+.dialogbtn {
+    margin-top: 20px;
+}

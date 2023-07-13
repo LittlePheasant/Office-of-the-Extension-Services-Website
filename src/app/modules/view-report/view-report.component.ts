@@ -27,14 +27,16 @@ export class ViewReportComponent {
   filteredData: any[] = [];
   status!:string;
   userrole!:string;
+  fileName!: string;
   
   columns = ['index', 'date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
              'poor_rate', 'fair_rate', 'satisfactory_rate', 'verysatisfactory_rate', 'excellent_rate',
-             'duration', 'serviceOpt', 'partners', 'fac_staff', 'role', 'cost_fund', 'actions'];
+             'duration', 'serviceOpt', 'partners', 'fac_staff', 'role', 'cost_fund', '_file', 'actions'];
              
 
   // Declare the data source
   data = new MatTableDataSource<Data>();
+
 
    // Declare the paginator and sort
    @ViewChild('paginator') paginator!: MatPaginator;
@@ -62,7 +64,7 @@ export class ViewReportComponent {
       .subscribe(
         (response: any) => {
           this.programOptions = response;
-          console.log(this.programOptions);
+          //console.log(this.programOptions);
 
         },
         error => {
@@ -82,9 +84,10 @@ export class ViewReportComponent {
       (response: any) => {
         //this._api.reportData = response;
         //console.log(response.data);
+        
         this.filteredData=response.data;
-        console.log(this.filteredData);
-
+        //console.log(this.filteredData);
+        
         this.userrole = response.userRole;
 
       }
@@ -142,20 +145,27 @@ export class ViewReportComponent {
     this._api.fetchReportDetailsById(userid, entry_id).subscribe((response: any) => {
       const _dialogRef = this._dialog.open(EditReportComponent, {
         data: {
-          reportDetails: response
+          reportDetails: response.data
         }
       });
   
       console.log(_dialogRef);
+      console.log(response)
     });
+    
   };
 
-  isLocked(entry_id:any){
-    const userid = localStorage.getItem('userid');
-    
-    this._api.updateStatus(userid, entry_id)
-     .subscribe((response: any) => {
+  isLocked(){
 
+  }
+
+  lock(entry_id:any){
+    const userid = localStorage.getItem('userid');
+    this.status = "LOCKED";
+    const statusUpdate = this.status;
+    this._api.updateStatus(entry_id, statusUpdate)
+     .subscribe((response: any) => {
+        console.log(response);
     })
   };
 

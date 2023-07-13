@@ -1,0 +1,71 @@
+<div class="row">
+
+    <mat-card class="card">
+
+        <div class="title">
+
+            <div class="title-banner">
+                <strong> DOWNLOADABLES </strong>
+            </div>
+
+            <div class="align-right">
+                <div class="add-btn">
+                    <a (click)="uploadFileDialog()" *ngIf="isAdmin()" style="text-decoration: none;">
+                        <button mat-button>
+                            <span class="material-symbols-rounded" style="color: green;">
+                                add_task
+                            </span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+        <br>
+        <mat-card>
+
+            <mat-table matSort [dataSource]="filteredData" id="print-section" class="tablecontainer">
+
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="df_id">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let element" ngIf="false">{{element.df_id}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="_filename">
+                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let element">{{element._filename}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="uploaded_at">
+                    <th mat-header-cell *matHeaderCellDef>Uplaoded at</th>
+                    <td mat-cell *matCellDef="let element">{{element.uploaded_at}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            <a type="button" (click)="download(element.df_id)">
+                                <span class="material-symbols-outlined" style="color: rgb(179, 0, 0);">
+                                    download
+                                </span>
+                            </a>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+            </mat-table>
+
+        </mat-card>
+
+    </mat-card>
+
+</div>

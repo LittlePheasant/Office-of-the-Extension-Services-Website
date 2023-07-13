@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { AddReportComponent } from '../add-report/add-report.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-report',
@@ -15,40 +16,47 @@ export class EditReportComponent implements OnInit {
   editReportForm!:FormGroup;
   dataLoaded: boolean=false;
   programOptions: any[] = [];
+  fileFetched:any;
+  fileDetails!:File;
+  formattedDate: any = '';
+  fileUpload!:File;
 
   constructor (private _fb: FormBuilder,
     private _api: ApiService,
+    private datePipe: DatePipe,
     private router:Router,
     private activateRoute: ActivatedRoute,
     private _dialogRef: MatDialogRef<EditReportComponent>,
    @Inject(MAT_DIALOG_DATA) public data: any){
 
     this.editReportForm = this._fb.group({
-      userid: [data.reportDetails[0].userid],
-      program_id: [data.reportDetails[0].program_id],
-      date_entry: [data.reportDetails[0].date_entry],
-      // facilitator: [data.reportDetails[0].facilitator],
-      title: [data.reportDetails[0].title],
-      type_beneficiary: [data.reportDetails[0].type_beneficiary],
-      count_male: [data.reportDetails[0].count_male],
-      count_female: [data.reportDetails[0].count_female],
-      poor_rate: [data.reportDetails[0].poor_rate],
-      fair_rate: [data.reportDetails[0].fair_rate],
-      satisfactory_rate: [data.reportDetails[0].satisfactory_rate],
-      verysatisfactory_rate: [data.reportDetails[0].verysatisfactory_rate],
-      excellent_rate: [data.reportDetails[0].excellent_rate],
-      duration: [data.reportDetails[0].duration],
-      unitOpt: [data.reportDetails[0].unitOpt],
-      serviceOpt: [data.reportDetails[0].serviceOpt],
-      partners: [data.reportDetails[0].partners],
-      fac_staff: [data.reportDetails[0].fac_staff],
-      role: [data.reportDetails[0].role],
-      cost_fund: [data.reportDetails[0].cost_fund],
-      _file: [data.reportDetails[0]._file || null]
+      entry_id: [data.reportDetails.entry_id],
+      user_id: [data.reportDetails.user_id],
+      program_id: [data.reportDetails.program_id],
+      date_entry: [data.reportDetails.date_entry],
+      title: [data.reportDetails.title],
+      type_beneficiary: [data.reportDetails.type_beneficiary],
+      count_male: [data.reportDetails.count_male],
+      count_female: [data.reportDetails.count_female],
+      poor_rate: [data.reportDetails.poor_rate],
+      fair_rate: [data.reportDetails.fair_rate],
+      satisfactory_rate: [data.reportDetails.satisfactory_rate],
+      verysatisfactory_rate: [data.reportDetails.verysatisfactory_rate],
+      excellent_rate: [data.reportDetails.excellent_rate],
+      duration: [data.reportDetails.duration],
+      unitOpt: [data.reportDetails.unitOpt],
+      serviceOpt: [data.reportDetails.serviceOpt],
+      partners: [data.reportDetails.partners],
+      fac_staff: [data.reportDetails.fac_staff],
+      role: [data.reportDetails.role],
+      cost_fund: [data.reportDetails.cost_fund],
+      file: [data.reportDetails.file]
     });
 
     // Set the dataLoaded flag to true
     this.dataLoaded = true;
+
+    this.fileFetched = data.reportDetails.file;
    }
   
   
@@ -64,22 +72,91 @@ export class EditReportComponent implements OnInit {
           console.log('Error retrieving program options.');
         }
       );
-     
+      const fileObj: File = this.fileFetched;
+      this.fileUpload = fileObj;
+      console.log(this.fileUpload);
+
   }
 
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-    console.log(file.name); // logs the file name to the console
+    this.fileFetched = file.name;
+    this.fileDetails = file;
+    console.log(this.fileDetails); // logs the file name to the console
   }
 
 
-  postdata(form:any) {
-
-    const id = this.data.reportDetails[0].entry_id;
+  postdata() {
+    const id = this.data.reportDetails.entry_id;
     const data = this.editReportForm.value;
+
+    this.formattedDate = this.datePipe.transform(data.date_entry, 'yyyy-MM-dd');
+
+    const poorRate = data.poor_rate;
+    const fairRate = data.fair_rate;
+    const satisfactoryRate = data.satisfactory_rate;
+    const verySatisfactoryRate = data.verysatisfactory_rate;
+    const excellentRate = data.excellent_rate;
+    const countMale = data.count_male;
+    const countFemale = data.count_female;
+
+    // Perform the sum calculations
+    const sumSatisfactionRates = poorRate + fairRate + satisfactoryRate + verySatisfactoryRate + excellentRate;
+    const sumCount = countMale + countFemale;
+
+    const formData = new FormData();
+    formData.set('user_id', data.user_id);
+    formData.set('program_id', data.program_id);
+    formData.set('date_entry', this.formattedDate);
+    formData.set('title', data.title);
+    formData.set('type_beneficiary', data.type_beneficiary);
+    formData.set('count_male', countMale);
+    formData.set('count_female', countFemale);
+    formData.set('poor_rate', poorRate);
+    formData.set('fair_rate', fairRate);
+    formData.set('satisfactory_rate', satisfactoryRate);
+    formData.set('verysatisfactory_rate', verySatisfactoryRate);
+    formData.set('excellent_rate', excellentRate);
+    formData.set('duration', data.duration);
+    formData.set('unitOpt', data.unitOpt);
+    formData.set('serviceOpt', data.serviceOpt);
+    formData.set('partners', data.partners);
+    formData.set('fac_staff', data.fac_staff);
+    formData.set('role', data.role);
+    formData.set('cost_fund', data.cost_fund);
+
+    if (this.fileDetails) {
+      formData.set('file', this.fileDetails);
+      console.log('formData1', formData.get('file'));
+    } else {
+      formData.set('file', this.fileUpload);
+      console.log('formData2', formData.get('file'));
+    }
+
+    
+
+    
+    // const formDataObject: any = {};
+    // formData.forEach((value: any, key: any) => {
+    //   if (key === 'file') {
+    //     formDataObject[key] = {
+    //       name: value.name,
+    //       type: value.type,
+    //       size: value.size,
+    //       lastModified: value.lastModified,
+    //       lastModifiedDate: value.lastModifiedDate
+    //     };
+    //   } else {
+    //       formDataObject[key] = value;
+    //   }
+    // })
+
+    // console.log(formDataObject);
+
     // Perform PUT request
-    this._api.updateReport(id, data).subscribe(
+    
+    this._api.updateReport(id, formData).subscribe(
       (response: any) => {
         console.log(response);
         alert("Updated Successfully!");
@@ -162,8 +239,8 @@ export class EditReportComponent implements OnInit {
     return this.editReportForm.get('cost_fund');
   }
 
-  get _file() { 
-    return this.editReportForm.get('_file');
+  get file() { 
+    return this.editReportForm.get('file');
   }
 
   

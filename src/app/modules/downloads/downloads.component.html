@@ -1,1 +1,21 @@
-<p>downloads works!</p>
+<div mat-dialog-title class="title">
+    <h1><b>UPLOAD FILE</b></h1>
+</div>
+
+<div mat-dialog-content class="content">
+
+    <input type="hidden" name="user_id">
+    <div class="file-container" *ngIf="!file">
+        <input type="file" (change)="getfile($event)" name="file" id="file" class="file">
+    </div>
+
+    <div *ngIf="file">
+        File name: {{file.name}}<br>
+        <button mat-raised-button color="warn" (click)="file = undefined">Clear File</button>
+    </div>
+
+    <div mat-dialog-actions class="dialogbtn">
+        <button mat-raised-button color="warn" type="button" (click)="dialogClose()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" (click)="upload()" name="upload">Save</button>
+    </div>
+</div>

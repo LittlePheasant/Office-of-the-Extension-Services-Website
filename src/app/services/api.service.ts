@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ReportCount, ReportData, UsersList } from '../models/models';
+import { Downloadables, ReportCount, ReportData, UsersList } from '../models/models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -30,12 +30,21 @@ export class ApiService {
   toLogin(credentials:any){
     return this.httpClient.post(this.baseUrl + '/login.php', credentials);
   }
+
+  uploadFile(file:any){
+    return this.httpClient.post(this.baseUrl + '/uploadFile.php', file);
+  }
+
   viewUsersList(){
     return this.httpClient.get<UsersList[]>(this.baseUrl + '/getUsers.php');
   }
   
   viewReport(userID:any) {
     return this.httpClient.get<ReportData[]>(this.baseUrl + '/viewReport.php?id=' + userID);
+  }
+
+  viewUploadedFiles(userid:any){
+    return this.httpClient.get<Downloadables[]>(`${this.baseUrl}/viewUploadedFiles.php?id=${userid}`);
   }
 
   getParticularsLength(){
@@ -54,20 +63,22 @@ export class ApiService {
     return this.httpClient.get(`${this.baseUrl}/getPrograms.php?id=${userid}`);
   }
 
-  addReport(data:any){
-    return this.httpClient.post(this.baseUrl + '/insertReport.php', data);
+  addReport(data:any):Observable<any>{
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
+    return this.httpClient.post<ReportData[]>(this.baseUrl + '/insertReport.php', data);
   }
 
   fetchReportDetailsById(userid:any, entry_id:any){
-    return this.httpClient.get(`${this.baseUrl}/viewReport.php?userid=${userid}&entry_id=${entry_id}`);
+    return this.httpClient.get(`${this.baseUrl}/viewReport.php?id=${userid}&entry_id=${entry_id}`);
   }
 
-  updateReport(userid:any, data:any){
-    return this.httpClient.put(`${this.baseUrl}/updateReport.php?id=${userid}`, `${data}`);
+  updateReport(entry_id:any, data:any){
+    return this.httpClient.put<ReportData[]>(`${this.baseUrl}/updateReport.php?id=${entry_id}`, data);
   }
 
-  updateStatus(userid:any, data:any){
-    return this.httpClient.put(`${this.baseUrl}/updateReport.php?id=${userid}`, `${data}`);
+  updateStatus(entry_id:any, statusUpdate:any){
+    return this.httpClient.put(`${this.baseUrl}/updateReport.php?id=${entry_id}`, `${statusUpdate}`);
   }
 
   deleteReport(id:any) {
