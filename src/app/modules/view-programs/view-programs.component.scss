@@ -27,6 +27,12 @@
 
 }
 
+.paginator {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: 5px;
+}
+
 .tablecontainer td, .tablecontainer th {
     border: 1px solid #ffffff;
     padding: 6px;
@@ -47,6 +53,7 @@
     padding-bottom: 5px;
     text-align: center;
     background-color: #0c801f;
+
     color: white;
 }
 
@@ -82,9 +89,9 @@ mat-table {
 }
 
 .right {
-    p{
-        float: right;
-    }
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
     
 }
 
@@ -130,20 +137,20 @@ mat-table {
     position: fixed;
 }
 
-// .card {
-//     margin-bottom: 20px;
-//     //top: 176px;
-//     margin-left: 10px;
-//     justify-items: center;
-//     padding-left: 11px;
-//     padding-right: 10px;
-//     display: flex;
-//     flex-direction: column;
-//     flex: 1;
-// }
+.card {
+    margin-bottom: 20px;
+    //top: 176px;
+    margin-left: 10px;
+    justify-items: center;
+    padding-left: 11px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
 
 .cardcontainer {
     position: relative;
     top: 0;
-    height: 561px;
+    height: 500px;
 }

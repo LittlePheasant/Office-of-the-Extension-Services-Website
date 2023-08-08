@@ -12,13 +12,20 @@
 
       <mat-list>
         <mat-list-item>
-            <a routerLink="home" routerLinkActive="active" class="sidenav_anchor">
+          <a routerLink="view-profile" routerLinkActive="active" (click)="newClass('Profile')" class="sidenav_anchor">
+            <i class="material-icons">person</i>
+            Profile
+          </a>
+        </mat-list-item>
+        <hr>
+        <!-- <mat-list-item>
+            <a routerLink="home" routerLinkActive="active" (click)="newClass('Home')" class="sidenav_anchor">
               <i class="material-icons">home</i>
               Home
             </a>
-        </mat-list-item>
+        </mat-list-item> -->
         <mat-list-item>
-            <a routerLink="dashboard" routerLinkActive="active" class="sidenav_anchor">
+            <a routerLink="dashboard" routerLinkActive="active" (click)="newClass('Dashboard')" class="sidenav_anchor">
               <i class="material-icons">dashboard</i>
               Dashboard
             </a>
@@ -31,39 +38,63 @@
         </mat-list-item>
         <mat-list-item>
             <a class="sidenav_anchor">
-              <i class="material-icons">info</i>
-              About Us
+              <mat-menu #dropdownMenu="matMenu">
+                <button mat-menu-item [routerLink]="['./about-us']" fragment="aboutus" (click)="newClass('About')">
+                  About Us
+                </button>
+                <button mat-menu-item [routerLink]="['./about-us']" fragment="urdea" (click)="newClass('University Research & Development and Extension Agenda')"> 
+                  URDEA
+                </button>
+              </mat-menu>
+              <button mat-icon-button [matMenuTriggerFor]="dropdownMenu" class="btnMenu">
+                <i class="material-icons">info</i>About
+              </button>
             </a>
         </mat-list-item>
+        <mat-list-item>
+          <a class="sidenav_anchor">
+            <i class="material-icons">logout</i>
+            Logout
+          </a>
+      </mat-list-item>
       </mat-list>
     </mat-drawer>
   
     <div class="example-sidenav-content">
 
-      <mat-toolbar style="background-color: #900303 !important; height: 50px;">
+      <mat-toolbar class="toolbar">
         <div class="col-sm-6 col-md-6 col-lg-3">
-          <button type="button" mat-button (click)="drawer.toggle()" class="example-icon">
-            <mat-icon>menu</mat-icon>
+          <button type="button" mat-button (click)="toggleDrawer()" (click)="drawer.toggle()" class="example-icon">
+            <i class="material-icons">
+              {{ drawerOpened ? 'close' : 'menu' }}
+            </i>
           </button>
-          <span class="title">Office of the Extension Services</span>
+          <span class="title">{{Currentnav}}</span>
         </div>
         
         <span class="example-spacer"></span>
-        <!-- <button mat-icon-button class="example-icon">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button mat-icon-button class="example-icon">
-          <mat-icon>share</mat-icon>
-        </button> -->
 
-        <!-- <div class="profile-card" style="display: inline-flex; align-items: center;">
-          <img src=".\assets\images\extension_logo.png" alt="Extension Logo"
-               style="border-radius: 50%; vertical-align: middle; height: 50px; padding-right: 5px;">
-          <div class="header" style="display: inline;">
-            <h5 style="color: #fff;">User Name</h5>
-          </div>
+        <div class="toolbar-right">
+          <img [src]="userImg" alt="User Image" class="imageProfile">
           
-        </div> -->
+          <a class="example-icon">
+            <mat-menu #dropdownMenuToolbar="matMenu">
+              <button mat-menu-item>
+                <a routerLink="view-profile" routerLinkActive="active" (click)="newClass('Profile')" style="text-decoration: none; color: black;">
+                  <i class="material-icons">person</i>Profile
+                </a> 
+              </button>
+              <button mat-menu-item>
+                <a href="" style="text-decoration: none; color: black;">
+                  <i class="material-icons">logout</i>Logout
+                </a>
+              </button>
+            </mat-menu>
+            <button mat-button [matMenuTriggerFor]="dropdownMenuToolbar" class="example-icon">
+              <i class="material-icons">arrow_drop_down</i>
+            </button>
+          </a>
+        </div>
 
       </mat-toolbar>
 
@@ -72,8 +103,196 @@
     <div class="row">
       <router-outlet></router-outlet>
     </div>
+    <!-- <footer>
+      <div class="row">
+        <div class="large-3 columns" role="complementary">
+          <aside id="text-4" class="widget widget_text">
+            <div class="textwidget"><div class="text-center">
+              <a href="https://www.evsu.edu.ph/">
+                <noscript><img class="aligncenter wp-image-5621 size-medium" src="https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-300x178.png" alt="" width="300" height="178" srcset="https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-300x178.png 300w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-768x456.png 768w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent.png 1015w" sizes="(max-width: 300px) 100vw, 300px" />
+                </noscript><img class="aligncenter wp-image-5621 size-medium lazyloaded" src="https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-300x178.png" data-src="https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-300x178.png" alt="" width="300" height="178" data-srcset="https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-300x178.png 300w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-768x456.png 768w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent.png 1015w" data-sizes="(max-width: 300px) 100vw, 300px" sizes="(max-width: 300px) 100vw, 300px" srcset="https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-300x178.png 300w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent-768x456.png 768w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/evsu_main_logo_2_transparent.png 1015w">
+              </a>
+            </div>
+          </div>
+        </aside>
+        <aside id="custom_html-7" class="widget_text widget widget_custom_html">
+          <div class="textwidget custom-html-widget">
+            <div class="su-service text-white">
+              <div class="su-service-title">
+                <i class="material-icons" style="font-size:32px;color:#f6c500">location_on</i> <p>Arch. Lino R. Gonzaga Avenue, <br>Tacloban City, Philippines 6500</p>
+              </div>
+              <div class="su-service-content su-u-clearfix su-u-trim" style="padding-left:46px">
+              </div>
+            </div>
+            <div class="su-service text-white">
+              <div class="su-service-title">
+                <i class="material-icons" style="font-size:32px;color:#f6c500">phone</i> <p>Telefax: +63 53 888 2565</p>
+              </div>
+              <div class="su-service-content su-u-clearfix su-u-trim" style="padding-left:46px">
+              </div>
+            </div>
+            <div class="su-service text-white">
+              <div class="su-service-title">
+                <i class="material-icons" style="font-size:32px;color:#f6c500">mail</i> <p>president@evsu.edu.ph</p>
+              </div>
+              <div class="su-service-content su-u-clearfix su-u-trim" style="padding-left:46px"></div>
+            </div>
+          </div>
+        </aside>
+        </div>
+        <div class="large-3 columns" role="complementary">
+          <aside id="nav_menu-28" class="widget widget_nav_menu">
+            <h3 class="widget-title">COLLEGES</h3>
+            <div class="menu-colleges-footer-menu-container">
+              <ul id="menu-colleges-footer-menu" class="menu">
+                <li id="menu-item-7801" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7801">
+                  <a href="https://www.evsu.edu.ph/college-of-architecture-and-allied-discipline/">College of Architecture and Allied Discipline</a>
+                </li>
+                <li id="menu-item-7802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7802">
+                  <a href="https://www.evsu.edu.ph/college-of-arts-and-sciences/">College of Arts and Sciences</a>
+                </li>
+                <li id="menu-item-7803" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7803">
+                  <a href="https://www.evsu.edu.ph/college-of-business-and-entrepreneurship/">College of Business and Entrepreneurship</a>
+                </li>
+                <li id="menu-item-7804" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7804">
+                  <a href="https://www.evsu.edu.ph/college-of-education/">College of Education</a>
+                </li>
+                <li id="menu-item-7805" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7805">
+                  <a href="https://www.evsu.edu.ph/college-of-engineering/">College of Engineering</a>
+                </li>
+                <li id="menu-item-7806" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7806">
+                  <a href="https://www.evsu.edu.ph/college-of-technology/">College of Technology</a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+          <aside id="custom_html-10" class="widget_text widget widget_custom_html">
+            <h3 class="widget-title">OFFICE EMAIL ADDRESSES</h3>
+            <div class="textwidget custom-html-widget">
+              <ul style="list-style-type:none;margin-left:15px">
+                <li>
+                  <div style="margin-bottom:7px"> 
+                    <small>Registrar Office:</small><br> 
+                    <a href="mailto:registrar@evsu.edu.ph">registrar@evsu.edu.ph</a>
+                  </div>
+                </li>
+                <li>
+                  <div style="margin-bottom:7px">
+                    <small>Human Resource Management Office:</small><br> 
+                    <a href="mailto:hrmo@evsu.edu.ph">hrmo@evsu.edu.ph</a>
+                  </div>
+                </li>
+                <li>
+                  <div style="margin-bottom:7px">
+                    <small>Guidance Office:</small><br> 
+                    <a href="mailto:main.guidance@evsu.edu.ph">main.guidance@evsu.edu.ph</a>
+                  </div>
+                </li>
+                <li>
+                  <div style="margin-bottom:7px"><small>Student Affairs Office:</small><br> 
+                    <a href="mailto:saso.sao@evsu.edu.ph">saso.sao@evsu.edu.ph</a>
+                  </div>
+                </li>
+                <li>
+                  <div style="margin-bottom:7px">
+                    <small>Alumni Relations &amp; Affairs Office:</small><br> 
+                    <a href="mailto:alumnirelations@evsu.edu.ph">alumnirelations@evsu.edu.ph</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+        <div class="large-3 columns" role="complementary">
+          <aside id="nav_menu-29" class="widget widget_nav_menu">
+            <h3 class="widget-title">GRADUATE</h3>
+            <div class="menu-graduate-footer-menu-container">
+              <ul id="menu-graduate-footer-menu" class="menu">
+                <li id="menu-item-7807" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7807">
+                  <a href="https://www.evsu.edu.ph/graduate-school/">Graduate School</a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+          <aside id="nav_menu-30" class="widget widget_nav_menu">
+            <h3 class="widget-title">CAMPUSES</h3>
+            <div class="menu-campuses-footer-menu-container">
+              <ul id="menu-campuses-footer-menu" class="menu">
+                <li id="menu-item-7808" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7808">
+                  <a href="https://burauen.evsu.edu.ph/">Burauen</a>
+                </li>
+                <li id="menu-item-14412" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14412">
+                  <a href="#">Carigara</a>
+                </li>
+                <li id="menu-item-14414" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14414">
+                  <a href="#">Dulag</a>
+                </li>
+                <li id="menu-item-14413" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14413">
+                  <a href="#">Ormoc</a>
+                </li>
+                <li id="menu-item-7812" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7812">
+                  <a href="https://tanauan.evsu.edu.ph/">Tanauan</a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+          <aside id="nav_menu-31" class="widget widget_nav_menu">
+            <h3 class="widget-title">ABOUT THE UNIVERSITY</h3>
+            <div class="menu-about-university-footer-menu-container">
+              <ul id="menu-about-university-footer-menu" class="menu">
+                <li id="menu-item-7813" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7813">
+                  <a href="https://www.evsu.edu.ph/philosophy/">Philosophy</a>
+                </li>
+                <li id="menu-item-7814" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7814">
+                  <a href="https://www.evsu.edu.ph/brief-history/">Brief History</a>
+                </li>
+                <li id="menu-item-7815" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7815">
+                  <a href="https://www.evsu.edu.ph/vision-mission-core-values/">Vision, Mission &amp; Core Values</a>
+                </li>
+                <li id="menu-item-7816" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7816">
+                  <a href="https://www.evsu.edu.ph/hymn/">EVSU Hymn</a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+        <div class="large-3 columns" role="complementary">
+          <div id="nav_menu-32" class="widget widget_nav_menu">
+            <h3 class="widget-title">EXTRAS</h3>
+            <div class="menu-extras-footer-menu-container">
+              <ul id="menu-extras-footer-menu" class="menu">
+                <li id="menu-item-7817" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7817">
+                  <a href="https://www.evsu.edu.ph/university-career/">Careers</a>
+                </li>
+                <li id="menu-item-7818" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7818">
+                  <a href="https://www.evsu.edu.ph/downloads/">Downloads</a>
+                </li>
+                <li id="menu-item-7819" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7819">
+                  <a href="https://www.evsu.edu.ph/sitemap/">Sitemap</a>
+                </li>
+                <li id="menu-item-7821" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7821">
+                  <a href="https://www.evsu.edu.ph/contact-us/">Contact Us</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div id="text-5" class="widget widget_text">
+            <div class="textwidget">
+              <div class="footer-transparency-seal-logo">
+                <a href="https://www.evsu.edu.ph/transparency-seal/">
+                  <noscript><img class="aligncenter wp-image-5632 size-thumbnail" src="https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo-150x150.png" alt="" width="150" height="150" srcset="https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo-150x150.png 150w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo.png 200w" sizes="(max-width: 150px) 100vw, 150px" />
+                  </noscript><img class="aligncenter wp-image-5632 size-thumbnail lazyloaded" src="https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo-150x150.png" data-src="https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo-150x150.png" alt="" width="150" height="150" data-srcset="https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo-150x150.png 150w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo.png 200w" data-sizes="(max-width: 150px) 100vw, 150px" sizes="(max-width: 150px) 100vw, 150px" srcset="https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo-150x150.png 150w, https://www.evsu.edu.ph/wp-content/uploads/2018/01/transparency_seal_logo.png 200w">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer> -->
   </mat-drawer-container>
 
   
 </mat-drawer-container>
+
+
 

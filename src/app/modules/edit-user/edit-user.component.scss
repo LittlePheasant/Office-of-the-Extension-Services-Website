@@ -2,12 +2,6 @@
     text-align: center;
 }
 
-.gender_label_count, .rate_group, .duration {
-    mat-form-field {
-        margin-right: 11px;
-    }
-}
-
 .file-container {
     width: 100%;
     height: 50px;
@@ -24,3 +18,10 @@
         //margin-bottom: 10px;
     }
 }
+
+.top-snackbar {
+    top: 0;
+    height: 50px;
+    color: white;
+    font-weight: bold;
+  }

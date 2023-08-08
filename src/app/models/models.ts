@@ -28,7 +28,8 @@ export interface UsersList {
     name:string,
     username:string, 
     user_password:string, 
-    user_role:string
+    user_role:string,
+    file:File
 }
 
 export interface Particulars {

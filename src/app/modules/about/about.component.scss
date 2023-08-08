@@ -1,0 +1,29 @@
+.card {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    justify-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    box-shadow: 0px 1px 0px -1px rgba(0, 0, 0, 0.2), 
+                0px 0px 1px 0px rgba(0, 0, 0, 0.14), 
+                1px -1px 0px 0px rgba(0, 0, 0, 0.12);
+}
+
+p {
+    margin: 10px;
+    padding-top: 10px;
+    font-size: large;
+    line-height: 2;
+}
+
+li {
+    font-size: large;
+    line-height: 45px;
+    margin-left: 30px;
+}
+
+.title {
+    padding-top: 10px;
+}

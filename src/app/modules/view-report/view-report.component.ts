@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ReportData } from 'src/app/models/models';
 import { AddReportComponent } from '../add-report/add-report.component';
 import { EditReportComponent } from '../edit-report/edit-report.component';
-//import { NgxPrintService } from 'ngx-print';
+import { NgxPrintDirective } from 'ngx-print';
 
 @Component({
   selector: 'app-view-report',
@@ -24,12 +24,16 @@ export class ViewReportComponent {
   id:any;
   programOptions: any[] = [];
   selectedProgramId!: string;
+  isProgramselected!:boolean;
+  collegecampusName:any;
+  progDesc:any;
   filteredData: any[] = [];
+  entryStatusArray: any[] = [];
   status!:string;
   userrole!:string;
   fileName!: string;
   
-  columns = ['index', 'date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
+  columns = ['index', 'name', 'date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
              'poor_rate', 'fair_rate', 'satisfactory_rate', 'verysatisfactory_rate', 'excellent_rate',
              'duration', 'serviceOpt', 'partners', 'fac_staff', 'role', 'cost_fund', '_file', 'actions'];
              
@@ -41,12 +45,14 @@ export class ViewReportComponent {
    // Declare the paginator and sort
    @ViewChild('paginator') paginator!: MatPaginator;
    @ViewChild(MatSort) sort!: MatSort;
-   //directives!: [NgxPrintDirective]
+   @ViewChild('printTable', { static: false }) printTable!: NgxPrintDirective;
 
   constructor( private _api: ApiService,
                private activateRoute: ActivatedRoute,
                private _fb: FormBuilder,
                private _dialog: MatDialog,){
+
+    this.isProgramselected = true;
     
   }
   ngAfterViewInit(): void {
@@ -56,47 +62,78 @@ export class ViewReportComponent {
   }
   ngOnInit(): void {
 
-    this.adminview();
+    if (this.isProgramselected) {
+      this.viewReports();
+    } else {
+      this.onSelectProgram();
+    }
 
     const userid = localStorage.getItem('userid');
 
     this._api.getPrograms(userid)
       .subscribe(
         (response: any) => {
-          this.programOptions = response;
-          //console.log(this.programOptions);
-
+          this.programOptions = response.data;
         },
         error => {
           console.log('Error retrieving program options.');
         }
       );
 
-      //this.islocked();
+      //this.isLocked();
       this.isAdmin();
 
   }
 
-  adminview(){
+  viewReports(){
     const userid = localStorage.getItem('userid');
     this._api.viewReport(userid)
     .subscribe(
       (response: any) => {
-        //this._api.reportData = response;
-        //console.log(response.data);
-        
         this.filteredData=response.data;
-        //console.log(this.filteredData);
-        
+     
         this.userrole = response.userRole;
+
+        for (const item of this.filteredData) {
+          const entryStatus = {
+            entry_id: item.entry_id,
+            status: item.status
+          };
+          this.entryStatusArray.push(entryStatus);
+        }
+
+        for (const status of this.filteredData) {
+          this.status = status.status;
+        }
 
       }
     );
   };
 
-  // islocked(){
-  //   return this.status === 'LOCKED';
-  // }
+  onSelectProgram() {
+    const userid = localStorage.getItem('userid');
+    if (this.selectedProgramId === 'All') {
+      this.viewReports();
+      this.collegecampusName = '';
+      this.progDesc = '';
+    } else {
+      this._api.viewReportByprogramID(userid, this.selectedProgramId)
+      .subscribe((response:any) => {
+       this.filteredData=response.data;
+       for (const campus_name of this.filteredData) {
+         this.collegecampusName = campus_name.campus_name;
+       }
+ 
+       for (const program_description of this.filteredData) {
+         this.progDesc = program_description.description;
+       }
+ 
+      }, (error:any) => {
+       console.log(error);
+      })
+    }
+
+  }
 
   applyFilter(): void {
     if (this.selectedProgramId) {
@@ -112,20 +149,25 @@ export class ViewReportComponent {
   }
 
   delete(id:number){
-    console.log(id);
-     this._api.deleteReport(id).subscribe(data=>{
-        this.data.data = this.data.data.filter((u: any) => u !== data);
-        console.log(this.data);
+     this._api.deleteReport(id).subscribe((response:any)=>{
+      if(response.success === 1) {
+
+        alert(response.message);
+
+        window.location.reload();
+        
+      } else {
+        alert(response.message);
+      }
+        
      })
 
-     window.location.reload();
   }
 
-  print(id:any) {
-    // Call the print method
-    //this.printService.print();
-    const printSectionId = id;
-    this.print(printSectionId);
+  onPrint() {
+    if (this.printTable) {
+      this.printTable.print();
+    }
   }
 
   addReportDialog(){
@@ -133,7 +175,7 @@ export class ViewReportComponent {
 
     const _dialogRef = this._dialog.open(AddReportComponent);
 
-    console.log(_dialogRef);
+    //console.log(_dialogRef);
     
   }
 
@@ -141,7 +183,6 @@ export class ViewReportComponent {
     const userid = localStorage.getItem('userid');
   
     // Fetch the report details by ID using an API call or any other method
-    // Assuming you have a method to fetch report details, replace 'fetchReportDetailsById' with the appropriate method
     this._api.fetchReportDetailsById(userid, entry_id).subscribe((response: any) => {
       const _dialogRef = this._dialog.open(EditReportComponent, {
         data: {
@@ -149,28 +190,53 @@ export class ViewReportComponent {
         }
       });
   
-      console.log(_dialogRef);
-      console.log(response)
+      // console.log(_dialogRef);
+      //console.log(response);
     });
     
   };
 
-  isLocked(){
-
+  isLocked(id:string){
+    const entry = this.entryStatusArray.find(item => item.entry_id === id);
+    return entry ? entry.status === 'LOCKED' : false;
   }
 
   lock(entry_id:any){
-    const userid = localStorage.getItem('userid');
-    this.status = "LOCKED";
-    const statusUpdate = this.status;
-    this._api.updateStatus(entry_id, statusUpdate)
+    const statusUpdate = 'LOCKED';
+
+    const formData = new FormData();
+
+    formData.append('status' , statusUpdate);
+
+    this._api.updateStatus(entry_id, formData)
      .subscribe((response: any) => {
-        console.log(response);
+        alert('Please confirm to lock.');
+        if (response.success === 1) {
+          alert(response.message);
+          window.location.reload();
+        }
     })
   };
 
+  unlock(entry_id:any){
+    const statusUpdate = '';
+
+    const formData = new FormData();
+
+    formData.append('status' , statusUpdate);
+
+    this._api.updateStatus(entry_id, formData)
+     .subscribe((response: any) => {
+        alert('Please confirm to unlock.');
+        if (response.success === 1) {
+          alert(response.message);
+          window.location.reload();
+        }
+    })
+  }
+
   isAdmin(){
-    return this.userrole === 'Admin';
+    return this.userrole === 'ADMIN';
     
   }
 

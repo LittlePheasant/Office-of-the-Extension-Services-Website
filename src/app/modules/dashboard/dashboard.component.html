@@ -1,113 +1,149 @@
 
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isAdmin()">
-                <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">person</i>
-                      </div>
-                        <h3 class="card-title">
-                            <b>{{totalUsers}}</b>
-                        </h3>
-                        <p class="card-category">Users</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">
-                                visibility
-                            </i>
-                            <a routerLink="../view-userlist" routerLinkActive="active">
-                                <div class="button">
-                                    View   
-                                </div>
-                            </a>
+<div class="row">
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isAdmin()">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-warning card-header-icon">
+                          <div class="card-icon">
+                            <i class="material-icons">person</i>
+                          </div>
+                            <h3 class="card-title">
+                                <b>{{totalUsers}}</b>
+                            </h3>
+                            <p class="card-category">Users</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">
+                                    visibility
+                                </i>
+                                <a routerLink="../view-userlist" routerLinkActive="active">
+                                    <div class="button">
+                                        View   
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">checklist</i>
-                      </div>
-                      <h3 class="card-title">
-                        <b>{{totalAccomplishments}}</b>
-                      </h3>
-                      <p class="card-category">Accomplishment</p>
-                      
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">
-                                visibility
-                            </i>
-                            <a routerLink="../view-report" routerLinkActive="active">
-                                <div class="button">
-                                    View   
-                                </div>
-                            </a>
+    
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-danger card-header-icon">
+                          <div class="card-icon">
+                            <i class="material-icons">volunteer_activism</i>
+                          </div>
+                            <h3 class="card-title">
+                                <b>{{totalPrograms}}</b>
+                            </h3>
+                            <p class="card-category">Programs</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">
+                                    visibility
+                                </i>
+                                <a routerLink="../view-programs" routerLinkActive="active">
+                                    <div class="button">
+                                        View   
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        
-            <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isAdmin()">
-                <div class="card card-stats">
-                    <div class="card-header card-header-danger card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">list_alt</i>
-                      </div>
-                      <h3 class="card-title">
-                        <b>{{totalActualReports}}</b>
-                      </h3>
-                      <p class="card-category">Actual Accomplishment</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">
-                                visibility
-                            </i>
-                            <a routerLink="../view-actual-report" routerLinkActive="active">
-                                <div class="button">
-                                    View   
-                                </div>
-                            </a>
+            
+                <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="isAdmin()">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-success card-header-icon">
+                            <div class="card-icon">
+                                <i [class]="iconToShow === 'checklist' ? 'material-icons' : 'material-icons'">
+                                    {{ iconToShow }}
+                                </i>
+                            </div>
+                            <h3 class="card-title">
+                                <b>{{ totalToShow }}</b>
+                            </h3>
+                            
+                            <mat-select [(ngModel)]="selectedOption" (ngModelChange)="updateContent()">
+                                <mat-option value="accomplishment">Accomplishment</mat-option>
+                                <mat-option value="actualaccomplishment">Actual Accomplishment</mat-option>
+                            </mat-select>
+                
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">
+                                    visibility
+                                </i>
+                                <a [routerLink]="routerLinkToShow" routerLinkActive="active">
+                                    <div class="button">
+                                        View
+                                    </div>
+                                </a>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-info card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">download</i>
-                      </div>
-                      <h3 class="card-title">
-                        <b>{{totalDownloadbles}}</b>
-                      </h3>
-                      <p class="card-category">Downloads</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">
-                                visibility
-                            </i>
-                            <a routerLink="../view-downloads" routerLinkActive="active">
-                                <div class="button">
-                                    View   
-                                </div>
-                            </a>
+    
+                <div class="col-lg-3 col-md-6 col-sm-6" *ngIf="!isAdmin()">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-success card-header-icon">
+                          <div class="card-icon">
+                            <i class="material-icons">checklist</i>
+                          </div>
+                          <h3 class="card-title">
+                            <b>{{totalAccomplishments}}</b>
+                          </h3>
+                          <p class="card-category">Accomplishment</p>
+                          
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">
+                                    visibility
+                                </i>
+                                <a routerLink="../view-report" routerLinkActive="active">
+                                    <div class="button">
+                                        View   
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+            
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-info card-header-icon">
+                          <div class="card-icon">
+                            <i class="material-icons">download</i>
+                          </div>
+                          <h3 class="card-title">
+                            <b>{{totalDownloadbles}}</b>
+                          </h3>
+                          <p class="card-category">Downloads</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">
+                                    visibility
+                                </i>
+                                <a routerLink="../view-downloads" routerLinkActive="active">
+                                    <div class="button">
+                                        View   
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            
             </div>
-        
-        
         </div>
     </div>
 </div>
@@ -145,9 +181,5 @@
         </div>
     </div>
 </div>
-  
 
-<!-- <div class="row">
-    <router-outlet></router-outlet>
-</div> -->
 

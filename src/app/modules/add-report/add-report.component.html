@@ -4,13 +4,20 @@
 </div>
 
 <div mat-dialog-content class="content">
-    <form [formGroup]="addReportForm" (ngSubmit)="postdata()" enctype="multipart/form-data">
+    <form [formGroup]="addReportForm" (ngSubmit)="postdata()" enctype="multipart/form-data" >
         <div class="row">
             <mat-label><b>Program</b></mat-label>
             <mat-form-field appearance="outline">
-              <mat-select name="program_id" formControlName="program_id" placeholder="Choose program">
+              <mat-select name="program_id" formControlName="program_id" placeholder="Choose program" (selectionChange)="onProgramSelectionChange()">
                 <mat-option *ngFor="let program of programOptions" [value]="program.program_id">{{ program.program }}</mat-option>
               </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="row" *ngIf="false">
+            <mat-label ><b>User ID</b></mat-label>
+            <mat-form-field appearance="outline" >
+                <input matInput type="number" name="user_id" formControlName="user_id">
             </mat-form-field>
         </div>
               

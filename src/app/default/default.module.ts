@@ -32,7 +32,14 @@ import { DownloadsComponent } from '../modules/downloads/downloads.component';
 import { EditReportComponent } from '../modules/edit-report/edit-report.component';
 import { RegisterComponent } from '../auth/register/register.component';
 import { NgxPrintModule } from 'ngx-print';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ViewDownloadsComponent } from '../modules/view-downloads/view-downloads.component';
+import { ViewProgramsComponent } from '../modules/view-programs/view-programs.component';
+import { AddProgramComponent } from '../modules/add-program/add-program.component';
+import { EditProgramComponent } from '../modules/edit-program/edit-program.component';
+import { AddUserComponent } from '../modules/add-user/add-user.component';
+import { EditUserComponent } from '../modules/edit-user/edit-user.component';
+import { AboutComponent } from '../modules/about/about.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +55,12 @@ import { ViewDownloadsComponent } from '../modules/view-downloads/view-downloads
     EditReportComponent,
     RegisterComponent,
     ViewDownloadsComponent,
+    ViewProgramsComponent,
+    AddProgramComponent,
+    EditProgramComponent,
+    EditUserComponent,
+    AddUserComponent,
+    AboutComponent,
   ],
   imports: [
     CommonModule,
@@ -73,6 +86,7 @@ import { ViewDownloadsComponent } from '../modules/view-downloads/view-downloads
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatSnackBarModule,
   ]
 })
 export class DefaultModule { }

@@ -1,75 +1,67 @@
 .card {
     margin-bottom: 20px;
     margin-top: 10px;
+    margin-right: 10px;
     justify-items: center;
     padding-left: 10px;
     padding-right: 10px;
-    overflow-x: auto;
+
+    box-shadow: 0px 1px 0px -1px rgba(0, 0, 0, 0.2), 
+                0px 0px 1px 0px rgba(0, 0, 0, 0.14), 
+                1px -1px 0px 0px rgba(0, 0, 0, 0.12);
 }
 
 .tablecontainer {
     text-align:center; 
-    width: 100%;
     border-collapse: collapse;
-    display: table;
 
     color: black;
     padding: 4px;
+    overflow-y: auto;
+    height: 100%;
+
+    box-shadow: 0px 0px 1px -1px rgba(0, 0, 0, 0.2), 
+                0px 0px 1px 0px rgba(0, 0, 0, 0.14), 
+                0px 0px 3px 0px rgba(0, 0, 0, 0.12);
 
 }
 
-.tablecontainer td, .tablecontainer th, .requestcontainer td, .requestcontainer th {
+.tablecontainer td, .tablecontainer th{
     border: 1px solid #ffffff;
     padding: 6px;
     text-align: center;
+    width: 100%;
 }
 
-.tablecontainer tr:nth-child(even), .requestcontainer tr:nth-child(even) {
+.tablecontainer tr:nth-child(even) {
     background-color: #dddddd60;
 }
 
-.tablecontainer tr:hover, .requestcontainer tr:hover {
+.tablecontainer tr:hover{
     background-color: #dddddd93;
 }
 
-.tablecontainer th, .requestcontainer th {
+.tablecontainer th{
     padding-top: 5px;
     padding-bottom: 5px;
-    text-align: center;
     background-color: #a74639;
-
     color: white;
 }
 
-
-.title {
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 14pt;
+mat-table {
+    
+    white-space: pre;
 }
+
+th {
+    text-align: center;
+}
+
 
 .left {
     float: left;
 }
 
-.text {
-    margin-top: 25px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.right {
-    p{
-        float: right;
-    }
-    
-}
-
-
-th{
-    padding-top: 17px;
-    text-align: center;
-}
 
 .searchbar {
     font-size: large;
@@ -80,24 +72,32 @@ th{
 }
 
 .align-right{
-    // padding-bottom: 20px;
-    padding-left: 20px;
-    float: right;
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .add-btn{
     float: right;
     padding-left: 5px;
-    padding-bottom: 20px;
 }
 
 .material-symbols-rounded {
     font-size: 30px;
 }
 
-.bar, .material-symbols-rounded{
-    position: fixed;
+.cardcontainer {
+    position: relative;
+    top: 0;
+    height: 500px;
+}
+
+.card-title {
+    text-align: center;
+}
+
+.imageProfile img{
+    border-radius: 50%;
+    height: 3rem;
 }

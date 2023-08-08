@@ -21,9 +21,13 @@ export class DashboardComponent implements OnInit {
   totalUsers!: number;
   totalActualReports!:number;
   totalDownloadbles!:number;
-  //data=[];
+  totalPrograms!:number;
   userid!: string; //new
   userrole!:string;
+  selectedOption: string = 'accomplishment'; // Set the default option
+  totalToShow: number = 0; // Replace '0' with the appropriate default value
+  iconToShow: string = 'checklist'; // Set the default icon value
+  routerLinkToShow: string = '../view-report'; // Set the default routerLink value
 
   constructor(
     private _api:ApiService,
@@ -33,13 +37,15 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     const userid = localStorage.getItem('userid');
 
     this._api.viewReport(userid)
     .subscribe(
       (response: any) => {
         this.totalAccomplishments = response.data.length;
+
+        this.totalToShow = this.totalAccomplishments;
 
         //console.log(this.totalAccomplishments)
 
@@ -53,15 +59,14 @@ export class DashboardComponent implements OnInit {
     this._api.viewUsersList()
     .subscribe(
       (response: any) => {
-        console.log(response);
-        this.totalUsers = response.length;
+        this.totalUsers = response.data.length;
+        
       }
     );
 
     this._api.getParticularsLength()
     .subscribe(
       (response: any) => {
-        console.log(response);
         this.totalActualReports = response.length;
       }
     );
@@ -73,11 +78,20 @@ export class DashboardComponent implements OnInit {
 
       }
     );
+    
+    this._api.getPrograms(userid)
+    .subscribe(
+      (response:any) => {
+        this.totalPrograms = response.data.length;
+        //console.log(response);
+      }
+    );
 
     this.isAdmin();
 
     this.loadChart();
-
+    
+    this.updateContent();
 
   };
 
@@ -150,43 +164,43 @@ export class DashboardComponent implements OnInit {
           chartData.push({
             name: response[i].name,
             x: i,
-            y: parseInt(response[i].count),
+            y: parseFloat(response[i].count),
           });
         }
 
               // Define options for chart 2
-    const options2: Highcharts.Options = { 
-      chart: { type: 'column' },
-      title: { text: 'Output Indicator 2' },
-      xAxis: { type: 'category' },
-      yAxis: { title: {
-        text: ''
-        }
-      },
-      plotOptions: {
-        series: {
-            borderWidth: 0,
-            dataLabels: {
-                enabled: true,
-                //format: '{point.y:.1f}%'
+        const options2: Highcharts.Options = { 
+          chart: { type: 'column' },
+          title: { text: 'Output Indicator 2' },
+          xAxis: { type: 'category' },
+          yAxis: { title: {
+            text: ''
             }
-        }
-      },
-      accessibility: {
-        enabled: true,
-      },
-      series: [
-        {
-          type: 'column',
-          name: 'Number of Trainees weighted by the length of training',
-          data: chartData,
-          color: '#FF00FF'
-        },
-      ],
-    };
-        // Create chart 2
-    const container2 = this.elementRef.nativeElement.querySelector('#chart2');
-    Highcharts.chart(container2, options2);
+          },
+          plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.2f}'
+                }
+            }
+          },
+          accessibility: {
+            enabled: true,
+          },
+          series: [
+            {
+              type: 'column',
+              name: 'Number of Trainees weighted by the length of training',
+              data: chartData,
+              color: '#FF00FF'
+            },
+          ],
+        };
+            // Create chart 2
+        const container2 = this.elementRef.nativeElement.querySelector('#chart2');
+        Highcharts.chart(container2, options2);
       }
     });
 
@@ -249,7 +263,7 @@ export class DashboardComponent implements OnInit {
           chartData.push({
             name: response[i].name,
             x: i,
-            y: parseInt(response[i].count),
+            y: parseFloat(response[i].count),
           });
         }
 
@@ -267,7 +281,7 @@ export class DashboardComponent implements OnInit {
             borderWidth: 0,
             dataLabels: {
                 enabled: true,
-                format: '{point.y:.1f}%'
+                format: '{point.y:.2f}%'
             }
         }
       },
@@ -291,7 +305,20 @@ export class DashboardComponent implements OnInit {
   };
 
   isAdmin(){
-    return this.userrole === 'Admin';
+    return this.userrole === 'ADMIN';
     
   }
+
+  updateContent() {
+    if (this.selectedOption === 'accomplishment') {
+        this.totalToShow = this.totalAccomplishments;
+        this.iconToShow = 'checklist';
+        this.routerLinkToShow = '../view-report';
+    } else {
+        this.totalToShow = this.totalActualReports;
+        this.iconToShow = 'list_alt';
+        this.routerLinkToShow = '../view-actual-report';
+    }
+}
+
 }

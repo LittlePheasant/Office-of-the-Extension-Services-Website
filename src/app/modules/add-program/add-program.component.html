@@ -1,0 +1,39 @@
+
+<div mat-dialog-title class="title">
+    <h1><b>ADD PROGRAM FORM</b></h1>
+</div>
+
+<div mat-dialog-content class="content">
+    <form [formGroup]="addProgramForm" (ngSubmit)="postdata()">
+              
+        <div class="row">
+            <mat-label ><b>College/Campus</b></mat-label>
+            <mat-form-field appearance="outline">
+                <mat-select name="user_id" formControlName="user_id" placeholder="Choose College/Campus">
+                  <mat-option *ngFor="let user of userOptions" [value]="user.user_id">{{ user.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+        <div class="row">
+            <mat-label><b>Program Name</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" placeholder="Write in full"
+                name="prog_name" formControlName="prog_name">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-label><b>Program Description</b></mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" placeholder="Write in full"
+                name="prog_desc" formControlName="prog_desc">
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions class="dialogbtn">
+            <button mat-raised-button type="button" (click)="dialogClose()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" name="upload">Save</button>
+        </div>
+    </form>
+</div>

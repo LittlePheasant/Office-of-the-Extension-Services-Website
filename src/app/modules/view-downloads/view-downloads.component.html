@@ -27,8 +27,8 @@
             <mat-table matSort [dataSource]="filteredData" id="print-section" class="tablecontainer">
 
                 <ng-container matColumnDef="index">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> No. </th>
-                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: fit-content;"> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="width: fit-content;">{{ i + 1 }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="df_id">

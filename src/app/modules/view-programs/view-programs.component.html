@@ -1,0 +1,103 @@
+<div class="row">
+    
+    <mat-card class="card">
+        <mat-card-title>
+            <strong> COLLEGE/CAMPUS PROGRAMS </strong>
+        </mat-card-title>
+        
+        <div class="search-print-add">
+            <!-- <div class="bar">
+                 <input class="searchbar" type="text" name="search" [(ngModel)]="searchText" placeholder="Search ..."> 
+                <mat-form-field appearance="outline">
+                    <mat-select name="program_id" [(ngModel)]="selectedProgramId" placeholder="Choose program">
+                        <mat-option *ngFor="let program of programOptions" [value]="program.program_id">{{ program.program }}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+            </div> -->
+    
+            <div class="align-right">
+                <div class="add-btn">
+                    <a (click)="addProgramDialog()" style="text-decoration: none;">
+                        <button mat-button>
+                            <span class="material-symbols-rounded" style="color: green;">
+                                add_task
+                            </span>
+                        </button>
+                    </a>
+                </div>
+    
+                <div class="print-btn">
+                    <!-- <span class="material-symbols-rounded" style="color: black;" (click)="print()">
+                        print
+                    </span> -->
+                </div>
+            </div>
+        </div>
+        <mat-card class="cardcontainer" style="margin-top: 1px;">
+            <mat-card class="tablecontainer">
+                <mat-table matSort [dataSource]="filteredData" id="print-section">
+
+                    <ng-container matColumnDef="index">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: fit-content;"> No. </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="width: fit-content;">{{ i + 1 }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="user_id">
+                        <th mat-header-cell *matHeaderCellDef>Id</th>
+                        <td mat-cell *matCellDef="let element" ngIf="false">{{element.user_id}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="program_id">
+                        <th mat-header-cell *matHeaderCellDef>Id</th>
+                        <td mat-cell *matCellDef="let element" ngIf="false">{{element.program_id}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> College/Campus </th>
+                        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="program">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Program </th>
+                        <td mat-cell *matCellDef="let element"> {{element.program}} </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Description </th>
+                        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Actions</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div>
+                                <a (click)="editProgramDialog(element.program_id)" style="text-decoration: none; color: #fff; display: inline-flex;
+                                            align-items: center;">
+                                    <span class="material-symbols-outlined" style="color: rgb(0, 81, 255);">
+                                        edit_square
+                                    </span>
+                                </a>
+
+                                <a type="button" (click)="delete(element.program_id)">
+                                    <span class="material-symbols-outlined" style="color: rgb(179, 0, 0);">
+                                        delete
+                                    </span>
+                                </a>
+                            </div>
+                        </td>
+                    </ng-container>
+                
+                
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                
+                </mat-table>
+                <!-- <div class="paginator">
+                    <mat-paginator #paginator [pageSizeOptions]="[5, 25, 50]" showFirstLastButtons></mat-paginator>
+                </div> -->
+                
+            </mat-card>
+        </mat-card>
+    </mat-card>
+
+</div>

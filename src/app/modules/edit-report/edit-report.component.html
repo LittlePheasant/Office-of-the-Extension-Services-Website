@@ -116,12 +116,6 @@
             <mat-label><b>Type of Extension Services Rendered</b></mat-label>
             <mat-form-field appearance="outline">
                 <input matInput placeholder="Training, Outreach, Consultancy, GAD, etc." name="serviceOpt" formControlName="serviceOpt">
-                <!-- <mat-select multiple="true" name="serviceOpt" formControlName="serviceOpt">
-                    <mat-option value="training">Training</mat-option>
-                    <mat-option value="outreach">Outreach</mat-option>
-                    <mat-option value="consultancy">Consultancy</mat-option>
-                    <mat-option value="gad">GAD</mat-option>
-                </mat-select> -->
             </mat-form-field>
         </div>
 
@@ -156,11 +150,11 @@
         <div class="row">
             <mat-label><b>Attachment</b></mat-label>
             <div class="file-container" *ngIf="!fileFetched">
-                <input type="file" id="file" class="file" name="file" formControlName="file" accept="application/pdf" (change)="onFileSelected($event)" placeholder="Click space or Drag a File" style="margin-bottom: 20px;">
+                <input type="file" id="file" class="file" name="file" formControlName="file" accept="application/pdf" (change)="onFileSelected($event)" placeholder="Click space or Drag a File" style="margin-bottom: 20px;">{{fileFetched}}
             </div>
-            <div *ngIf="fileFetched">
-                <!-- <button (click)="fileFetched = undefined" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">Clear File</button> -->
-                <input type="button" (click)="fileFetched = undefined" value="Clear" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">{{fileFetched.name}}
+            <div  class="file-container" *ngIf="fileFetched">
+                <input type="button" (click)="fileFetched = undefined" value="Clear" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">{{fileFetched}}
+                <input type="text" id="file" class="file" name="file" formControlName="file" style="margin-right: 10px;">
             </div>
         </div>
 

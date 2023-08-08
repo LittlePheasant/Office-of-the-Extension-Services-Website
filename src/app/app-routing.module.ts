@@ -10,25 +10,28 @@ import { ViewProfileComponent } from './modules/view-profile/view-profile.compon
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ViewDownloadsComponent } from './modules/view-downloads/view-downloads.component';
+import { ViewProgramsComponent } from './modules/view-programs/view-programs.component';
+import { AboutComponent } from './modules/about/about.component';
 
 const routes: Routes = [
   {path:'register', component:RegisterComponent},
   {path:'login', component:LoginComponent},
   {path:'main', component:DefaultComponent,
    children:[
+    {path:'about-us', component:AboutComponent},
     {path:'dashboard', component:DashboardComponent},
-    {path:'add-report', component:AddReportComponent},
     {path:'view-report', component:ViewReportComponent},
     {path:'view-actual-report', component:ViewActualReportComponent},
     {path:'view-profile', component:ViewProfileComponent},
     {path:'view-userlist', component:ViewUserlistComponent},
-    {path:'view-downloads', component:ViewDownloadsComponent}
+    {path:'view-downloads', component:ViewDownloadsComponent},
+    {path:'view-programs', component:ViewProgramsComponent}
    ]},
   {path:'', redirectTo:'/main/dashboard', pathMatch:'full'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -7,25 +7,22 @@
             </div>
             
         </div>
-        <!-- <div class="text">
+        <div class="text">
             <div class="left">
-                <p>College/Campus: __________________</p>
-            </div>
-            <div class="right">
-                <p>Extension Program: ________________________</p>
-            </div>
-        </div> -->
-        <div class="search-print-add">
-            <div class="bar">
-                <!-- <input class="searchbar" type="text" name="search" [(ngModel)]="searchText" placeholder="Search ..."> -->
-                <mat-form-field appearance="outline">
-                    <mat-select name="program_id" [(ngModel)]="selectedProgramId" placeholder="Choose program">
+                <p>College/Campus: <b><u>{{collegecampusName}}</u></b></p>
+                <p>Extension Program:
+                    <mat-form-field>
+                    <mat-select name="program_id" (selectionChange)="onSelectProgram()" [(ngModel)]="selectedProgramId" placeholder="Choose program">
+                        <mat-option [value]="'All'">All</mat-option>
                         <mat-option *ngFor="let program of programOptions" [value]="program.program_id">{{ program.program }}</mat-option>
-                      </mat-select>
+
+                    </mat-select>
                   </mat-form-field>
+                  <b style="padding-left: 10px;"><u>({{progDesc}})</u></b>
+                </p>
             </div>
-    
-            <div class="align-right">
+
+            <div class="right">
                 <div class="add-btn">
                     <a (click)="addReportDialog()" style="text-decoration: none;">
                         <button mat-button>
@@ -35,151 +32,175 @@
                         </button>
                     </a>
                 </div>
-    
+
                 <div class="print-btn">
-                    <!-- <span class="material-symbols-rounded" style="color: black;" (click)="print()">
+                    <span class="material-symbols-rounded" style="color: black;">
+                    <button style="border: none; background: none;"
+                    (click)="onPrint()">
                         print
-                    </span> -->
+                    </button>
+                    </span>
+                    
                 </div>
             </div>
         </div>
+        
         <mat-card class="cardcontainer" style="margin-top: 1px;">
-            
-            
             <mat-card class="tablecontainer">
-                <mat-table matSort [dataSource]="filteredData" id="print-section">
+                <div ngxPrint>
+                    <mat-table matSort [dataSource]="filteredData" id="print-section" #printTable>
 
-                    <ng-container matColumnDef="index">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> No. </th>
-                        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-                    </ng-container>
+                        <ng-container matColumnDef="index">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> No. </th>
+                            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="entry_id">
+                            <th mat-header-cell *matHeaderCellDef>Id</th>
+                            <td mat-cell *matCellDef="let element" ngIf="false">{{element.entry_id}}</td>
+                        </ng-container>
 
-                    <ng-container matColumnDef="entry_id">
-                        <th mat-header-cell *matHeaderCellDef>Id</th>
-                        <td mat-cell *matCellDef="let element" ngIf="false">{{element.entry_id}}</td>
-                      </ng-container>
-
-                    <ng-container matColumnDef="date_entry">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Inclusive Dates </th>
-                        <td mat-cell *matCellDef="let element"> {{element.date_entry}} </td>
-                    </ng-container>
-                
-                    <ng-container matColumnDef="title">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Title </th>
-                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-                    </ng-container>
-                
-                    <ng-container matColumnDef="type_beneficiary">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Type of Beneficiary </th>
-                        <td mat-cell *matCellDef="let element"> {{element.type_beneficiary}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="count_male">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Male </th>
-                        <td mat-cell *matCellDef="let element"> {{element.count_male}} </td>
-                    </ng-container>
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> College/Campus </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="date_entry">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Inclusive Dates </th>
+                            <td mat-cell *matCellDef="let element"> {{element.date_entry}} </td>
+                        </ng-container>
                     
-                    <ng-container matColumnDef="count_female">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Female </th>
-                        <td mat-cell *matCellDef="let element"> {{element.count_female}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="total">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Total</th>
-                        <td mat-cell *matCellDef="let element">{{ +element.count_male + +element.count_female }}</td>
-                    </ng-container>
+                        <ng-container matColumnDef="title">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Title </th>
+                        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                        </ng-container>
                     
-                    <ng-container matColumnDef="poor_rate">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> 1 Poor</th>
-                        <td mat-cell *matCellDef="let element"> {{element.poor_rate}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="fair_rate">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> 2 Fair </th>
-                        <td mat-cell *matCellDef="let element"> {{element.fair_rate}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="satisfactory_rate">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> 3 Satisfactory </th>
-                        <td mat-cell *matCellDef="let element"> {{element.satisfactory_rate}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="verysatisfactory_rate">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> 4 Very Satisfactory </th>
-                        <td mat-cell *matCellDef="let element"> {{element.verysatisfactory_rate}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="excellent_rate">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> 5 Excellent </th>
-                        <td mat-cell *matCellDef="let element"> {{element.excellent_rate}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="duration">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Duration </th>
-                        <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="serviceOpt">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Service Rendered </th>
-                        <td mat-cell *matCellDef="let element"> {{element.serviceOpt}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="partners">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Partners </th>
-                        <td mat-cell *matCellDef="let element"> {{element.partners}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="fac_staff">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Faculty/Staff </th>
-                        <td mat-cell *matCellDef="let element"> {{element.fac_staff}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="role">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Participation </th>
-                        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="cost_fund">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Cost and Funding Source </th>
-                        <td mat-cell *matCellDef="let element"> {{element.cost_fund}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="_file">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Attachment </th>
-                        <td mat-cell *matCellDef="let element"> {{element._file}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="actions">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Actions</th>
-                        <td mat-cell *matCellDef="let element">
-                            <div>
-                                <a (click)="editOpenDialog(element.entry_id)" style="text-decoration: none; color: #fff; display: inline-flex;
-                                            align-items: center;">
-                                    <span class="material-symbols-outlined" style="color: rgb(0, 81, 255);">
-                                        edit_square
-                                    </span>
-                                </a>
-
-                                <a type="button" (click)="delete(element.entry_id)">
-                                    <span class="material-symbols-outlined" style="color: rgb(179, 0, 0);">
-                                        delete
-                                    </span>
-                                </a>
-
-                                <a type="button" (click)="lock(element.entry_id)" *ngIf="isAdmin()">
-                                    <span class="material-symbols-outlined">
+                        <ng-container matColumnDef="type_beneficiary">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Type of Beneficiary </th>
+                            <td mat-cell *matCellDef="let element"> {{element.type_beneficiary}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="count_male">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Male </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count_male}} </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="count_female">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Female </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count_female}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="total">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef>Total</th>
+                            <td mat-cell *matCellDef="let element">{{ +element.count_male + +element.count_female }}</td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="poor_rate">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> 1 Poor</th>
+                            <td mat-cell *matCellDef="let element"> {{element.poor_rate}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="fair_rate">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> 2 Fair </th>
+                            <td mat-cell *matCellDef="let element"> {{element.fair_rate}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="satisfactory_rate">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> 3 Satisfactory </th>
+                            <td mat-cell *matCellDef="let element"> {{element.satisfactory_rate}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="verysatisfactory_rate">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> 4 Very Satisfactory </th>
+                            <td mat-cell *matCellDef="let element"> {{element.verysatisfactory_rate}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="excellent_rate">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> 5 Excellent </th>
+                            <td mat-cell *matCellDef="let element"> {{element.excellent_rate}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="duration">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Duration </th>
+                            <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="serviceOpt">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Service Rendered </th>
+                            <td mat-cell *matCellDef="let element"> {{element.serviceOpt}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="partners">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Partners </th>
+                            <td mat-cell *matCellDef="let element"> {{element.partners}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="fac_staff">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Faculty/Staff </th>
+                            <td mat-cell *matCellDef="let element"> {{element.fac_staff}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="role">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Participation </th>
+                            <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="cost_fund">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Cost and Funding Source </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cost_fund}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="_file">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Attachment </th>
+                            <td mat-cell *matCellDef="let element"> {{element._file}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Actions</th>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-container *ngIf="!isLocked(element.entry_id)">
+                                    <!-- Actions when not locked -->
+                                    <a (click)="editOpenDialog(element.entry_id)" style="text-decoration: none; color: #fff; display: inline-flex;
+                                        align-items: center;">
+                                        <span class="material-symbols-outlined" style="color: rgb(0, 81, 255);">
+                                            edit_square
+                                        </span>
+                                    </a>
+                        
+                                    <a type="button" (click)="delete(element.entry_id)">
+                                        <span class="material-symbols-outlined" style="color: rgb(179, 0, 0);">
+                                            delete
+                                        </span>
+                                    </a>
+                        
+                                    <a type="button" (click)="lock(element.entry_id)" *ngIf="isAdmin()">
+                                        <span class="material-symbols-outlined">
+                                            lock_open_right
+                                        </span>
+                                    </a>
+                                </ng-container>
+                                <div *ngIf="isLocked(element.entry_id)">
+                                    <a type="button" (click)="unlock(element.entry_id)" *ngIf="isAdmin()">
+                                        <span class="material-symbols-outlined">
+                                            lock
+                                        </span>
+                                    </a>
+                                    <span class="material-symbols-outlined" *ngIf="!isAdmin()" style="padding: auto;">
                                         lock
                                     </span>
-                                </a>
-                            </div>
-                        </td>
-                    </ng-container>
+                                </div>
+                            </td>
+                        </ng-container>
+                        
+                    
+                    
+                        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                        
+                        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                    
+                    </mat-table>
+                </div>
                 
-                
-                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-                
-                </mat-table>
                 <!-- <div class="paginator">
                     <mat-paginator #paginator [pageSizeOptions]="[5, 25, 50]" showFirstLastButtons></mat-paginator>
                 </div> -->

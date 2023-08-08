@@ -14,6 +14,7 @@ export class ViewActualReportComponent implements OnInit {
   selectedOpt!:string;
   index = 0;
   transformedData: any[] = [];
+  rowspan!:number; // Initialize rowspan for each particulars group
 
   defaultValues: string[] =[];
   columns = ['particulars', 'quarter', 'CAAD', 'CAS', 'COBE', 'COE', 'COED', 'COT', 'GS' , 'BURAUEN', 'CARIGARA', 'DULAG', 'ORMOC', 'TANAUAN'];
@@ -38,9 +39,6 @@ export class ViewActualReportComponent implements OnInit {
 
       this.transformData(response);
       this.data = new MatTableDataSource(this.transformedData);
-      this.data.data = this.transformedData;
-      console.log('responsedata',response);
-      console.log('transformeddata', this.data.data);
 
       
     })
@@ -54,38 +52,66 @@ export class ViewActualReportComponent implements OnInit {
         const group = response[particularsId];
   
         let isFirstRow = true; // Flag to track the first row of each particularsId
-  
+        
         for (const quarter in group) {
           if (group.hasOwnProperty(quarter)) {
             const items = group[quarter];
 
             if (items.length > 0) {
+              this.rowspan = items.length;
+              const transformedItem: any = {
+                particulars: isFirstRow ? items?.[0]?.particulars : '',
+                quarter: quarter,
+                CAAD: '',
+                CAS: '',
+                COBE: '',
+                COE: '',
+                COED: '',
+                COT: '',
+                GS: '',
+                BURAUEN: '',
+                CARIGARA: '',
+                DULAG: '',
+                ORMOC: '',
+                TANAUAN: ''
+              };
+  
               for (const item of items) {
-                const transformedItem: any = {
-                  particulars: isFirstRow ? item.particulars : '',
-                  quarter: quarter,
-                  CAAD: item.name === 'CAAD' ? item.count : '',
-                  CAS: item.name === 'CAS' ? item.count : '',
-                  COBE: item.name === 'COBE' ? item.count : '',
-                  COE: item.name === 'COE' ? item.count : '',
-                  COED: item.name === 'COED' ? item.count : '',
-                  COT: item.name === 'COT' ? item.count : '',
-                  GS: item.name === 'GS' ? item.count : '',
-                  BURAUEN: item.name === 'BURAUEN' ? item.count : '',
-                  CARIGARA: item.name === 'CARIGARA' ? item.count : '',
-                  DULAG: item.name === 'DULAG' ? item.count : '',
-                  ORMOC: item.name === 'ORMOC' ? item.count : '',
-                  TANAUAN: item.name === 'TANAUAN' ? item.count : ''
-                };
-
-                this.transformedData.push(transformedItem);
-                isFirstRow = false;
+                if (item.name === 'CAAD') {
+                  transformedItem.CAAD = item.count;
+                } else if (item.name === 'CAS') {
+                  transformedItem.CAS = item.count;
+                } else if (item.name === 'COBE') {
+                  transformedItem.COBE = item.count;
+                } else if (item.name === 'COE') {
+                  transformedItem.COE = item.count;
+                } else if (item.name === 'COED') {
+                  transformedItem.COED = item.count;
+                } else if (item.name === 'COT') {
+                  transformedItem.COT = item.count;
+                } else if (item.name === 'GS') {
+                  transformedItem.GS = item.count;
+                } else if (item.name === 'BURAUEN') {
+                  transformedItem.BURAUEN = item.count;
+                } else if (item.name === 'CARIGARA') {
+                  transformedItem.CARIGARA = item.count;
+                } else if (item.name === 'DULAG') {
+                  transformedItem.DULAG = item.count;
+                } else if (item.name === 'ORMOC') {
+                  transformedItem.ORMOC = item.count;
+                } else if (item.name === 'TANAUAN') {
+                  transformedItem.TANAUAN = item.count;
+                }
               }
+  
+              this.transformedData.push(transformedItem);
+              
+              isFirstRow = false;
 
             } else {
 
               const transformedItem: any = {
-                particulars: isFirstRow ? group[Number(quarter) - 1]?.[0]?.particulars : '', // Set the value only for the first row
+                particulars: isFirstRow ? group[Number(quarter) - 1]?.[1]?.particulars : '', // Set the value only for the first row
                 quarter: quarter,
                 CAAD: '',
                 CAS: '',

@@ -15,6 +15,7 @@ export class AddReportComponent implements OnInit{
 
   addReportForm!: FormGroup;
   reportData!: ReportData[];
+  user_id: any;
   programOptions: any[] = [];
   fileName: any = '';
   formattedDate: any = '';
@@ -31,9 +32,19 @@ export class AddReportComponent implements OnInit{
   ngOnInit(): void {
 
     const userid = localStorage.getItem('userid');
+    this._api.getPrograms(userid)
+      .subscribe(
+        (response: any) => {
+          this.programOptions = response.data;
+        },
+        error => {
+          console.log('Error retrieving program options.');
+        }
+      );
+    
 
     this.addReportForm = this._fb.group({
-      user_id: [userid],
+      user_id: [''],
       program_id: ['', [Validators.required]],
       date_entry: ['', [Validators.required]],
       title: ['', [Validators.required]],
@@ -54,24 +65,29 @@ export class AddReportComponent implements OnInit{
       cost_fund: [0.00, [Validators.required]],
       file: ['']
     });
+    
 
-    this._api.getPrograms(userid)
-      .subscribe(
-        (response: any) => {
-          this.programOptions = response;
-        },
-        error => {
-          console.log('Error retrieving program options.');
-        }
-      );
   }
 
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.fileName = file;
-      console.log(this.fileName); // logs the file name to the console
+      //console.log(this.fileName); // logs the file name to the console
     }
+
+  }
+
+  // Method to handle program selection change
+  onProgramSelectionChange() {
+    const selectedProgramId = this.addReportForm.get('program_id')?.value;
+
+    // Find the corresponding user_id based on the selected program_id
+    const selectedProgram = this.programOptions.find((program) => program.program_id === selectedProgramId);
+    if (selectedProgram) {
+      this.user_id = selectedProgram.user_id;
+    }
+    
 
   }
   
@@ -92,7 +108,7 @@ export class AddReportComponent implements OnInit{
     const sumCount = countMale + countFemale;
     const formData = new FormData();
 
-    formData.append('user_id', this.addReportForm.get('user_id')?.value);
+    formData.append('user_id', this.user_id);
     formData.append('program_id', this.addReportForm.get('program_id')?.value);
     formData.append('date_entry', this.formattedDate);
     formData.append('title', this.addReportForm.get('title')?.value);
@@ -113,54 +129,39 @@ export class AddReportComponent implements OnInit{
     formData.append('cost_fund', this.addReportForm.get('cost_fund')?.value);
     formData.append('file', this.fileName);
 
-    // Convert FormData to plain JavaScript object
-    // const formDataObject: any = {};
-    // formData.forEach((value: any, key: any) => {
-    //   if (key === 'file') {
-    //     formDataObject[key] = {
-    //       name: value.name,
-    //       type: value.type,
-    //       size: value.size,
-    //       lastModified: value.lastModified,
-    //       lastModifiedDate: value.lastModifiedDate
-    //     };
-    //   } else {
-    //       formDataObject[key] = value;
-    //   }
+    if (this.addReportForm.valid) { //validates first the inputs 
+      if (sumSatisfactionRates === sumCount) { //check if total ratings are equal to total of beneficiaries
 
-    // });
-    
-    // console.log("FormData Object:", formDataObject);
-
-    if (sumSatisfactionRates === sumCount) { //check if total ratings are equal to total of beneficiaries
-
-      if (!this.fileName) { //check if file is selected
-
-        alert ("No file SELECTED!\nPlease select one!");
+        if (!this.fileName) { //check if file is selected
+  
+          alert ("No file SELECTED!\nPlease select one!");
+          
+        } else {
+          // Perform POST request
+          this._api.addReport(formData).subscribe(
+            (response: any) => {
+              //console.log(response);
+              if(response.success  === 1){
+                alert(response.message);
+                this.dialogClose();
+                window.location.reload();
+              } else {
+                alert(response.message);
+              }
+            }, (error:any) => {
+              console.log(error);
+            }
+          );
+        }
         
       } else {
-        // Perform POST request
-        this._api.addReport(formData).subscribe(
-          (response: any) => {
-            //console.log(response);
-            if(response.success  === 1){
-              alert("Added Successfully!");
-              this.dialogClose();
-              window.location.reload();
-            }
-          }, (error:any) => {
-            console.log(error);
-          }
-        );
+        alert ("Total of Quality and Relavance Ratings IS NOT EQAUL to total No. of Beneficiaries.\nPlease DOUBLE CHECK!")
       }
-      
-    } else {
-      alert ("Total of Quality and Relavance Ratings IS NOT EQAUL to total No. of Beneficiaries.\nPlease DOUBLE CHECK!")
+    } else { //alert if form has invalid input
+
+      alert('Please check inputs!');
     }
     
-
-    // reset form
-    //form.reset();
     
   };
 

@@ -19,7 +19,6 @@ export class EditReportComponent implements OnInit {
   fileFetched:any;
   fileDetails!:File;
   formattedDate: any = '';
-  fileUpload!:File;
 
   constructor (private _fb: FormBuilder,
     private _api: ApiService,
@@ -55,8 +54,8 @@ export class EditReportComponent implements OnInit {
 
     // Set the dataLoaded flag to true
     this.dataLoaded = true;
+    console.log(data);
 
-    this.fileFetched = data.reportDetails.file;
    }
   
   
@@ -66,24 +65,23 @@ export class EditReportComponent implements OnInit {
     this._api.getPrograms(userid)
       .subscribe(
         (response: any) => {
-          this.programOptions = response;
+          this.programOptions = response.data;
         },
         error => {
           console.log('Error retrieving program options.');
         }
       );
-      const fileObj: File = this.fileFetched;
-      this.fileUpload = fileObj;
-      console.log(this.fileUpload);
+      //const files: File = this.data.reportDetails.file;
+      this.fileFetched = this.data.reportDetails.file;
 
   }
 
 
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
+    const file = event.target.files[0];
     this.fileFetched = file.name;
     this.fileDetails = file;
-    console.log(this.fileDetails); // logs the file name to the console
+    console.log(this.fileDetails);
   }
 
 
@@ -106,63 +104,64 @@ export class EditReportComponent implements OnInit {
     const sumCount = countMale + countFemale;
 
     const formData = new FormData();
-    formData.set('user_id', data.user_id);
-    formData.set('program_id', data.program_id);
-    formData.set('date_entry', this.formattedDate);
-    formData.set('title', data.title);
-    formData.set('type_beneficiary', data.type_beneficiary);
-    formData.set('count_male', countMale);
-    formData.set('count_female', countFemale);
-    formData.set('poor_rate', poorRate);
-    formData.set('fair_rate', fairRate);
-    formData.set('satisfactory_rate', satisfactoryRate);
-    formData.set('verysatisfactory_rate', verySatisfactoryRate);
-    formData.set('excellent_rate', excellentRate);
-    formData.set('duration', data.duration);
-    formData.set('unitOpt', data.unitOpt);
-    formData.set('serviceOpt', data.serviceOpt);
-    formData.set('partners', data.partners);
-    formData.set('fac_staff', data.fac_staff);
-    formData.set('role', data.role);
-    formData.set('cost_fund', data.cost_fund);
+    formData.append('user_id', data.user_id);
+    formData.append('program_id', data.program_id);
+    formData.append('date_entry', this.formattedDate);
+    formData.append('title', data.title);
+    formData.append('type_beneficiary', data.type_beneficiary);
+    formData.append('count_male', countMale);
+    formData.append('count_female', countFemale);
+    formData.append('poor_rate', poorRate);
+    formData.append('fair_rate', fairRate);
+    formData.append('satisfactory_rate', satisfactoryRate);
+    formData.append('verysatisfactory_rate', verySatisfactoryRate);
+    formData.append('excellent_rate', excellentRate);
+    formData.append('duration', data.duration);
+    formData.append('unitOpt', data.unitOpt);
+    formData.append('serviceOpt', data.serviceOpt);
+    formData.append('partners', data.partners);
+    formData.append('fac_staff', data.fac_staff);
+    formData.append('role', data.role);
+    formData.append('cost_fund', data.cost_fund);
 
     if (this.fileDetails) {
-      formData.set('file', this.fileDetails);
+      formData.append('file', this.fileDetails);
       console.log('formData1', formData.get('file'));
     } else {
-      formData.set('file', this.fileUpload);
+      formData.append('file', this.fileFetched);
       console.log('formData2', formData.get('file'));
     }
 
-    
 
-    
-    // const formDataObject: any = {};
-    // formData.forEach((value: any, key: any) => {
-    //   if (key === 'file') {
-    //     formDataObject[key] = {
-    //       name: value.name,
-    //       type: value.type,
-    //       size: value.size,
-    //       lastModified: value.lastModified,
-    //       lastModifiedDate: value.lastModifiedDate
-    //     };
-    //   } else {
-    //       formDataObject[key] = value;
-    //   }
-    // })
+    if (this.editReportForm.valid) { //check first before sending put request
 
-    // console.log(formDataObject);
+      if (sumSatisfactionRates === sumCount) { //check if total ratings are equal to total of beneficiaries
 
-    // Perform PUT request
+        // Perform POST request
+        this._api.updateReport(id, formData).subscribe(
+          (response: any) => {
+            //console.log(response);
+            if(response.success  === 1){
+              alert(response.message);
+              this.dialogClose();
+              window.location.reload();
+            } else {
+              alert(response.message);
+            }
+          }, (error:any) => {
+            console.log(error);
+          }
+        );
+        
+      } else {
+        alert ("Total of Quality and Relavance Ratings IS NOT EQAUL to total No. of Beneficiaries.\nPlease DOUBLE CHECK!")
+      }
+
+    } else { //alert if form has invalid input
+
+      alert('Please check inputs!');
+    }
     
-    this._api.updateReport(id, formData).subscribe(
-      (response: any) => {
-        console.log(response);
-        alert("Updated Successfully!");
-        this.dialogClose();
-      },
-    );
   }
 
 

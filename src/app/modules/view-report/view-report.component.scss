@@ -72,24 +72,36 @@
     padding-left: 10px;
 }
 
-.left {
-    float: left;
-}
-
 .text {
     margin-top: 25px;
     padding-left: 10px;
     padding-right: 10px;
 }
 
-.right {
-    p{
-        float: right;
+.left {
+
+    float: left;
+
+    p {
+        margin: 0 0 0px;
+    }
+
+    mat-form-field{
+        height: 51pt;
+        text-align: center;
+        align-items: center;
+        width: fit-content;
     }
     
 }
 
-.title-card {
+.right {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.card-title {
     margin-top: 12px;
     height: 45px;
     margin-left: 10px;
@@ -146,5 +158,12 @@
 .cardcontainer {
     position: relative;
     top: 0;
-    height: 561px;
+    height: 426px;
+}
+
+@media print {
+    /* Add styles to hide certain elements when printing */
+    .no-print {
+      display: none;
+    }
 }
