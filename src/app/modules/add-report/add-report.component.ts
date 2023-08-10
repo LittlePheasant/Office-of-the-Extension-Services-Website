@@ -40,7 +40,7 @@ export class AddReportComponent implements OnInit{
           this.programOptions = response.data;
         },
         error => {
-          console.log('Error retrieving program options.');
+          this.showErrorMessage('Error retrieving program options.');
         }
       );
     
@@ -167,7 +167,6 @@ export class AddReportComponent implements OnInit{
       panelClass: ['top-snackbar'],
       
     });
-    this.dialogClose();
   }
 
   showErrorMessage(message: string) {

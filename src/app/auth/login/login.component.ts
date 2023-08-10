@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent {
   constructor(
     public _fb:FormBuilder,
     private _api:ApiService,
+    private snackBar: MatSnackBar,
     private router:Router
   ) { }
 
@@ -25,7 +27,7 @@ export class LoginComponent {
 
     this.loginForm = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -37,29 +39,37 @@ export class LoginComponent {
 
       this._api.toLogin(credentials)
     .subscribe((response: any) => {
-      console.log(response);
       const data = response.data; // Assuming user_id and user_role are within a data object
-
-      if (response.success === 1) {
-        alert('Login successful');
-
+      
+      if(response.success  === 1){
+        this.showSuccessMessage(response.message);
         const userId = data.user_id;
         const role = data.user_role;
-        localStorage.setItem('userid', userId); // Replace '123' with the actual value of the userid obtained from your API
+        localStorage.setItem('userid', userId);
         this._api.userROLE = role;//new
 
         // Redirect or perform any other actions
-
-        this.router.navigate(['/main/dashboard']);//new
-
+        this.router.navigate(['/main/dashboard']);
 
       } else {
-        console.log('Login failed:', response.message);
-        // Handle login error, such as displaying an error message to the user
+        this.showErrorMessage(response.message);
       }
     });
+  }
 
-    console.log(credentials);
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
   }
   
 
