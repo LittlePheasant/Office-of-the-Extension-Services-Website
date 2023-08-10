@@ -38,25 +38,21 @@ export class ViewProfileComponent implements OnInit {
     this._api.getUsers(userid).subscribe((response:any) => {
 
       this.editProfileForm = this._fb.group({
-        campus_name: [response.campus_name],
-        name: [response.data.name],
-        username: [response.data.username],
-        user_email: [response.data.user_email],
-        password: [response.data.user_password],
-        cpassword: [response.data.user_password],
-        file: [response.data.imagename]
+        campus_name: [response.data[0].campus_name],
+        name: [response.data[0].name],
+        username: [response.data[0].username],
+        user_email: [response.data[0].user_email],
+        password: [response.data[0].user_password],
+        cpassword: [response.data[0].user_password],
+        file: [response.data[0].imagename]
       }, {validators: this.MustMatch('password', 'cpassword')})
 
-      this.userrole = response.data.user_role;
-      this.fileFetched = response.data.imagename;
-      console.log(response.data)
+      this.userrole = response.data[0].user_role;
+      const filename = response.data[0].imagename.split('/');
+      this.fileFetched = filename[filename.length - 1];
 
     });
 
-    
-
-    
-    
   }
 
   MustMatch(controlName: string, matchingcontrolName: string) {
