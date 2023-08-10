@@ -52,8 +52,8 @@
             </a>
         </mat-list-item>
         <mat-list-item>
-          <a class="sidenav_anchor">
-            <i class="material-icons">logout</i>
+          <a class="sidenav_anchor" (click)="onlogOut()">
+            <i class="material-icons" >logout</i>
             Logout
           </a>
       </mat-list-item>
@@ -84,9 +84,9 @@
                   <i class="material-icons">person</i>Profile
                 </a> 
               </button>
-              <button mat-menu-item>
-                <a href="" style="text-decoration: none; color: black;">
-                  <i class="material-icons">logout</i>Logout
+              <button mat-menu-item (click)="onlogOut()">
+                <a style="text-decoration: none; color: black;">
+                  <i class="material-icons" >logout</i>Logout
                 </a>
               </button>
             </mat-menu>

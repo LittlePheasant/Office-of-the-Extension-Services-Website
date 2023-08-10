@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { error } from 'highcharts';
 import { ReportData } from 'src/app/models/models';
 import { ApiService } from 'src/app/services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-report',
@@ -23,6 +24,7 @@ export class AddReportComponent implements OnInit{
   constructor (private _fb: FormBuilder,
                private _api: ApiService,
                private datePipe: DatePipe,
+               private snackBar: MatSnackBar,
                private _dialogRef: MatDialogRef<AddReportComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any){
               }
@@ -133,8 +135,7 @@ export class AddReportComponent implements OnInit{
       if (sumSatisfactionRates === sumCount) { //check if total ratings are equal to total of beneficiaries
 
         if (!this.fileName) { //check if file is selected
-  
-          alert ("No file SELECTED!\nPlease select one!");
+          this.showErrorMessage('No file SELECTED!\nPlease select one!');
           
         } else {
           // Perform POST request
@@ -142,28 +143,39 @@ export class AddReportComponent implements OnInit{
             (response: any) => {
               //console.log(response);
               if(response.success  === 1){
-                alert(response.message);
+                this.showSuccessMessage(response.message);
                 this.dialogClose();
                 window.location.reload();
               } else {
-                alert(response.message);
+                this.showErrorMessage(response.message);
               }
-            }, (error:any) => {
-              console.log(error);
             }
           );
         }
         
       } else {
-        alert ("Total of Quality and Relavance Ratings IS NOT EQAUL to total No. of Beneficiaries.\nPlease DOUBLE CHECK!")
+        this.showErrorMessage('Total of Quality and Relavance Ratings IS NOT EQAUL to total No. of Beneficiaries.\nPlease DOUBLE CHECK!');
       }
     } else { //alert if form has invalid input
-
-      alert('Please check inputs!');
+      this.showErrorMessage('Please check inputs!');
     }
-    
-    
   };
+
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+    this.dialogClose();
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
+  }
 
   dialogClose(){
     this._dialogRef.close();

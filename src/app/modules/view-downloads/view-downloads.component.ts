@@ -70,7 +70,7 @@ export class ViewDownloadsComponent implements OnInit {
   }
 
   isAdmin(){
-    return this.userrole === 'Admin';
+    return this.userrole === 'ADMIN';
     
   }
 

@@ -1,8 +1,6 @@
-import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -80,21 +78,18 @@ export class EditUserComponent implements OnInit{
 
       this._api.updateUserInfo(id, formData).subscribe((response:any) => {
 
-        const responseBody = response.body; // Access the response body
-        console.log(response)
-        if (response.success === 0) {
-          this.showErrorMessages(responseBody.message, responseBody.message);
-        } else {
+        if(response.success  === 1){
           this.showSuccessMessage(response.message);
-          //this.dialogClose();
+          this.dialogClose();
           window.location.reload();
+        } else {
+          this.showErrorMessage(response.message);
         }
       
       });
 
     } else {
-
-      alert('Please check inputs!');
+      this.showErrorMessage('Please check inputs!');
     }
 
     
@@ -105,16 +100,16 @@ export class EditUserComponent implements OnInit{
     this._dialogRef.close();
   };
 
-  showSuccessMessage(message1: string) {
-    this.snackBar.open(message1, 'Dismiss', {
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
       duration: 50000,
-      panelClass: ['top-snackbar']
+      panelClass: ['top-snackbar'],
+      
     });
   }
 
-  showErrorMessages(message1: string, message2: string) {
-    const combinedMessage = `${message1} ${message2}`;
-    this.snackBar.open(combinedMessage, 'Dismiss', {
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
       duration: 50000,
       panelClass: ['top-snackbar']
     });

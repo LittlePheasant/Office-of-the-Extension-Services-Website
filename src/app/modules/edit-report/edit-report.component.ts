@@ -2,9 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
-import { AddReportComponent } from '../add-report/add-report.component';
-import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-report',
@@ -23,8 +22,7 @@ export class EditReportComponent implements OnInit {
   constructor (private _fb: FormBuilder,
     private _api: ApiService,
     private datePipe: DatePipe,
-    private router:Router,
-    private activateRoute: ActivatedRoute,
+    private snackBar: MatSnackBar,
     private _dialogRef: MatDialogRef<EditReportComponent>,
    @Inject(MAT_DIALOG_DATA) public data: any){
 
@@ -54,7 +52,6 @@ export class EditReportComponent implements OnInit {
 
     // Set the dataLoaded flag to true
     this.dataLoaded = true;
-    console.log(data);
 
    }
   
@@ -81,7 +78,6 @@ export class EditReportComponent implements OnInit {
     const file = event.target.files[0];
     this.fileFetched = file.name;
     this.fileDetails = file;
-    console.log(this.fileDetails);
   }
 
 
@@ -100,8 +96,8 @@ export class EditReportComponent implements OnInit {
     const countFemale = data.count_female;
 
     // Perform the sum calculations
-    const sumSatisfactionRates = poorRate + fairRate + satisfactoryRate + verySatisfactoryRate + excellentRate;
-    const sumCount = countMale + countFemale;
+    const sumSatisfactionRates:number = parseInt(poorRate, 10) + parseInt(fairRate, 10) + parseInt(satisfactoryRate, 10) + parseInt(verySatisfactoryRate, 10) + parseInt(excellentRate, 10);
+    const sumCount:number = parseInt(countMale, 10) + parseInt(countFemale, 10);
 
     const formData = new FormData();
     formData.append('user_id', data.user_id);
@@ -134,7 +130,7 @@ export class EditReportComponent implements OnInit {
 
 
     if (this.editReportForm.valid) { //check first before sending put request
-
+      
       if (sumSatisfactionRates === sumCount) { //check if total ratings are equal to total of beneficiaries
 
         // Perform POST request
@@ -142,28 +138,39 @@ export class EditReportComponent implements OnInit {
           (response: any) => {
             //console.log(response);
             if(response.success  === 1){
-              alert(response.message);
+              this.showSuccessMessage(response.message);
               this.dialogClose();
               window.location.reload();
             } else {
-              alert(response.message);
+              this.showErrorMessage(response.message);
             }
-          }, (error:any) => {
-            console.log(error);
           }
         );
         
       } else {
-        alert ("Total of Quality and Relavance Ratings IS NOT EQAUL to total No. of Beneficiaries.\nPlease DOUBLE CHECK!")
+        this.showErrorMessage('Total of Quality and Relavance Ratings IS NOT EQAUL to total No. of Beneficiaries.\nPlease DOUBLE CHECK!');
       }
 
     } else { //alert if form has invalid input
-
-      alert('Please check inputs!');
+      this.showErrorMessage('Please check inputs!');
     }
     
   }
 
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
+  }
 
   dialogClose(){
     this._dialogRef.close();

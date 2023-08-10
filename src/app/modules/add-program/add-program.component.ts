@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-program',
@@ -16,7 +17,7 @@ export class AddProgramComponent implements OnInit {
 
   constructor (private _fb: FormBuilder,
               private _api: ApiService,
-              private datePipe: DatePipe,
+              private snackBar: MatSnackBar,
               private _dialogRef: MatDialogRef<AddProgramComponent>,
             @Inject(MAT_DIALOG_DATA) public data: any){
             }
@@ -50,19 +51,33 @@ export class AddProgramComponent implements OnInit {
 
     this._api.addProgram(formData).subscribe((response:any) => {
       if (this.addProgramForm.valid) {
-        if (response.success === 1) {
-          alert(response.message);
+        if(response.success  === 1){
+          this.showSuccessMessage(response.message);
           this.dialogClose();
           window.location.reload();
         } else {
-          alert(response.message);
+          this.showErrorMessage(response.message);
         }
       } else {
-        alert('Invalid input \n Please check input again!');
+        this.showErrorMessage('Invalid input \n Please check input again!');
       }
     })
+  }
 
-    console.log(data);
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+    this.dialogClose();
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
   }
 
   dialogClose(){

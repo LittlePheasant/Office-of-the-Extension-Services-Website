@@ -3,19 +3,20 @@
 </div>
 
 <div mat-dialog-content class="content">
+    <form [formGroup]="uploadFileForm" (ngSubmit)="postdata()" enctype="multipart/form-data" >
+        <input *ngIf="false" type="number" name="user_id" formControlName="user_id">
+        <div class="file-container" *ngIf="!file">
+            <input type="file" id="file" name="file" formControlName="file" accept="application/pdf" (change)="onFileSelected($event)">
+        </div>
 
-    <input type="hidden" name="user_id">
-    <div class="file-container" *ngIf="!file">
-        <input type="file" (change)="getfile($event)" name="file" id="file" class="file">
-    </div>
+        <div *ngIf="file">
+            File name: {{file.name}}<br>
+            <button mat-raised-button color="warn" (click)="file = undefined">Clear File</button>
+        </div>
 
-    <div *ngIf="file">
-        File name: {{file.name}}<br>
-        <button mat-raised-button color="warn" (click)="file = undefined">Clear File</button>
-    </div>
-
-    <div mat-dialog-actions class="dialogbtn">
-        <button mat-raised-button color="warn" type="button" (click)="dialogClose()">Cancel</button>
-        <button mat-raised-button color="primary" type="submit" (click)="upload()" name="upload">Save</button>
-    </div>
+        <div mat-dialog-actions class="dialogbtn">
+            <button mat-raised-button color="warn" type="button" (click)="dialogClose()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" name="upload">Save</button>
+        </div>
+    </form>
 </div>

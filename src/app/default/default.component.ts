@@ -43,7 +43,11 @@ export class DefaultComponent implements OnInit{
     this.drawerOpened = !this.drawerOpened;
   }
 
-
+  onlogOut() {
+    const data = localStorage.removeItem('userid');
+    console.log(data);
+    this.routes.navigateByUrl('login');
+  }
 
 
 }

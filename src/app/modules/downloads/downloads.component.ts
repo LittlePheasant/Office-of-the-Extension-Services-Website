@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { error } from 'highcharts';
 import { ApiService } from 'src/app/services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Form, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-downloads',
@@ -13,45 +15,62 @@ export class DownloadsComponent implements OnInit {
 
   file:any;
   user_id:any;
+  uploadFileForm!:FormGroup;
 
   constructor (
+    private _fb: FormBuilder,
     private _api: ApiService,
+    private snackBar: MatSnackBar,
     private _dialogRef: MatDialogRef<DownloadsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {}
   
   
   ngOnInit(): void {
-    const userid = localStorage.getItem('userid');
-    if (typeof userid === 'string') {
-      this.user_id = parseInt(userid, 10);
-    } else {
-      // Handle the case when userid is null or not a string
-      // For example, show an error message or set a default user ID
-      console.log('null');
-    }
+
+    this.user_id = localStorage.getItem('userid');
+
+    this.uploadFileForm = this._fb.group({
+      userid: [this.user_id],
+      file:['']
+    })
+
   }
 
-  getfile(event:any){
+  onFileSelected(event:any){
     this.file = event.target.files[0];
     console.log(this.file);
   }
 
-  upload() {
-    
+  postdata() {
     let formData = new FormData();
-    formData.set('user_id', this.user_id);
-    formData.set('file',this.file);
+    formData.append('user_id', this.user_id);
+    formData.append('file',this.file);
 
     this._api.uploadFile(formData).subscribe((response:any) => {
-      console.log(response);
-      if (response.success === 1){
-        alert ('Uploaded Successfully!');
+      if(response.success  === 1){
+        this.showSuccessMessage(response.message);
         this.dialogClose();
         window.location.reload();
+      } else {
+        this.showErrorMessage(response.message);
       }
-    }, (error:any) => {
-      console.log(error);
     })
+  }
+
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+    this.dialogClose();
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
   }
 
   dialogClose(){
