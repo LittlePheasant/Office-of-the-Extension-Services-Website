@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-userlist',
@@ -29,6 +30,7 @@ export class ViewUserlistComponent {
 
   constructor(private _api: ApiService,
               private _dialog: MatDialog,
+              private snackBar: MatSnackBar,
               private sanitizer: DomSanitizer){}
 
 
@@ -83,13 +85,30 @@ export class ViewUserlistComponent {
   };
 
   delete(id:number){
-    console.log(id);
-     this._api.deleteReport(id).subscribe(data=>{
-        this.data.data = this.data.data.filter((u: any) => u !== data);
-        console.log(this.data);
+     this._api.deleteReport(id).subscribe((response:any)=>{
+        //this.data.data = this.data.data.filter((u: any) => u !== data);
+        if(response.success  === 1){
+        this.showSuccessMessage(response.message);
+        window.location.reload();
+      } else {
+        this.showErrorMessage(response.message);
+      }
      })
+  }
 
-     window.location.reload();
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
   }
 
 }

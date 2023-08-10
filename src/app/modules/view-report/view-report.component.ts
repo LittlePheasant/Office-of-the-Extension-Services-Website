@@ -10,6 +10,7 @@ import { ReportData } from 'src/app/models/models';
 import { AddReportComponent } from '../add-report/add-report.component';
 import { EditReportComponent } from '../edit-report/edit-report.component';
 import { NgxPrintDirective } from 'ngx-print';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-report',
@@ -50,6 +51,7 @@ export class ViewReportComponent {
   constructor( private _api: ApiService,
                private activateRoute: ActivatedRoute,
                private _fb: FormBuilder,
+               private snackBar: MatSnackBar,
                private _dialog: MatDialog,){
 
     this.isProgramselected = true;
@@ -76,7 +78,7 @@ export class ViewReportComponent {
           this.programOptions = response.data;
         },
         error => {
-          console.log('Error retrieving program options.');
+          this.showErrorMessage('Error retrieving program options.');
         }
       );
 
@@ -150,14 +152,11 @@ export class ViewReportComponent {
 
   delete(id:number){
      this._api.deleteReport(id).subscribe((response:any)=>{
-      if(response.success === 1) {
-
-        alert(response.message);
-
+      if(response.success  === 1){
+        this.showSuccessMessage(response.message);
         window.location.reload();
-        
       } else {
-        alert(response.message);
+        this.showErrorMessage(response.message);
       }
         
      })
@@ -210,10 +209,12 @@ export class ViewReportComponent {
 
     this._api.updateStatus(entry_id, formData)
      .subscribe((response: any) => {
-        alert('Please confirm to lock.');
-        if (response.success === 1) {
-          alert(response.message);
+      this.showSuccessMessage('Please confirm to lock.');
+        if(response.success  === 1){
+          this.showSuccessMessage(response.message);
           window.location.reload();
+        } else {
+          this.showErrorMessage(response.message);
         }
     })
   };
@@ -227,10 +228,12 @@ export class ViewReportComponent {
 
     this._api.updateStatus(entry_id, formData)
      .subscribe((response: any) => {
-        alert('Please confirm to unlock.');
-        if (response.success === 1) {
-          alert(response.message);
+      this.showSuccessMessage('Please confirm to unlock.');
+        if(response.success  === 1){
+          this.showSuccessMessage(response.message);
           window.location.reload();
+        } else {
+          this.showErrorMessage(response.message);
         }
     })
   }
@@ -238,6 +241,21 @@ export class ViewReportComponent {
   isAdmin(){
     return this.userrole === 'ADMIN';
     
+  }
+
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
   }
 
   

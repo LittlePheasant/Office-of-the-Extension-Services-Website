@@ -65,7 +65,7 @@ export class EditReportComponent implements OnInit {
           this.programOptions = response.data;
         },
         error => {
-          console.log('Error retrieving program options.');
+          this.showErrorMessage('Error retrieving program options.');
         }
       );
       //const files: File = this.data.reportDetails.file;

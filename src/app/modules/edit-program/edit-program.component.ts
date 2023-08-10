@@ -62,7 +62,6 @@ export class EditProgramComponent implements OnInit{
       panelClass: ['top-snackbar'],
       
     });
-    this.dialogClose();
   }
 
   showErrorMessage(message: string) {

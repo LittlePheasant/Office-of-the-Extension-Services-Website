@@ -8,6 +8,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AddProgramComponent } from '../add-program/add-program.component';
 import { EditProgramComponent } from '../edit-program/edit-program.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-programs',
@@ -36,6 +37,7 @@ export class ViewProgramsComponent implements OnInit {
   constructor( private _api: ApiService,
     private activateRoute: ActivatedRoute,
     private _fb: FormBuilder,
+    private snackBar: MatSnackBar,
     private _dialog: MatDialog,){
 
   }
@@ -61,7 +63,7 @@ export class ViewProgramsComponent implements OnInit {
 
         },
         error => {
-          console.log('Error retrieving program options.');
+          this.showErrorMessage('Error retrieving program options.');
         }
       );
   }
@@ -92,19 +94,34 @@ export class ViewProgramsComponent implements OnInit {
   delete(id:number){
     console.log(id);
      this._api.deleteProgram(id).subscribe((response:any) => {
-      if(response.success === 1) {
-        alert(response.message);
+      if(response.success  === 1){
+        this.showSuccessMessage(response.message);
+        window.location.reload();
       } else {
-        alert(response.message);
+        this.showErrorMessage(response.message);
       }
-      window.location.reload();
      })
 
      
   }
 
   isAdmin(){
-    return this.userrole === 'Admin';
+    return this.userrole === 'ADMIN';
     
+  }
+
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
   }
 }

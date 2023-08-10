@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class ViewProfileComponent implements OnInit {
   fileDetails!:File;
 
   constructor(private _api: ApiService,
+    private snackBar: MatSnackBar,
     private _fb: FormBuilder,){
       this.editProfileForm = this._fb.group({
         campus_name: ['', [Validators.required]],
@@ -103,22 +105,38 @@ export class ViewProfileComponent implements OnInit {
 
       this._api.updateUserInfo(userid, formData).subscribe((response:any) => {
 
-        alert(response.message);
-        window.location.reload();
+        if(response.success  === 1){
+          this.showSuccessMessage(response.message);
+          window.location.reload();
+        } else {
+          this.showErrorMessage(response.message);
+        }
         
-      }, (error:any) => {
-        alert(error.message);
       });
 
     } else {
-
-      alert('Please check inputs!');
+      this.showErrorMessage('Please check inputs!');
     }
   }
 
   isAdmin(){
     return this.userrole === 'ADMIN';
     
+  }
+
+  showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Okay', {
+      duration: 50000,
+      panelClass: ['top-snackbar'],
+      
+    });
+  }
+
+  showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Try Again!', {
+      duration: 50000,
+      panelClass: ['top-snackbar']
+    });
   }
 
 

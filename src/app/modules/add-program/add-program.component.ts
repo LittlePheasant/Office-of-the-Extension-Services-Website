@@ -70,7 +70,6 @@ export class AddProgramComponent implements OnInit {
       panelClass: ['top-snackbar'],
       
     });
-    this.dialogClose();
   }
 
   showErrorMessage(message: string) {
