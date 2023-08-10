@@ -42,7 +42,7 @@ export class LoginComponent {
       const data = response.data; // Assuming user_id and user_role are within a data object
       
       if(response.success  === 1){
-        this.showSuccessMessage(response.message);
+        this.showSuccessMessage('Login Success!');
         const userId = data.user_id;
         const role = data.user_role;
         localStorage.setItem('userid', userId);

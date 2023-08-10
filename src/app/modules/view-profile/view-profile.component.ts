@@ -82,7 +82,6 @@ export class ViewProfileComponent implements OnInit {
     const file = event.target.files[0];
     this.fileFetched = file.name;
     this.fileDetails = file;
-    console.log(this.fileDetails);
   }
 
   postdata(){
@@ -96,6 +95,14 @@ export class ViewProfileComponent implements OnInit {
     formData.set('username', data.username);
     formData.set('user_email', data.user_email);
     formData.set('password', data.password);
+
+    if (this.fileDetails) {
+      formData.append('file', this.fileDetails);
+      console.log('formData1', formData.get('file'));
+    } else {
+      formData.append('file', this.fileFetched);
+      console.log('formData2', formData.get('file'));
+    }
 
     if (this.editProfileForm.valid){
 
