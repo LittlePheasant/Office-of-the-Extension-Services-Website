@@ -42,14 +42,20 @@ export class LoginComponent {
       const data = response.data; // Assuming user_id and user_role are within a data object
       
       if(response.success  === 1){
-        this.showSuccessMessage('Login Success!');
-        const userId = data.user_id;
-        const role = data.user_role;
-        localStorage.setItem('userid', userId);
-        this._api.userROLE = role;//new
+        const snackBarRef = this.snackBar.open('Login Success!', 'Okay', {
+          panelClass: ['success-snackbar'],
+        });
 
-        // Redirect or perform any other actions
-        this.router.navigate(['/main/dashboard']);
+        snackBarRef.afterDismissed().subscribe(() => {
+          const userId = data.user_id;
+          const role = data.user_role;
+          localStorage.setItem('userid', userId);
+          this._api.userROLE = role;//new
+
+          // Redirect or perform any other actions
+          this.router.navigate(['/main/dashboard']);
+        });
+        
 
       } else {
         this.showErrorMessage(response.message);
@@ -57,18 +63,10 @@ export class LoginComponent {
     });
   }
 
-  showSuccessMessage(message: string) {
-    this.snackBar.open(message, 'Okay', {
-      duration: 50000,
-      panelClass: ['top-snackbar'],
-      
-    });
-  }
-
   showErrorMessage(message: string) {
     this.snackBar.open(message, 'Try Again!', {
       duration: 50000,
-      panelClass: ['top-snackbar']
+      panelClass: ['error-snackbar']
     });
   }
   
