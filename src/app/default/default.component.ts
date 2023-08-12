@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-default',
@@ -20,7 +21,8 @@ export class DefaultComponent implements OnInit{
 
   constructor(private routes: Router, 
               private _api: ApiService,
-              private datePipe: DatePipe,) { }
+              private datePipe: DatePipe,
+              private snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
     this.userid = localStorage.getItem('userid');
@@ -55,9 +57,16 @@ export class DefaultComponent implements OnInit{
   }
 
   onlogOut() {
-    const data = localStorage.removeItem('userid');
-    console.log(data);
-    this.routes.navigateByUrl('login');
+
+    const snackBarRef = this.snackBar.open('Please confirm to continue!', 'Confirm', {
+      panelClass: ['success-snackbar'],
+    });
+
+    snackBarRef.afterDismissed().subscribe(() => {
+      localStorage.removeItem('userid');
+      this.routes.navigateByUrl('login');
+    });
+
   }
 
   updateTime() {
