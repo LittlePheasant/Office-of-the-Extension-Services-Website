@@ -1,114 +1,120 @@
-<div mat-dialog-title class="title">
-    <h1><b>EDIT USER INFORMATION</b></h1>
-</div>
-<div mat-dialog-content class="content">
-    <form [formGroup]="editProfileForm" (ngSubmit)="postdata()">
-        <div class="row" *ngIf="!isAdmin()">
-            <mat-label><b>College/Campus Name <i>(long name)</i></b></mat-label>
-            <mat-form-field appearance="outline">
-                <input matInput type="text" placeholder="College of Architecture and Allied Disciplines"
-                name="campus_name" formControlName="campus_name">
-                <mat-error *ngIf="editProfileForm.get('campus_name')?.errors?.['required']">
-                    <span>
-                      This field is required
-                    </span>
-                </mat-error>
-            </mat-form-field>
+<mat-card class="card-container">
+    <div class="row">
+        <div mat-dialog-title class="title">
+            <h1><b>EDIT USER INFORMATION</b></h1>
         </div>
+        <div mat-dialog-content class="content">
+            <form [formGroup]="editProfileForm" (ngSubmit)="postdata()">
+                <div class="row" *ngIf="!isAdmin()">
+                    <mat-label><b>College/Campus Name <i>(long name)</i></b></mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" placeholder="College of Architecture and Allied Disciplines"
+                        name="campus_name" formControlName="campus_name">
+                        <mat-error *ngIf="editProfileForm.get('campus_name')?.errors?.['required']">
+                            <span>
+                              This field is required
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div class="row" *ngIf="!isAdmin()">
+                    <mat-label><b>College/Campus Name <i>(short name)</i></b></mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" placeholder="CAAD"
+                        name="name" formControlName="name">
+                        <mat-error *ngIf="editProfileForm.get('name')?.errors?.['required']">
+                            <span>
+                              This field is required
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            
+                <div class="row">
+                    <mat-label ><b>Username</b></mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" name="username" formControlName="username" placeholder="John Doe">
+                        <mat-error *ngIf="editProfileForm.get('username')?.errors?.['required']">
+                            <span>
+                              This field is required
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div class="row">
+                    <mat-label ><b>Useremail</b></mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="email" name="user_email" formControlName="user_email" placeholder="example@evsu.edu.ph">
+                        <mat-error *ngIf="editProfileForm.get('user_email')?.errors?.['required']">
+                            <span>
+                              This field is required
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            
+                <div class="row">
+                    <mat-label><b>Password</b></mat-label>
+                    <mat-form-field appearance="outline">
+                        <input name="password" formControlName="password" matInput [type]=" hidePassword ? 'password' : 'text'" required />
+                        <button  mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide Password'"
+                        [attr.aria-pressed]="hidePassword">
+                          <mat-icon>
+                              {{hidePassword ? 'visibility_off' : 'visibility'}}
+                          </mat-icon>
+                        </button>
+                        <mat-error *ngIf="editProfileForm.get('password')?.invalid">
+                            <span *ngIf="editProfileForm.get('password')?.errors?.['required']">
+                              This field is required
+                            </span>
+                            <span *ngIf="editProfileForm.get('password')?.errors?.['minLength']">
+                                Password must be in 8 length
+                              </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div class="row">
+                    <mat-label><b>Confirm Password</b></mat-label>
+                    <mat-form-field appearance="outline">
+                        <input name="cpassword" formControlName="cpassword" matInput [type]=" hideCPassword ? 'password' : 'text'" required />
+                        <button  mat-icon-button matSuffix (click)="hideCPassword = !hideCPassword" [attr.aria-label]="'Hide Password'"
+                        [attr.aria-pressed]="hideCPassword">
+                          <mat-icon>
+                              {{hideCPassword ? 'visibility_off' : 'visibility'}}
+                          </mat-icon>
+                        </button>
+            
+                        <mat-error *ngIf="editProfileForm.get('cpassword')?.invalid">
+                            <span *ngIf="editProfileForm.get('cpassword')?.errors?.['MustMatch']">
+                              Confirm password didn't match
+                            </span>
+                            <span *ngIf="editProfileForm.get('cpassword')?.errors?.['required']">
+                                This field is required  
+                              </span>
+                          </mat-error>
+                    </mat-form-field>
+                </div>
         
-        <div class="row" *ngIf="!isAdmin()">
-            <mat-label><b>College/Campus Name <i>(short name)</i></b></mat-label>
-            <mat-form-field appearance="outline">
-                <input matInput type="text" placeholder="CAAD"
-                name="name" formControlName="name">
-                <mat-error *ngIf="editProfileForm.get('name')?.errors?.['required']">
-                    <span>
-                      This field is required
-                    </span>
-                </mat-error>
-            </mat-form-field>
+                <div class="row">
+                    <div class="row">
+                        <mat-label style="padding-left: 0px;"><b>Attachment</b></mat-label>
+                        <div class="file-container" *ngIf="!fileFetched">
+                            <input type="file" id="file" class="file" name="file" formControlName="file" accept=".png, .jpeg, .jpg" (change)="onFileSelected($event)" placeholder="Click space or Drag a File" style="margin-bottom: 20px;">{{fileFetched}}
+                        </div>
+                        <div  class="file-container" *ngIf="fileFetched">
+                            <input type="button" (click)="fileFetched = undefined" value="Clear" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">{{fileFetched}}
+                            <input type="text" id="file" class="file" name="file" formControlName="file" style="margin-right: 10px;">
+                        </div>
+                    </div>
+                </div>
+            
+                <div mat-dialog-actions class="dialogbtn">
+                    <button mat-raised-button color="primary" type="submit">Save</button>
+                </div>
+            </form>
         </div>
-    
-        <div class="row">
-            <mat-label ><b>Username</b></mat-label>
-            <mat-form-field appearance="outline">
-                <input matInput type="text" name="username" formControlName="username" placeholder="John Doe">
-                <mat-error *ngIf="editProfileForm.get('username')?.errors?.['required']">
-                    <span>
-                      This field is required
-                    </span>
-                </mat-error>
-            </mat-form-field>
-        </div>
-        
-        <div class="row">
-            <mat-label ><b>Useremail</b></mat-label>
-            <mat-form-field appearance="outline">
-                <input matInput type="email" name="user_email" formControlName="user_email" placeholder="example@evsu.edu.ph">
-                <mat-error *ngIf="editProfileForm.get('user_email')?.errors?.['required']">
-                    <span>
-                      This field is required
-                    </span>
-                </mat-error>
-            </mat-form-field>
-        </div>
-    
-        <div class="row">
-            <mat-label><b>Password</b></mat-label>
-            <mat-form-field appearance="outline">
-                <input name="password" formControlName="password" matInput [type]=" hidePassword ? 'password' : 'text'" required />
-                <button  mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide Password'"
-                [attr.aria-pressed]="hidePassword">
-                  <mat-icon>
-                      {{hidePassword ? 'visibility_off' : 'visibility'}}
-                  </mat-icon>
-                </button>
-                <mat-error *ngIf="editProfileForm.get('password')?.invalid">
-                    <span *ngIf="editProfileForm.get('password')?.errors?.['required']">
-                      This field is required
-                    </span>
-                    <span *ngIf="editProfileForm.get('password')?.errors?.['minLength']">
-                        Password must be in 8 length
-                      </span>
-                </mat-error>
-            </mat-form-field>
-        </div>
-        
-        <div class="row">
-            <mat-label><b>Confirm Password</b></mat-label>
-            <mat-form-field appearance="outline">
-                <input name="cpassword" formControlName="cpassword" matInput [type]=" hideCPassword ? 'password' : 'text'" required />
-                <button  mat-icon-button matSuffix (click)="hideCPassword = !hideCPassword" [attr.aria-label]="'Hide Password'"
-                [attr.aria-pressed]="hideCPassword">
-                  <mat-icon>
-                      {{hideCPassword ? 'visibility_off' : 'visibility'}}
-                  </mat-icon>
-                </button>
-    
-                <mat-error *ngIf="editProfileForm.get('cpassword')?.invalid">
-                    <span *ngIf="editProfileForm.get('cpassword')?.errors?.['MustMatch']">
-                      Confirm password didn't match
-                    </span>
-                    <span *ngIf="editProfileForm.get('cpassword')?.errors?.['required']">
-                        This field is required  
-                      </span>
-                  </mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="row">
-            <mat-label><b>Attachment</b></mat-label>
-            <div class="file-container" *ngIf="!fileFetched">
-                <input type="file" id="file" class="file" name="file" formControlName="file" accept=".png, .jpeg, .jpg" (change)="onFileSelected($event)" placeholder="Click space or Drag a File" style="margin-bottom: 20px;">{{fileFetched}}
-            </div>
-            <div  class="file-container" *ngIf="fileFetched">
-                <input type="button" (click)="fileFetched = undefined" value="Clear" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">{{fileFetched}}
-                <input type="text" id="file" class="file" name="file" formControlName="file" style="margin-right: 10px;">
-            </div>
-        </div>
-    
-        <div mat-dialog-actions class="dialogbtn">
-            <button mat-raised-button color="primary" type="submit">Save</button>
-        </div>
-    </form>
-</div>
+    </div>
+</mat-card>

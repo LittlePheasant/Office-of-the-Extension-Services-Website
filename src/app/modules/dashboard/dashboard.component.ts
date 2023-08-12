@@ -104,17 +104,25 @@ export class DashboardComponent implements OnInit {
         const chartData = [];
   
         for (let i = 0; i < response.length; i++) {
-          chartData.push({
-            name: response[i].name,
-            x: i,
-            y: parseInt(response[i].count),
-          });
+          if(this.userrole === 'ADMIN') {
+            chartData.push({
+              name: response[i].name,
+              x: i,
+              y: parseInt(response[i].count),
+            });
+          } else {
+            chartData.push({
+              name: 'Quarter ' + [i + 1],
+              x: i,
+              y: parseInt(response[i].count),
+            });
+          }
         }
   
         // Define options for chart 1
         const options1: Highcharts.Options = { 
           chart: { type: 'column' },
-          title: { text: 'Output Indicator 1' },
+          title: { text: 'Outcome Indicator 1' },
           xAxis: { type: 'category' },
           yAxis: { title: {
             text: ''
@@ -161,17 +169,25 @@ export class DashboardComponent implements OnInit {
         const chartData = [];
     
         for (let i = 0; i < response.length; i++) {
-          chartData.push({
-            name: response[i].name,
-            x: i,
-            y: parseFloat(response[i].count),
-          });
+          if(this.userrole === 'ADMIN') {
+            chartData.push({
+              name: response[i].name,
+              x: i,
+              y: parseInt(response[i].count),
+            });
+          } else {
+            chartData.push({
+              name: 'Quarter ' + [i + 1],
+              x: i,
+              y: parseInt(response[i].count),
+            });
+          }
         }
 
               // Define options for chart 2
         const options2: Highcharts.Options = { 
           chart: { type: 'column' },
-          title: { text: 'Output Indicator 2' },
+          title: { text: 'Output Indicator 1' },
           xAxis: { type: 'category' },
           yAxis: { title: {
             text: ''
@@ -210,17 +226,25 @@ export class DashboardComponent implements OnInit {
         const chartData = [];
     
         for (let i = 0; i < response.length; i++) {
-          chartData.push({
-            name: response[i].name,
-            x: i,
-            y: parseInt(response[i].count),
-          });
+          if(this.userrole === 'ADMIN') {
+            chartData.push({
+              name: response[i].name,
+              x: i,
+              y: parseInt(response[i].count),
+            });
+          } else {
+            chartData.push({
+              name: 'Quarter ' + [i + 1],
+              x: i,
+              y: parseInt(response[i].count),
+            });
+          }
         }
 
               // Define options for chart 3
     const options3: Highcharts.Options = { 
       chart: { type: 'column' },
-      title: { text: 'Output Indicator 3' },
+      title: { text: 'Output Indicator 2' },
       xAxis: { type: 'category' },
       yAxis: { title: {
         text: ''
@@ -260,17 +284,25 @@ export class DashboardComponent implements OnInit {
         const chartData = [];
     
         for (let i = 0; i < response.length; i++) {
-          chartData.push({
-            name: response[i].name,
-            x: i,
-            y: parseFloat(response[i].count),
-          });
+          if(this.userrole === 'ADMIN') {
+            chartData.push({
+              name: response[i].name,
+              x: i,
+              y: parseInt(response[i].count),
+            });
+          } else {
+            chartData.push({
+              name: 'Quarter ' + [i + 1],
+              x: i,
+              y: parseInt(response[i].count),
+            });
+          }
         }
 
               // Define options for chart 2
     const options4: Highcharts.Options = { 
       chart: { type: 'column' },
-      title: { text: 'Output Indicator 4' },
+      title: { text: 'Output Indicator 3' },
       xAxis: { type: 'category' },
       yAxis: { title: {
         text: ''

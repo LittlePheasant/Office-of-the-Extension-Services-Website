@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-default',
@@ -14,8 +15,12 @@ export class DefaultComponent implements OnInit{
   Currentnav: string = '';
   drawerOpened: boolean = false;
   userImg:any;
+  currentTime!:string;
+  currentDate!:string;
 
-  constructor(private routes: Router, private _api: ApiService,) { }
+  constructor(private routes: Router, 
+              private _api: ApiService,
+              private datePipe: DatePipe,) { }
 
   ngOnInit(): void {
     this.userid = localStorage.getItem('userid');
@@ -31,6 +36,12 @@ export class DefaultComponent implements OnInit{
       });
       
     })
+
+    this.currentDate = this.datePipe.transform(new Date(), 'MMMM dd, yyyy')!;
+    this.updateTime();
+    setInterval(() => {
+      this.updateTime();
+    }, 1000); // Update every second (1000 milliseconds)
     
   }
 
@@ -47,6 +58,12 @@ export class DefaultComponent implements OnInit{
     const data = localStorage.removeItem('userid');
     console.log(data);
     this.routes.navigateByUrl('login');
+  }
+
+  updateTime() {
+    const now = new Date();
+
+    this.currentTime = this.datePipe.transform(now, 'hh:mm:ss a', 'Asia/Manila')!;
   }
 
 

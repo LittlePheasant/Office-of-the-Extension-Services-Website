@@ -27,7 +27,7 @@ const routes: Routes = [
     {path:'view-downloads', component:ViewDownloadsComponent},
     {path:'view-programs', component:ViewProgramsComponent}
    ]},
-  {path:'', redirectTo:'/main/dashboard', pathMatch:'full'}
+  {path:'', redirectTo:'/login', pathMatch:'full'}
 ];
 
 @NgModule({

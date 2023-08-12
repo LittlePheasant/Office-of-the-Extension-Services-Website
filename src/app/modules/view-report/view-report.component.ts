@@ -1,16 +1,15 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Data } from '@angular/router';
+import { Data } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { ReportData } from 'src/app/models/models';
 import { AddReportComponent } from '../add-report/add-report.component';
 import { EditReportComponent } from '../edit-report/edit-report.component';
 import { NgxPrintDirective } from 'ngx-print';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-report',
@@ -33,6 +32,7 @@ export class ViewReportComponent {
   status!:string;
   userrole!:string;
   fileName!: string;
+  currentDate!:string;
   
   columns = ['index', 'name', 'date_entry', 'title', 'type_beneficiary', 'count_male', 'count_female', 'total',
              'poor_rate', 'fair_rate', 'satisfactory_rate', 'verysatisfactory_rate', 'excellent_rate',
@@ -49,8 +49,7 @@ export class ViewReportComponent {
    @ViewChild('printTable', { static: false }) printTable!: NgxPrintDirective;
 
   constructor( private _api: ApiService,
-               private activateRoute: ActivatedRoute,
-               private _fb: FormBuilder,
+               private datePipe: DatePipe,
                private snackBar: MatSnackBar,
                private _dialog: MatDialog,){
 
@@ -81,6 +80,8 @@ export class ViewReportComponent {
           this.showErrorMessage('Error retrieving program options.');
         }
       );
+
+      this.currentDate = this.datePipe.transform(new Date(), 'MMMM dd, yyyy')!;
 
       //this.isLocked();
       this.isAdmin();
@@ -242,6 +243,7 @@ export class ViewReportComponent {
     return this.userrole === 'ADMIN';
     
   }
+
 
   showSuccessMessage(message: string) {
     this.snackBar.open(message, 'Okay', {

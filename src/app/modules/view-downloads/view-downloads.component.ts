@@ -17,6 +17,9 @@ export class ViewDownloadsComponent implements OnInit {
   userrole!:string;
   columns = ['index', '_filename', 'uploaded_at', 'actions'];
 
+  // pdfFiles: string[] = [];
+  // selectedPdf: string | null = null;
+
   // Declare the data source
   data = new MatTableDataSource<Data>();
 
@@ -39,6 +42,9 @@ export class ViewDownloadsComponent implements OnInit {
         //console.log(this.filteredData);
         
         this.userrole = response.userRole;
+
+        // this.pdfFiles = response.files; // Assuming 'files' is an array containing the file names
+        // this.selectedPdf = this.pdfFiles.length > 0 ? this.pdfFiles[0] : null; // Select the first file by default
 
       }
     );
@@ -73,5 +79,9 @@ export class ViewDownloadsComponent implements OnInit {
     return this.userrole === 'ADMIN';
     
   }
+
+  // showPdf(pdfName: string) {
+  //   this.selectedPdf = pdfName;
+  // }
 
 }

@@ -99,13 +99,15 @@
         </div>
 
         <div class="row">
-            <mat-label><b>Attachment</b></mat-label>
-            <div class="file-container" *ngIf="!fileFetched">
-                <input type="file" id="file" class="file" name="file" formControlName="file" accept=".png, .jpeg, .jpg" (change)="onFileSelected($event)" placeholder="Click space or Drag a File" style="margin-bottom: 20px;">{{fileFetched}}
-            </div>
-            <div  class="file-container" *ngIf="fileFetched">
-                <input type="button" (click)="fileFetched = undefined" value="Clear" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">{{fileFetched}}
-                <input type="text" id="file" class="file" name="file" formControlName="file" style="margin-right: 10px;">
+            <div class="row">
+                <mat-label style="padding-left: 0px;"><b>Attachment</b></mat-label>
+                <div class="file-container" *ngIf="!fileFetched">
+                    <input type="file" id="file" class="file" name="file" formControlName="file" accept=".png, .jpeg, .jpg" (change)="onFileSelected($event)" placeholder="Click space or Drag a File" style="margin-bottom: 20px;">{{fileFetched}}
+                </div>
+                <div  class="file-container" *ngIf="fileFetched">
+                    <input type="button" (click)="fileFetched = undefined" value="Clear" style="background-color: rgb(243, 37, 37); color: white; margin-right: 10px;">{{fileFetched}}
+                    <input type="text" id="file" class="file" name="file" formControlName="file" style="margin-right: 10px;">
+                </div>
             </div>
         </div>
 

@@ -1,14 +1,12 @@
 
 <mat-drawer-container class="example-container" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side">
+      <div class="side-img">
+        
+        <img [src]="userImg" alt="User Image" style="border-radius: 50%; width: 7rem;">
+      </div>
 
-        <img src="assets/images/extension_logo.png" alt="EVSU Logo" style="display: flex; justify-content: center; border-radius: 50%; width: 10rem;">
-      <!-- <p>Auto-resizing sidenav</p>
-      <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p> -->
-      <!-- <button (click)="showFiller = !showFiller" mat-raised-button>
-        Toggle extra text
-      </button> -->
-
+      <br>
 
       <mat-list>
         <mat-list-item>
@@ -75,6 +73,10 @@
         <span class="example-spacer"></span>
 
         <div class="toolbar-right">
+          <span style="color: white; font-size: 9pt; padding-right: 10px;">
+            {{currentDate}}
+            {{currentTime}}
+          </span>
           <img [src]="userImg" alt="User Image" class="imageProfile">
           
           <a class="example-icon">
@@ -91,7 +93,7 @@
               </button>
             </mat-menu>
             <button mat-button [matMenuTriggerFor]="dropdownMenuToolbar" class="example-icon">
-              <i class="material-icons">arrow_drop_down</i>
+              <i class="material-icons" style="padding-right: 0px;">arrow_drop_down</i>
             </button>
           </a>
         </div>
