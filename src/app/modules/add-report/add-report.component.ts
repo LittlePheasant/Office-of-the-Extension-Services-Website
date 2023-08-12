@@ -143,9 +143,13 @@ export class AddReportComponent implements OnInit{
             (response: any) => {
               //console.log(response);
               if(response.success  === 1){
-                this.showSuccessMessage(response.message);
-                this.dialogClose();
-                window.location.reload();
+                const snackBarRef = this.snackBar.open(response.message, 'Okay', {
+                  panelClass: ['success-snackbar'],
+                });
+                snackBarRef.afterDismissed().subscribe(() => {
+                  this.dialogClose();
+                  window.location.reload();
+                });
               } else {
                 this.showErrorMessage(response.message);
               }
@@ -161,18 +165,10 @@ export class AddReportComponent implements OnInit{
     }
   };
 
-  showSuccessMessage(message: string) {
-    this.snackBar.open(message, 'Okay', {
-      duration: 50000,
-      panelClass: ['top-snackbar'],
-      
-    });
-  }
-
   showErrorMessage(message: string) {
     this.snackBar.open(message, 'Try Again!', {
       duration: 50000,
-      panelClass: ['top-snackbar']
+      panelClass: ['error-snackbar']
     });
   }
 

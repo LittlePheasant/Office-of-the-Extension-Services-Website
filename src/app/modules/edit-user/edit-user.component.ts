@@ -79,9 +79,19 @@ export class EditUserComponent implements OnInit{
       this._api.updateUserInfo(id, formData).subscribe((response:any) => {
 
         if(response.success  === 1){
-          this.showSuccessMessage(response.message);
-          this.dialogClose();
-          window.location.reload();
+          const confirmSnackBarRef = this.snackBar.open('Please confirm to continue', 'Confirm', {
+            panelClass: ['confirm-snackbar'],
+          });
+          confirmSnackBarRef.afterDismissed().subscribe(() => {
+            const snackBarRef = this.snackBar.open(response.message, 'Okay', {
+              panelClass: ['success-snackbar'],
+            });
+            snackBarRef.afterDismissed().subscribe(() => {
+              this.dialogClose();
+              window.location.reload();
+            });
+          });
+          
         } else {
           this.showErrorMessage(response.message);
         }
@@ -100,18 +110,10 @@ export class EditUserComponent implements OnInit{
     this._dialogRef.close();
   };
 
-  showSuccessMessage(message: string) {
-    this.snackBar.open(message, 'Okay', {
-      duration: 50000,
-      panelClass: ['top-snackbar'],
-      
-    });
-  }
-
   showErrorMessage(message: string) {
     this.snackBar.open(message, 'Try Again!', {
       duration: 50000,
-      panelClass: ['top-snackbar']
+      panelClass: ['error-snackbar']
     });
   }
 

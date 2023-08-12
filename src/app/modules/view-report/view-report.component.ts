@@ -154,8 +154,19 @@ export class ViewReportComponent {
   delete(id:number){
      this._api.deleteReport(id).subscribe((response:any)=>{
       if(response.success  === 1){
-        this.showSuccessMessage(response.message);
-        window.location.reload();
+        const confirmSnackBarRef = this.snackBar.open('Please confirm to delete', 'Confirm', {
+          panelClass: ['confirm-snackbar'],
+          duration: 0, // Set duration to 0 so the snackbar stays open
+        });
+
+        confirmSnackBarRef.afterDismissed().subscribe(() => {
+          const snackBarRef = this.snackBar.open(response.message, 'Okay', {
+            panelClass: ['success-snackbar'],
+          });
+          snackBarRef.afterDismissed().subscribe(() => {
+            window.location.reload();
+          });
+        });
       } else {
         this.showErrorMessage(response.message);
       }
@@ -210,13 +221,23 @@ export class ViewReportComponent {
 
     this._api.updateStatus(entry_id, formData)
      .subscribe((response: any) => {
-      this.showSuccessMessage('Please confirm to lock.');
-        if(response.success  === 1){
-          this.showSuccessMessage(response.message);
-          window.location.reload();
-        } else {
-          this.showErrorMessage(response.message);
-        }
+      
+      if(response.success  === 1){
+        const confirmSnackBarRef = this.snackBar.open('Please confirm to lock', 'Confirm', {
+          panelClass: ['success-snackbar'],
+        });
+        confirmSnackBarRef.afterDismissed().subscribe(() => {
+          const snackBarRef = this.snackBar.open(response.message, 'Okay', {
+            panelClass: ['success-snackbar'],
+          });
+          snackBarRef.afterDismissed().subscribe(() => {
+            window.location.reload();
+          });
+        });
+        
+      } else {
+        this.showErrorMessage(response.message);
+      }
     })
   };
 
@@ -229,10 +250,22 @@ export class ViewReportComponent {
 
     this._api.updateStatus(entry_id, formData)
      .subscribe((response: any) => {
-      this.showSuccessMessage('Please confirm to unlock.');
+
         if(response.success  === 1){
-          this.showSuccessMessage(response.message);
-          window.location.reload();
+          const confirmSnackBarRef = this.snackBar.open('Please confirm to unlock', 'Confirm', {
+            panelClass: ['confirm-snackbar'],
+            duration: 0, // Set duration to 0 so the snackbar stays open
+          });
+
+          confirmSnackBarRef.afterDismissed().subscribe(() => {
+            const snackBarRef = this.snackBar.open(response.message, 'Okay', {
+              panelClass: ['success-snackbar'],
+            });
+            snackBarRef.afterDismissed().subscribe(() => {
+              window.location.reload();
+            });
+          });
+          
         } else {
           this.showErrorMessage(response.message);
         }
@@ -245,18 +278,10 @@ export class ViewReportComponent {
   }
 
 
-  showSuccessMessage(message: string) {
-    this.snackBar.open(message, 'Okay', {
-      duration: 50000,
-      panelClass: ['top-snackbar'],
-      
-    });
-  }
-
   showErrorMessage(message: string) {
     this.snackBar.open(message, 'Try Again!', {
       duration: 50000,
-      panelClass: ['top-snackbar']
+      panelClass: ['error-snackbar']
     });
   }
 
