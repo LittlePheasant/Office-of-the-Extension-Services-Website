@@ -12,11 +12,12 @@ import { RegisterComponent } from './auth/register/register.component';
 import { ViewDownloadsComponent } from './modules/view-downloads/view-downloads.component';
 import { ViewProgramsComponent } from './modules/view-programs/view-programs.component';
 import { AboutComponent } from './modules/about/about.component';
+import { AuthGuardGuard } from './auth/auth-guard.guard';
 
 const routes: Routes = [
   {path:'register', component:RegisterComponent},
   {path:'login', component:LoginComponent},
-  {path:'main', component:DefaultComponent,
+  {path:'main', component:DefaultComponent, canActivate:[AuthGuardGuard],
    children:[
     {path:'about-us', component:AboutComponent},
     {path:'dashboard', component:DashboardComponent},
