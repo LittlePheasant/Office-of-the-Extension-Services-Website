@@ -41,7 +41,7 @@ export class LoginComponent {
     .subscribe((response: any) => {
       const data = response.data; // Assuming user_id and user_role are within a data object
       
-      if(response.success  === 1){
+      if(data){
         const snackBarRef = this.snackBar.open('Login Success!', 'Okay', {
           panelClass: ['success-snackbar'],
         });
