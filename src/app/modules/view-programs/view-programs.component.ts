@@ -22,6 +22,7 @@ export class ViewProgramsComponent implements OnInit {
   filteredData: any[] = [];
   status!:string;
   userrole!:string;
+  filterValue: string = '';
 
 
   columns = ['index', 'name', 'program', 'description', 'actions'];
@@ -59,7 +60,7 @@ export class ViewProgramsComponent implements OnInit {
         (response: any) => {
           this.programOptions = response.data;
 
-          this.filteredData=response.data;
+          this.data.data=response.data;
 
         },
         error => {
@@ -119,6 +120,10 @@ export class ViewProgramsComponent implements OnInit {
   isAdmin(){
     return this.userrole === 'ADMIN';
     
+  }
+
+  applyFilter() {
+    this.data.filter = this.filterValue.trim().toUpperCase();
   }
 
   showErrorMessage(message: string) {

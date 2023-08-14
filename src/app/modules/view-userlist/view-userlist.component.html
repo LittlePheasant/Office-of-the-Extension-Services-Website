@@ -11,7 +11,7 @@
 
         <div class="align-right">
             <div class="searchbar">
-                <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search ...">
+                <input matInput [(ngModel)]="filterValue" (keyup)="applyFilter()" placeholder="Search ...">
             </div>
             <div class="add-btn">
                 <a (click)="addUserDialog()" style="text-decoration: none; color: #ffffff;">
@@ -42,7 +42,14 @@
 
                     <ng-container matColumnDef="imagename" >
                         <th mat-header-cell *matHeaderCellDef style="width: fit-content;"> Image </th>
-                        <td mat-cell *matCellDef="let user" class="imageProfile" style="width: fit-content;"> <img [src]="user.imagename" alt="User Image"> </td>
+                        <td mat-cell *matCellDef="let user" class="imageProfile" style="width: fit-content;"> 
+                            <ng-container *ngIf="user.imagename !== 'No image'; else noImageTemplate">
+                                <img [src]="user.imagename" alt="User Image">
+                              </ng-container>
+                              <ng-template #noImageTemplate>
+                                No image
+                              </ng-template> 
+                        </td>
                       </ng-container>
                       
 

@@ -17,8 +17,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ViewUserlistComponent {
 
-  searchText: any;
-  imagePath: string | null = null;
+  filterValue: string = '';
+  noimagePath!: string ;
   columns = ['index', 'imagename', 'campus_name', 'name', 'username', 'user_email', 'user_role', 'actions'];
 
   // Declare the data source
@@ -37,6 +37,7 @@ export class ViewUserlistComponent {
   ngOnInit(): void {
     const userid = localStorage.getItem('userid');
     this.viewUsers(userid);
+    
   }
 
   ngAfterViewInit(): void {
@@ -54,7 +55,11 @@ export class ViewUserlistComponent {
         
         this.data.data = response.data;
         this.data.data.forEach((user: any) => {
-          user.imagename = this._api.baseUrl + '/' + user.imagename;
+          if (!user.imagename) {
+            user.imagename = 'No image';
+          } else {
+            user.imagename = this._api.baseUrl + '/' + user.imagename;
+          }
         });
         
         
@@ -66,8 +71,6 @@ export class ViewUserlistComponent {
     const userid = localStorage.getItem('userid');
 
     const _dialogRef = this._dialog.open(AddUserComponent);
-
-    console.log(_dialogRef);
     
   }
 
@@ -79,10 +82,12 @@ export class ViewUserlistComponent {
         }
       });
   
-      console.log(_dialogRef);
-      console.log(response)
     })
   };
+
+  applyFilter() {
+    this.data.filter = this.filterValue.trim().toLowerCase();
+  }
 
   delete(id:number){
      this._api.deleteReport(id).subscribe((response:any)=>{

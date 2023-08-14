@@ -1,61 +1,79 @@
 
 <mat-drawer-container class="example-container" autosize>
-    <mat-drawer #drawer class="example-sidenav" mode="side">
-      <div class="side-img">
+
+    <mat-drawer #drawer class="example-sidenav" mode="side" [ngClass]="darkMode ? 'dark-theme' : ''">
+
+        <div class="side-img">
         
-        <img [src]="userImg" alt="User Image" style="border-radius: 50%; width: 7rem;">
+          <img [src]="userImg" alt="User Image" style="border-radius: 50%; width: 7rem;"> 
+        </div>
+  
+        <br>
+          <div class="userprofile">
+            <p class="username">
+              {{username}}
+            </p>
+            <p class="useremail">
+              {{useremail}}
+            </p>
+          </div>
+  
+        <br>
+  
+        <mat-list>
+          <mat-list-item class="sidenav_anchor">
+            <a routerLink="view-profile" routerLinkActive="active" (click)="newClass('Profile')" >
+              <i class="material-icons">person</i>
+              Profile
+            </a>
+          </mat-list-item>
+          <hr>
+          <!-- <mat-list-item>
+              <a routerLink="home" routerLinkActive="active" (click)="newClass('Home')" >
+                <i class="material-icons">home</i>
+                Home
+              </a>
+          </mat-list-item> -->
+          <mat-list-item class="sidenav_anchor">
+              <a routerLink="dashboard" routerLinkActive="active" (click)="newClass('Dashboard')" >
+                <i class="material-icons">dashboard</i>
+                Dashboard
+              </a>
+          </mat-list-item>
+          <mat-list-item class="sidenav_anchor">
+              <a >
+                <i class="material-icons">article</i>
+                Journals
+              </a>
+          </mat-list-item>
+          <mat-list-item class="sidenav_anchor">
+              <a >
+                <mat-menu #dropdownMenu="matMenu">
+                  <button mat-menu-item [routerLink]="['./about-us']" fragment="aboutus" (click)="newClass('About')">
+                    About Us
+                  </button>
+                  <button mat-menu-item [routerLink]="['./about-us']" fragment="urdea" (click)="newClass('University Research & Development and Extension Agenda')"> 
+                    URDEA
+                  </button>
+                </mat-menu>
+                <button mat-icon-button [matMenuTriggerFor]="dropdownMenu" class="btnMenu">
+                  <i class="material-icons">info</i>About
+                </button>
+              </a>
+          </mat-list-item>
+          <mat-list-item class="sidenav_anchor">
+            <a  (click)="onlogOut()">
+              <i class="material-icons" >logout</i>
+              Logout
+            </a>
+        </mat-list-item>
+        </mat-list>
+
+      <div class="themecontainer">
+        <button (click)="toggleDarkMode()">
+          <mat-icon>{{ darkMode ? 'brightness_7' : 'brightness_4'}}</mat-icon>
+        </button>
       </div>
-
-      <br>
-
-      <mat-list>
-        <mat-list-item>
-          <a routerLink="view-profile" routerLinkActive="active" (click)="newClass('Profile')" class="sidenav_anchor">
-            <i class="material-icons">person</i>
-            Profile
-          </a>
-        </mat-list-item>
-        <hr>
-        <!-- <mat-list-item>
-            <a routerLink="home" routerLinkActive="active" (click)="newClass('Home')" class="sidenav_anchor">
-              <i class="material-icons">home</i>
-              Home
-            </a>
-        </mat-list-item> -->
-        <mat-list-item>
-            <a routerLink="dashboard" routerLinkActive="active" (click)="newClass('Dashboard')" class="sidenav_anchor">
-              <i class="material-icons">dashboard</i>
-              Dashboard
-            </a>
-        </mat-list-item>
-        <mat-list-item>
-            <a class="sidenav_anchor">
-              <i class="material-icons">article</i>
-              Journals
-            </a>
-        </mat-list-item>
-        <mat-list-item>
-            <a class="sidenav_anchor">
-              <mat-menu #dropdownMenu="matMenu">
-                <button mat-menu-item [routerLink]="['./about-us']" fragment="aboutus" (click)="newClass('About')">
-                  About Us
-                </button>
-                <button mat-menu-item [routerLink]="['./about-us']" fragment="urdea" (click)="newClass('University Research & Development and Extension Agenda')"> 
-                  URDEA
-                </button>
-              </mat-menu>
-              <button mat-icon-button [matMenuTriggerFor]="dropdownMenu" class="btnMenu">
-                <i class="material-icons">info</i>About
-              </button>
-            </a>
-        </mat-list-item>
-        <mat-list-item>
-          <a class="sidenav_anchor" (click)="onlogOut()">
-            <i class="material-icons" >logout</i>
-            Logout
-          </a>
-      </mat-list-item>
-      </mat-list>
     </mat-drawer>
   
     <div class="example-sidenav-content">

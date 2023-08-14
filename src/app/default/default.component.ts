@@ -16,8 +16,11 @@ export class DefaultComponent implements OnInit{
   Currentnav: string = '';
   drawerOpened: boolean = false;
   userImg:any;
+  username!:string;
+  useremail!:string;
   currentTime!:string;
   currentDate!:string;
+  darkMode:boolean = false;
 
   constructor(private routes: Router, 
               private _api: ApiService,
@@ -35,7 +38,13 @@ export class DefaultComponent implements OnInit{
       response.data.forEach((user: any) => {
         user.imagename = this._api.baseUrl + '/' + user.imagename;
         this.userImg = user.imagename;
+
+        this.username = user.username;
+
+        this.useremail = user.user_email;
       });
+
+      
       
     })
 
@@ -73,6 +82,10 @@ export class DefaultComponent implements OnInit{
     const now = new Date();
 
     this.currentTime = this.datePipe.transform(now, 'hh:mm:ss a', 'Asia/Manila')!;
+  }
+
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
   }
 
 

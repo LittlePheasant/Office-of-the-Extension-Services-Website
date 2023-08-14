@@ -1,6 +1,4 @@
 .example-container {
-    //height: -webkit-fill-available;
-    border: 1px solid rgba(0, 0, 0, 0.5);
     position: inherit;
   }
   
@@ -16,17 +14,41 @@
   .example-sidenav {
     width: 13rem;
     padding: 20px;
-    background-color: rgb(31, 31, 31);
+    background-color: rgb(255, 255, 255);
     top: 0;
     bottom: 0;
     left: 0;
+
+    .sidenav_anchor a{
+      text-decoration: none;
+      color: #000000;
+    }
+
+    .userprofile p{
+      color: rgb(0, 0, 0);
+    }
+
+    .themecontainer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      margin-top: 2.7rem;
+    
+      button {
+        background: none;
+        border: none;
+      }
+    }
+    
   }
 
   .sidenav_anchor:hover{
     background: #3a3a3bb5;
     height: 48px;
-    padding-left: 10px;
-    padding-right: 10px;
+  }
+
+  .sidenav_anchor:active {
+    background: #3a3a3bb5;
   }
 
   .example-spacer {
@@ -36,10 +58,6 @@
   .example-icon {
     min-width: 0px;
     padding-left: 0px;
-  }
-
-  .sidenave_anchor {
-    text-decoration: none;
   }
 
   .toolbar {
@@ -86,6 +104,25 @@
   .imageProfile{
     border-radius: 50%;
     height: 2rem;
+}
+
+.dark-theme {
+  background-color: rgb(31, 31, 31);
+
+  .sidenav_anchor a{
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .userprofile p{
+    color: rgb(255, 255, 255);
+  }
+
+  .themecontainer {
+    button {
+      color: white;
+    }
+  }
 }
 
 //   footer{
@@ -195,4 +232,21 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.userprofile p{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  line-height: 4px;
+}
+
+.username {
+  font-size: inherit;
+}
+
+.useremail {
+  font-size: small;
+  font-weight: lighter;
+}
+
 

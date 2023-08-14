@@ -15,6 +15,7 @@ export class ViewDownloadsComponent implements OnInit {
 
   filteredData: any[] = [];
   userrole!:string;
+  filterValue: string = '';
   columns = ['index', '_filename', 'uploaded_at', 'actions'];
 
   // pdfFiles: string[] = [];
@@ -78,6 +79,10 @@ export class ViewDownloadsComponent implements OnInit {
   isAdmin(){
     return this.userrole === 'ADMIN';
     
+  }
+
+  applyFilter() {
+    this.data.filter = this.filterValue.trim().toUpperCase();
   }
 
   // showPdf(pdfName: string) {
